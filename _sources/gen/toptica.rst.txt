@@ -1,0 +1,18 @@
+toptica package
+===============
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   toptica.lasersdk
+
+Module contents
+---------------
+
+.. automodule:: toptica
+   :members:
+   :undoc-members:
+   :show-inheritance:

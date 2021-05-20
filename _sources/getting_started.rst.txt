@@ -1,0 +1,45 @@
+Getting Started
+===============
+
+Prerequisites
+-------------
+
+The TOPTICA Python Laser SDK supports Python 3.5 and later. It depends on `pyserial <https://pypi.org/project/pyserial/>`_ for serial and `ifaddr <https://pypi.org/project/ifaddr/>`_ for network connections. Both packages are installed automatically when using ``pip``.
+
+
+Installation
+------------
+
+Install or upgrade to the latest version of the package::
+
+    $ pip3 install --upgrade toptica_lasersdk
+
+.. warning::
+    Python 3.8 deprecated explicit loop parameter in all public ``asyncio`` functions. In a future version of this package all currently optional loop parameter will also be removed. Their usage is considered deprecated from this point on.
+
+.. note:: Python 3.7 changed ``async`` and ``await`` to reserved keywords. Since version 2.0 of the SDK every module starting with ``toptica.lasersdk.async.*`` has therefore been renamed to ``toptica.lasersdk.asyncio.*``.
+
+.. note::
+   The TOPTICA Python Laser SDK uses `asyncio <https://docs.python.org/3/library/asyncio.html>`_ to communicate with
+   the hardware.  This also applies to the synchronous API which internally runs an event loop if necessary.
+
+   This creates a problem with current versions of IPython (including Jupyter and Spyder) because
+   they already run an event loop and an additional loop can't be nested.
+
+   This will lead to the following exception: ``RuntimeError: This event loop is already running``
+
+    | **Workaround #1:**
+    | Use a development environment like `PyCharm <https://www.jetbrains.com/pycharm/>`_ which directly supports `asyncio <https://docs.python.org/3/library/asyncio.html>`_.
+
+    | **Workaround #2:**
+    | Use `nest_asyncio <https://pypi.org/project/nest-asyncio/>`_ which allows nesting of event loops.
+
+    .. code-block:: python
+
+        import nest_asyncio
+        nest_asyncio.apply()
+
+        from toptica.lasersdk.dlcpro.v2_1_0 import DLCpro, NetworkConnection
+
+        with(DLCpro(NetworkConnection('192.168.55.198'))) as dlc:
+            print(dlc.uptime_txt.get())

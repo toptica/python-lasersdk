@@ -1,0 +1,276 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Getting Started &mdash; TOPTICA Python Laser SDK 2.6.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Getting Connected" href="getting_connected.html" />
+    <link rel="prev" title="TOPTICA Python Laser SDK Documentation" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> TOPTICA Python Laser SDK
+          
+
+          
+            
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.6.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="getting_connected.html">Getting Connected</a></li>
+<li class="toctree-l1"><a class="reference internal" href="low_level_api.html">The Low Level API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="synchronous_high_level_api.html">The Synchronous High Level API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="asynchronous_high_level_api.html">The Asynchronous High Level API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">TOPTICA Python Laser SDK</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Getting Started</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/getting_started.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <section id="getting-started">
+<h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
+<section id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
+<p>The TOPTICA Python Laser SDK supports Python 3.5 and later. It depends on <a class="reference external" href="https://pypi.org/project/pyserial/">pyserial</a> for serial and <a class="reference external" href="https://pypi.org/project/ifaddr/">ifaddr</a> for network connections. Both packages are installed automatically when using <code class="docutils literal notranslate"><span class="pre">pip</span></code>.</p>
+</section>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>Install or upgrade to the latest version of the package:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip3 install --upgrade toptica_lasersdk
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Python 3.8 deprecated explicit loop parameter in all public <code class="docutils literal notranslate"><span class="pre">asyncio</span></code> functions. In a future version of this package all currently optional loop parameter will also be removed. Their usage is considered deprecated from this point on.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Python 3.7 changed <code class="docutils literal notranslate"><span class="pre">async</span></code> and <code class="docutils literal notranslate"><span class="pre">await</span></code> to reserved keywords. Since version 2.0 of the SDK every module starting with <code class="docutils literal notranslate"><span class="pre">toptica.lasersdk.async.*</span></code> has therefore been renamed to <code class="docutils literal notranslate"><span class="pre">toptica.lasersdk.asyncio.*</span></code>.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The TOPTICA Python Laser SDK uses <a class="reference external" href="https://docs.python.org/3/library/asyncio.html">asyncio</a> to communicate with
+the hardware.  This also applies to the synchronous API which internally runs an event loop if necessary.</p>
+<p>This creates a problem with current versions of IPython (including Jupyter and Spyder) because
+they already run an event loop and an additional loop can’t be nested.</p>
+<p>This will lead to the following exception: <code class="docutils literal notranslate"><span class="pre">RuntimeError:</span> <span class="pre">This</span> <span class="pre">event</span> <span class="pre">loop</span> <span class="pre">is</span> <span class="pre">already</span> <span class="pre">running</span></code></p>
+<blockquote>
+<div><div class="line-block">
+<div class="line"><strong>Workaround #1:</strong></div>
+<div class="line">Use a development environment like <a class="reference external" href="https://www.jetbrains.com/pycharm/">PyCharm</a> which directly supports <a class="reference external" href="https://docs.python.org/3/library/asyncio.html">asyncio</a>.</div>
+</div>
+<div class="line-block">
+<div class="line"><strong>Workaround #2:</strong></div>
+<div class="line">Use <a class="reference external" href="https://pypi.org/project/nest-asyncio/">nest_asyncio</a> which allows nesting of event loops.</div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">nest_asyncio</span>
+<span class="n">nest_asyncio</span><span class="o">.</span><span class="n">apply</span><span class="p">()</span>
+
+<span class="kn">from</span> <span class="nn">toptica.lasersdk.dlcpro.v2_1_0</span> <span class="kn">import</span> <span class="n">DLCpro</span><span class="p">,</span> <span class="n">NetworkConnection</span>
+
+<span class="k">with</span><span class="p">(</span><span class="n">DLCpro</span><span class="p">(</span><span class="n">NetworkConnection</span><span class="p">(</span><span class="s1">&#39;192.168.55.198&#39;</span><span class="p">)))</span> <span class="k">as</span> <span class="n">dlc</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">dlc</span><span class="o">.</span><span class="n">uptime_txt</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+</section>
+</section>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="getting_connected.html" class="btn btn-neutral float-right" title="Getting Connected" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="index.html" class="btn btn-neutral float-left" title="TOPTICA Python Laser SDK Documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2018-2020, TOPTICA Photonics AG.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

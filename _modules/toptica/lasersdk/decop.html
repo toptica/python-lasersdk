@@ -1,0 +1,946 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>toptica.lasersdk.decop &mdash; TOPTICA Python Laser SDK 2.6.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> TOPTICA Python Laser SDK
+          
+
+          
+            
+            <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.6.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting_connected.html">Getting Connected</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../low_level_api.html">The Low Level API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../synchronous_high_level_api.html">The Synchronous High Level API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../asynchronous_high_level_api.html">The Asynchronous High Level API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">TOPTICA Python Laser SDK</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>toptica.lasersdk.decop</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for toptica.lasersdk.decop</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">IntEnum</span>
+
+<span class="kn">from</span> <span class="nn">base64</span> <span class="kn">import</span> <span class="n">b64encode</span>
+<span class="kn">from</span> <span class="nn">base64</span> <span class="kn">import</span> <span class="n">b64decode</span>
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Tuple</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Type</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span>
+
+<span class="kn">from</span> <span class="nn">xml.etree.ElementTree</span> <span class="kn">import</span> <span class="n">ElementTree</span>
+<span class="kn">from</span> <span class="nn">xml.etree.ElementTree</span> <span class="kn">import</span> <span class="n">Element</span>
+<span class="kn">from</span> <span class="nn">xml.etree.ElementTree</span> <span class="kn">import</span> <span class="n">fromstring</span>
+
+
+<div class="viewcode-block" id="DecopError"><a class="viewcode-back" href="../../../gen/toptica.lasersdk.asyncio.html#toptica.lasersdk.client.DecopError">[docs]</a><span class="k">class</span> <span class="nc">DecopError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A generic DeCoP error.&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="DecopValueError"><a class="viewcode-back" href="../../../gen/toptica.lasersdk.asyncio.html#toptica.lasersdk.client.DecopValueError">[docs]</a><span class="k">class</span> <span class="nc">DecopValueError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A DeCoP value conversion error.&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">expected_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">type</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">expected_type</span><span class="p">:</span>
+            <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s2">&quot;Failed to convert </span><span class="si">{!r}</span><span class="s2"> to type &#39;</span><span class="si">{}</span><span class="s2">&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">expected_type</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s2">&quot;Failed to infer type for </span><span class="si">{!r}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">value</span><span class="p">))</span></div>
+
+
+<span class="n">DecopType</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">]</span>
+<span class="n">DecopMetaType</span> <span class="o">=</span> <span class="n">Type</span><span class="p">[</span><span class="n">DecopType</span><span class="p">]</span>
+
+<span class="n">DecopStreamType</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">]</span>
+<span class="n">DecopStreamMetaType</span> <span class="o">=</span> <span class="n">Type</span><span class="p">[</span><span class="n">DecopStreamType</span><span class="p">]</span>
+
+<span class="n">DecopCallback</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">datetime</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="n">DecopType</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="n">DecopError</span><span class="p">]],</span> <span class="kc">None</span><span class="p">]</span>
+<span class="n">DecopMonitoringLine</span> <span class="o">=</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">datetime</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">DecopError</span><span class="p">]]</span>
+
+
+<div class="viewcode-block" id="UserLevel"><a class="viewcode-back" href="../../../gen/toptica.lasersdk.asyncio.html#toptica.lasersdk.client.UserLevel">[docs]</a><span class="k">class</span> <span class="nc">UserLevel</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A user level of a parameter in a DeCoP system model.&quot;&quot;&quot;</span>
+    <span class="n">INTERNAL</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">SERVICE</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">MAINTENANCE</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">NORMAL</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">READONLY</span> <span class="o">=</span> <span class="mi">4</span></div>
+
+
+<div class="viewcode-block" id="ParamMode"><a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.ParamMode">[docs]</a><span class="k">class</span> <span class="nc">ParamMode</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;An access mode of a parameter in a DeCoP system model.&quot;&quot;&quot;</span>
+    <span class="n">READONLY</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">WRITEONLY</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">READWRITE</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">READSET</span> <span class="o">=</span> <span class="mi">4</span></div>
+
+
+<div class="viewcode-block" id="StreamType"><a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.StreamType">[docs]</a><span class="k">class</span> <span class="nc">StreamType</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A stream type of a command in a DeCoP system model.&quot;&quot;&quot;</span>
+    <span class="n">TEXT</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">BASE64</span> <span class="o">=</span> <span class="mi">2</span></div>
+
+
+<div class="viewcode-block" id="user_level"><a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.user_level">[docs]</a><span class="k">def</span> <span class="nf">user_level</span><span class="p">(</span><span class="n">user_level_str</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">UserLevel</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;Converts a string with a parameter user level to the corresponding type.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        user_level_str (str): The string with the parameter user level.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Optional[UserLevel]: The type of the parameter user level.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">user_level_str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="n">table</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;internal&#39;</span><span class="p">:</span>    <span class="n">UserLevel</span><span class="o">.</span><span class="n">INTERNAL</span><span class="p">,</span>
+             <span class="s1">&#39;service&#39;</span><span class="p">:</span>     <span class="n">UserLevel</span><span class="o">.</span><span class="n">SERVICE</span><span class="p">,</span>
+             <span class="s1">&#39;maintenance&#39;</span><span class="p">:</span> <span class="n">UserLevel</span><span class="o">.</span><span class="n">MAINTENANCE</span><span class="p">,</span>
+             <span class="s1">&#39;normal&#39;</span><span class="p">:</span>      <span class="n">UserLevel</span><span class="o">.</span><span class="n">NORMAL</span><span class="p">,</span>
+             <span class="s1">&#39;readonly&#39;</span><span class="p">:</span>    <span class="n">UserLevel</span><span class="o">.</span><span class="n">READONLY</span><span class="p">}</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">table</span><span class="p">[</span><span class="n">user_level_str</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()]</span>
+    <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="access_mode"><a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.access_mode">[docs]</a><span class="k">def</span> <span class="nf">access_mode</span><span class="p">(</span><span class="n">access_mode_str</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ParamMode</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;Converts a string with a parameter access mode to the corresponding type.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        access_mode_str (str): The string with the parameter access mode.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Optional[ParamMode]: The type of the parameter access mode.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">access_mode_str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="n">table</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;readonly&#39;</span><span class="p">:</span>  <span class="n">ParamMode</span><span class="o">.</span><span class="n">READONLY</span><span class="p">,</span>
+             <span class="s1">&#39;writeonly&#39;</span><span class="p">:</span> <span class="n">ParamMode</span><span class="o">.</span><span class="n">WRITEONLY</span><span class="p">,</span>
+             <span class="s1">&#39;readwrite&#39;</span><span class="p">:</span> <span class="n">ParamMode</span><span class="o">.</span><span class="n">READWRITE</span><span class="p">,</span>
+             <span class="s1">&#39;readset&#39;</span><span class="p">:</span>   <span class="n">ParamMode</span><span class="o">.</span><span class="n">READSET</span><span class="p">}</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">table</span><span class="p">[</span><span class="n">access_mode_str</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()]</span>
+    <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="stream_type"><a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.stream_type">[docs]</a><span class="k">def</span> <span class="nf">stream_type</span><span class="p">(</span><span class="n">stream_type_str</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">StreamType</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;Converts a string with a command stream type to the corresponding type.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        stream_type_str (str): The string with the command stream type.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Optional[StreamType]: The type of the command stream type.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">stream_type_str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="n">table</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;base64&#39;</span><span class="p">:</span> <span class="n">StreamType</span><span class="o">.</span><span class="n">BASE64</span><span class="p">,</span>
+             <span class="s1">&#39;text&#39;</span><span class="p">:</span>   <span class="n">StreamType</span><span class="o">.</span><span class="n">TEXT</span><span class="p">}</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">table</span><span class="p">[</span><span class="n">stream_type_str</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()]</span>
+    <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="encode_value"><a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.encode_value">[docs]</a><span class="k">def</span> <span class="nf">encode_value</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="n">DecopType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Encodes a value to a string.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        value (DecopType): The value of the parameter.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: The encoded value.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;#t&#39;</span> <span class="k">if</span> <span class="n">value</span> <span class="k">else</span> <span class="s1">&#39;#f&#39;</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)):</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;&quot;&#39;</span> <span class="o">+</span> <span class="n">value</span> <span class="o">+</span> <span class="s1">&#39;&quot;&#39;</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;&quot;&#39;</span> <span class="o">+</span> <span class="n">b64encode</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39;&quot;&#39;</span>
+
+    <span class="k">raise</span> <span class="n">DecopError</span><span class="p">(</span><span class="s1">&#39;Invalid type for value: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)))</span></div>
+
+
+<div class="viewcode-block" id="decode_value"><a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.decode_value">[docs]</a><span class="k">def</span> <span class="nf">decode_value</span><span class="p">(</span><span class="n">result</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">expected_type</span><span class="p">:</span> <span class="n">DecopMetaType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DecopType</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Converts a DeCoP parameter string to a Python value.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        result (str): The string returned by the command line.</span>
+<span class="sd">        expected_type (DecopTypeList): The expected type of the result.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        DecopType: The value of the command line result.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        DecopError: If the command line returned an error message</span>
+<span class="sd">        DecopValueError: If the command line result couldn&#39;t be converted to the expected type.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="n">DecopError</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">expected_type</span> <span class="ow">is</span> <span class="nb">int</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">DecopValueError</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">exc</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">expected_type</span> <span class="ow">is</span> <span class="nb">float</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">DecopValueError</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">exc</span>
+
+    <span class="k">if</span> <span class="n">expected_type</span> <span class="ow">is</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">result</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;#t&#39;</span><span class="p">,</span> <span class="s1">&#39;#T&#39;</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="n">result</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;#f&#39;</span><span class="p">,</span> <span class="s1">&#39;#F&#39;</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">raise</span> <span class="n">DecopValueError</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">expected_type</span> <span class="ow">is</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;&quot;&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">result</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;&quot;&#39;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">DecopValueError</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;&quot;&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">expected_type</span> <span class="ow">is</span> <span class="nb">bytes</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;&amp;&#39;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">b64decode</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+        <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;&quot;&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">result</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;&quot;&#39;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">b64decode</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">raise</span> <span class="n">DecopValueError</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">expected_type</span> <span class="ow">is</span> <span class="nb">tuple</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;&#39;(&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">result</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;)&quot;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">))</span>
+        <span class="k">raise</span> <span class="n">DecopValueError</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span>
+
+    <span class="k">raise</span> <span class="n">DecopError</span><span class="p">(</span><span class="s2">&quot;Unexpected type while decoding a DeCoP value: &#39;</span><span class="si">{}</span><span class="s2">&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">expected_type</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="decode_value_inferred"><a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.decode_value_inferred">[docs]</a><span class="k">def</span> <span class="nf">decode_value_inferred</span><span class="p">(</span><span class="n">param_str</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DecopType</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Tries to convert a DeCoP parameter string to a Python type by inferring its data type.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        param_str (str): The string containing the parameter value.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        DecopType: The value of the parameter string.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        DecopError: If the parameter string contains an error message.</span>
+<span class="sd">        DecopValueError: If the data type of the parameter string couldn&#39;t be inferred.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">param_str</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="n">DecopError</span><span class="p">(</span><span class="n">param_str</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">param_str</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;#t&#39;</span><span class="p">,</span> <span class="s1">&#39;#T&#39;</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">if</span> <span class="n">param_str</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;#f&#39;</span><span class="p">,</span> <span class="s1">&#39;#F&#39;</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">if</span> <span class="n">param_str</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;&amp;&#39;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">b64decode</span><span class="p">(</span><span class="n">param_str</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+
+    <span class="k">if</span> <span class="n">param_str</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;&quot;&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">param_str</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;&quot;&#39;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">param_str</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">param_str</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;(&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">param_str</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;)&#39;</span><span class="p">):</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="n">_match_tuple</span><span class="p">(</span><span class="n">param_str</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">DecopValueError</span><span class="p">(</span><span class="n">param_str</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">value</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">param_str</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">param_str</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">DecopValueError</span><span class="p">(</span><span class="n">param_str</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">exc</span></div>
+
+
+<span class="k">def</span> <span class="nf">_match_bool</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]]:</span>
+    <span class="sd">&quot;&quot;&quot;Tries to match a boolean value.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        text (str): The string containing the boolean value.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Tuple[str, Optional[bool]]: A tuple containing the remaining text and boolean value if the</span>
+<span class="sd">                                    match was successful, the original text and None otherwise.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="ow">or</span> <span class="n">text</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;#&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">text</span><span class="p">,</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">text</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">in</span> <span class="s1">&#39;tT&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">text</span><span class="p">[</span><span class="mi">2</span><span class="p">:],</span> <span class="kc">True</span>
+    <span class="k">if</span> <span class="n">text</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">in</span> <span class="s1">&#39;fF&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">text</span><span class="p">[</span><span class="mi">2</span><span class="p">:],</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="n">text</span><span class="p">,</span> <span class="kc">None</span>
+
+
+<span class="k">def</span> <span class="nf">_match_int</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
+    <span class="sd">&quot;&quot;&quot;Tries to match an integer value.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        text (str): The string containing the integer value.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Tuple[str, Optional[int]]: A tuple containing the remaining text and integer value if the</span>
+<span class="sd">                                   match was successful, the original text and None otherwise.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="kc">None</span>
+
+    <span class="c1"># Match sign</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">text</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="s1">&#39;+-&#39;</span> <span class="k">else</span> <span class="mi">0</span>
+
+    <span class="n">has_value</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">text</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">in</span> <span class="s1">&#39;0123456789&#39;</span><span class="p">:</span>
+            <span class="n">has_value</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">elif</span> <span class="n">text</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">in</span> <span class="s1">&#39;() </span><span class="se">\t\v\f\r\n</span><span class="s1">&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">text</span><span class="p">[</span><span class="n">i</span><span class="p">:],</span> <span class="nb">int</span><span class="p">(</span><span class="n">text</span><span class="p">[:</span><span class="n">i</span><span class="p">]))</span> <span class="k">if</span> <span class="n">has_value</span> <span class="k">else</span> <span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">text</span><span class="p">,</span> <span class="kc">None</span>
+
+    <span class="k">return</span> <span class="p">(</span><span class="n">text</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">:],</span> <span class="nb">int</span><span class="p">(</span><span class="n">text</span><span class="p">[:</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]))</span> <span class="k">if</span> <span class="n">has_value</span> <span class="k">else</span> <span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_match_float</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]]:</span>
+    <span class="sd">&quot;&quot;&quot;Tries to match a floating point (real) value.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        text (str): The string containing the floating point value.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Tuple[str, Optional[float]]: A tuple containing the remaining text and floating point value if the</span>
+<span class="sd">                                     match was successful, the original text and None otherwise.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="kc">None</span>
+
+    <span class="c1"># Match sign</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">text</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="s1">&#39;+-&#39;</span> <span class="k">else</span> <span class="mi">0</span>
+
+    <span class="n">has_dot</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">has_value</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">text</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">in</span> <span class="s1">&#39;0123456789&#39;</span><span class="p">:</span>
+            <span class="n">has_value</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">elif</span> <span class="n">text</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">in</span> <span class="s1">&#39;.&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">has_dot</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">text</span><span class="p">,</span> <span class="kc">None</span>
+            <span class="n">has_dot</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">elif</span> <span class="n">text</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">in</span> <span class="s1">&#39;() </span><span class="se">\t\v\f\r\n</span><span class="s1">&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">text</span><span class="p">[</span><span class="n">i</span><span class="p">:],</span> <span class="nb">float</span><span class="p">(</span><span class="n">text</span><span class="p">[:</span><span class="n">i</span><span class="p">]))</span> <span class="k">if</span> <span class="n">has_dot</span> <span class="ow">and</span> <span class="n">has_value</span> <span class="k">else</span> <span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">text</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">in</span> <span class="s1">&#39;eE&#39;</span> <span class="ow">and</span> <span class="n">has_value</span> <span class="ow">and</span> <span class="n">i</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">break</span>  <span class="c1"># Continue by matching exponent</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">text</span><span class="p">,</span> <span class="kc">None</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">text</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">:],</span> <span class="nb">float</span><span class="p">(</span><span class="n">text</span><span class="p">[:</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]))</span> <span class="k">if</span> <span class="n">has_dot</span> <span class="ow">and</span> <span class="n">has_value</span> <span class="k">else</span> <span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+    <span class="c1"># Match &#39;e|E&#39;, match sign</span>
+    <span class="n">i</span> <span class="o">+=</span> <span class="mi">2</span> <span class="k">if</span> <span class="n">text</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="ow">in</span> <span class="s1">&#39;+-&#39;</span> <span class="k">else</span> <span class="mi">1</span>
+
+    <span class="n">has_value</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">text</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">in</span> <span class="s1">&#39;0123456789&#39;</span><span class="p">:</span>
+            <span class="n">has_value</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">elif</span> <span class="n">text</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">in</span> <span class="s1">&#39;() </span><span class="se">\t\v\f\r\n</span><span class="s1">&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">text</span><span class="p">[</span><span class="n">i</span><span class="p">:],</span> <span class="nb">float</span><span class="p">(</span><span class="n">text</span><span class="p">[:</span><span class="n">i</span><span class="p">]))</span> <span class="k">if</span> <span class="n">has_value</span> <span class="k">else</span> <span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">text</span><span class="p">,</span> <span class="kc">None</span>
+
+    <span class="k">return</span> <span class="p">(</span><span class="n">text</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">:],</span> <span class="nb">float</span><span class="p">(</span><span class="n">text</span><span class="p">[:</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]))</span> <span class="k">if</span> <span class="n">has_value</span> <span class="k">else</span> <span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_match_string</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+    <span class="sd">&quot;&quot;&quot;Tries to match a string value.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        text (str): The string containing the string value.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Tuple[str, Optional[str]]: A tuple containing the remaining text and string value if the</span>
+<span class="sd">                                   match was successful, the original text and None otherwise.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="ow">or</span> <span class="n">text</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;&quot;&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">text</span><span class="p">,</span> <span class="kc">None</span>
+
+    <span class="n">is_escaped</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">text</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">:</span>
+            <span class="n">is_escaped</span> <span class="o">=</span> <span class="kc">True</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">is_escaped</span> <span class="k">else</span> <span class="kc">False</span>
+        <span class="k">elif</span> <span class="n">text</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;&quot;&#39;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">is_escaped</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">text</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">:],</span> <span class="n">text</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="n">i</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">is_escaped</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">return</span> <span class="n">text</span><span class="p">,</span> <span class="kc">None</span>
+
+
+<span class="k">def</span> <span class="nf">_match_bytes</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bytes</span><span class="p">]]:</span>
+    <span class="sd">&quot;&quot;&quot;Tries to match a bytes value.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        text (str): The string containing the bytes value.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Tuple[str, Optional[bytes]]: A tuple containing the remaining text and bytes value if the</span>
+<span class="sd">                                     match was successful, the original text and None otherwise.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">text</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;&amp;&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">text</span><span class="p">,</span> <span class="kc">None</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">text</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">in</span> <span class="s1">&#39;() </span><span class="se">\t\v\f\r\n</span><span class="s1">&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">text</span><span class="p">[</span><span class="n">i</span><span class="p">:],</span> <span class="n">b64decode</span><span class="p">(</span><span class="n">text</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="n">i</span><span class="p">])</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">text</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">isalnum</span><span class="p">()</span> <span class="ow">and</span> <span class="n">text</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="s1">&#39;+/=&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">text</span><span class="p">,</span> <span class="kc">None</span>
+
+    <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">b64decode</span><span class="p">(</span><span class="n">text</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+
+
+<span class="k">def</span> <span class="nf">_match_tuple</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">tuple</span><span class="p">]]:</span>
+    <span class="sd">&quot;&quot;&quot;Tries to match a tuple value.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        text (str): The string containing the tuple value.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Tuple[str, Optional[tuple]]: A tuple containing the remaining text and tuple value if the</span>
+<span class="sd">                                     match was successful, the original text and None otherwise.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="ow">or</span> <span class="n">text</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;(&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">text</span><span class="p">,</span> <span class="kc">None</span>
+
+    <span class="n">ls</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># type: List[DecopType]</span>
+    <span class="n">original</span> <span class="o">=</span> <span class="n">text</span><span class="p">[:]</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+    <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># type: Optional[DecopType]</span>
+        <span class="k">if</span> <span class="n">text</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;#&#39;</span><span class="p">:</span>
+            <span class="n">text</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="n">_match_bool</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">text</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;&quot;&#39;</span><span class="p">:</span>
+            <span class="n">text</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="n">_match_string</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">text</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;&amp;&#39;</span><span class="p">:</span>
+            <span class="n">text</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="n">_match_bytes</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">text</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;.&#39;</span><span class="p">:</span>
+            <span class="n">text</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="n">_match_float</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">text</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="s1">&#39;0123456789+-&#39;</span><span class="p">:</span>
+            <span class="n">text</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="n">_match_int</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">text</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="n">_match_float</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">text</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;(&#39;</span><span class="p">:</span>
+            <span class="n">text</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="n">_match_tuple</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">text</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;)&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">text</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">ls</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">original</span><span class="p">,</span> <span class="kc">None</span>
+
+        <span class="n">ls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">lstrip</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">original</span><span class="p">,</span> <span class="kc">None</span>
+
+
+<div class="viewcode-block" id="parse_monitoring_line"><a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.parse_monitoring_line">[docs]</a><span class="k">def</span> <span class="nf">parse_monitoring_line</span><span class="p">(</span><span class="n">line</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DecopMonitoringLine</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Parses a monitoring line message.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        line (str): A monitoring line message.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        DecopMonitoringLine: A tuple containing the timestamp, parameter name and value/exception.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">datetime_fmt</span> <span class="o">=</span> <span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">T%H:%M:%S.</span><span class="si">%f</span><span class="s1">Z&#39;</span>
+
+    <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;(error: &#39;</span><span class="p">):</span>
+        <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\(Error: (.*?) \((.*?) &#39;(.*?)\) (.*?)\)\r?\n&quot;</span><span class="p">,</span> <span class="n">line</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">match</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">ls</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span>
+            <span class="n">timestamp</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">ls</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">datetime_fmt</span><span class="p">)</span>
+            <span class="n">error</span> <span class="o">=</span> <span class="n">DecopError</span><span class="p">(</span><span class="s1">&#39;Error: </span><span class="si">{}</span><span class="s1"> </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ls</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ls</span><span class="p">[</span><span class="mi">3</span><span class="p">]))</span>
+            <span class="k">return</span> <span class="n">timestamp</span><span class="p">,</span> <span class="n">ls</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">error</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\((.*?) &#39;(.*?) (.*?)\)\r?\n&quot;</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">match</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">ls</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span>
+            <span class="n">timestamp</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">ls</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">datetime_fmt</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">timestamp</span><span class="p">,</span> <span class="n">ls</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">ls</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
+    <span class="n">error</span> <span class="o">=</span> <span class="n">DecopError</span><span class="p">(</span><span class="s1">&#39;Invalid monitoring line message: </span><span class="si">{!r}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">line</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">error</span></div>
+
+
+<div class="viewcode-block" id="Parameter"><a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.Parameter">[docs]</a><span class="k">class</span> <span class="nc">Parameter</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;A parameter in a DeCoP system model.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        name (str): The name of the parameter.</span>
+<span class="sd">        typestr (str): The type of the parameter.</span>
+<span class="sd">        mode (ParamMode): The access mode of the parameter.</span>
+<span class="sd">        readlevel(UserLevel): The required user level to read the parameter.</span>
+<span class="sd">        writelevel(UserLevel): The required user level to write the parameter.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">typestr</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">description</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">mode</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ParamMode</span><span class="p">],</span> <span class="n">readlevel</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">UserLevel</span><span class="p">],</span> <span class="n">writelevel</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">UserLevel</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">paramtype</span> <span class="o">=</span> <span class="n">typestr</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="n">description</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span class="n">mode</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">readlevel</span> <span class="o">=</span> <span class="n">readlevel</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">writelevel</span> <span class="o">=</span> <span class="n">writelevel</span></div>
+
+
+<div class="viewcode-block" id="Command"><a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.Command">[docs]</a><span class="k">class</span> <span class="nc">Command</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;A command in the DeCoP system model.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        name(str): The name of the command.</span>
+<span class="sd">        input_type(StreamType): The type of the input stream.</span>
+<span class="sd">        output_type (StreamType): The type of the output stream.</span>
+<span class="sd">        execlevel (UserLevel): The required user level to execute the command.</span>
+<span class="sd">        params (List[Tuple[str, str]]): The list of parameter names and types of the command.</span>
+<span class="sd">        return_type (str): The type of the return value.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">description</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">input_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">StreamType</span><span class="p">],</span> <span class="n">output_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">StreamType</span><span class="p">],</span> <span class="n">execlevel</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">UserLevel</span><span class="p">],</span> <span class="n">params</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]],</span> <span class="n">return_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="n">description</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">input_type</span> <span class="o">=</span> <span class="n">input_type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output_type</span> <span class="o">=</span> <span class="n">output_type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">execlevel</span> <span class="o">=</span> <span class="n">execlevel</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="n">params</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">return_type</span> <span class="o">=</span> <span class="n">return_type</span></div>
+
+
+<div class="viewcode-block" id="Typedef"><a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.Typedef">[docs]</a><span class="k">class</span> <span class="nc">Typedef</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;A typedef in a DeCoP system model.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        name (str): The name of the typedef.</span>
+<span class="sd">        is_atomic (bool): True if the typedef is atomic, False otherwise.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">is_atomic</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">is_atomic</span> <span class="o">=</span> <span class="n">is_atomic</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>  <span class="c1"># type: OrderedDict[str, Parameter]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cmds</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>  <span class="c1"># type: OrderedDict[str, Command]</span></div>
+
+
+<div class="viewcode-block" id="Module"><a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.Module">[docs]</a><span class="k">class</span> <span class="nc">Module</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;A module in a DeCoP system model.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        name (str): The name of the module.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>  <span class="c1"># type: OrderedDict[str, Parameter]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cmds</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>  <span class="c1"># type: OrderedDict[str, Command]</span></div>
+
+
+<div class="viewcode-block" id="SystemModel"><a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.SystemModel">[docs]</a><span class="k">class</span> <span class="nc">SystemModel</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;A DeCoP system model.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">typedefs</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>  <span class="c1"># type: OrderedDict[str, Typedef]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modules</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>  <span class="c1"># type: OrderedDict[str, Module]</span>
+
+<div class="viewcode-block" id="SystemModel.build_from_file"><a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.SystemModel.build_from_file">[docs]</a>    <span class="k">def</span> <span class="nf">build_from_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Loads a DeCoP system model from an XML file.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            filename (str): The name of the XML file with the DeCoP system model.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">xml</span> <span class="o">=</span> <span class="n">ElementTree</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="n">filename</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_build_model</span><span class="p">(</span><span class="n">xml</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SystemModel.build_from_string"><a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.SystemModel.build_from_string">[docs]</a>    <span class="k">def</span> <span class="nf">build_from_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xml_str</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Loads a DeCoP system model form a string.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            xml_str (str): A string containing the XML description of the DeCoP system model.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">xml</span> <span class="o">=</span> <span class="n">ElementTree</span><span class="p">(</span><span class="n">fromstring</span><span class="p">(</span><span class="n">xml_str</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_build_model</span><span class="p">(</span><span class="n">xml</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_build_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xml</span><span class="p">:</span> <span class="n">ElementTree</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Builds the system model from an XML tree.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            xml (ElementTree): The DeCoP system model.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_read_system</span><span class="p">(</span><span class="n">xml</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_read_xtypedefs</span><span class="p">(</span><span class="n">xml</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_read_modules</span><span class="p">(</span><span class="n">xml</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_read_system</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xml</span><span class="p">:</span> <span class="n">ElementTree</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Reads system definition from the DeCoP system model.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            xml (ElementTree): The DeCoP system model.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">system_name</span> <span class="o">=</span> <span class="n">xml</span><span class="o">.</span><span class="n">getroot</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">system_name</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">system_name</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;System node has no name&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">_read_xtypedefs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xml</span><span class="p">:</span> <span class="n">ElementTree</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Reads all typedefs from the DeCoP system model.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            xml (ElementTree): The DeCoP system model.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">xtypedef</span> <span class="ow">in</span> <span class="n">xml</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="s1">&#39;xtypedef&#39;</span><span class="p">):</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">xtypedef</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">name</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;XTypedef node has no name&#39;</span><span class="p">)</span>
+                <span class="k">continue</span>
+
+            <span class="n">is_atomic</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">xtypedef</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;is_atomic&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;true&#39;</span>
+
+            <span class="n">node</span> <span class="o">=</span> <span class="n">Typedef</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">is_atomic</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_read_params</span><span class="p">(</span><span class="n">xtypedef</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_read_cmds</span><span class="p">(</span><span class="n">xtypedef</span><span class="p">,</span> <span class="n">node</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">typedefs</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">node</span>
+
+    <span class="k">def</span> <span class="nf">_read_modules</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xml</span><span class="p">:</span> <span class="n">ElementTree</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Reads all modules from the DeCoP system model.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            xml (ElementTree): The DeCoP system model.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">module</span> <span class="ow">in</span> <span class="n">xml</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="s1">&#39;module&#39;</span><span class="p">):</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">module</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">name</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Module node has no name&#39;</span><span class="p">)</span>
+                <span class="k">continue</span>
+
+            <span class="n">node</span> <span class="o">=</span> <span class="n">Module</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_read_params</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">UserLevel</span><span class="o">.</span><span class="n">NORMAL</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_read_cmds</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">node</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">node</span>
+
+    <span class="k">def</span> <span class="nf">_read_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">:</span> <span class="n">Element</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Module</span><span class="p">,</span> <span class="n">Typedef</span><span class="p">],</span> <span class="n">default_level</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">UserLevel</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Reads all parameters of a DeCoP system model node.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            element (ElementTree): The DeCoP system model node.</span>
+<span class="sd">            node (Node): The node in this system model.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># e.g. &lt;param name=&quot;amplitude&quot; type=&quot;REAL&quot; mode=&quot;readwrite&quot; readlevel=&quot;normal&quot; writelevel=&quot;normal&quot;&gt;</span>
+        <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">element</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="s1">&#39;param&#39;</span><span class="p">):</span>
+            <span class="n">param_name</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">param_name</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Parameter node has no name&#39;</span><span class="p">)</span>
+                <span class="k">continue</span>
+
+            <span class="n">param_type</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;type&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">param_type</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Parameter node has no type: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">param_name</span><span class="p">)</span>
+                <span class="k">continue</span>
+
+            <span class="n">param_mode</span> <span class="o">=</span> <span class="n">access_mode</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;mode&#39;</span><span class="p">))</span>
+
+            <span class="n">readlevel</span> <span class="o">=</span> <span class="n">user_level</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;readlevel&#39;</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">readlevel</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">param_mode</span> <span class="o">!=</span> <span class="n">ParamMode</span><span class="o">.</span><span class="n">WRITEONLY</span><span class="p">:</span>
+                <span class="n">readlevel</span> <span class="o">=</span> <span class="n">default_level</span>
+
+            <span class="n">writelevel</span> <span class="o">=</span> <span class="n">user_level</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;writelevel&#39;</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">writelevel</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">param_mode</span> <span class="o">!=</span> <span class="n">ParamMode</span><span class="o">.</span><span class="n">READONLY</span><span class="p">:</span>
+                <span class="n">writelevel</span> <span class="o">=</span> <span class="n">default_level</span>
+
+            <span class="n">param_description</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+            <span class="k">for</span> <span class="n">desc</span> <span class="ow">in</span> <span class="n">param</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="s1">&#39;description&#39;</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">desc</span><span class="o">.</span><span class="n">text</span><span class="p">:</span>
+                    <span class="n">param_description</span> <span class="o">+=</span> <span class="n">desc</span><span class="o">.</span><span class="n">text</span>
+
+            <span class="n">node</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="n">param_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">Parameter</span><span class="p">(</span><span class="n">param_name</span><span class="p">,</span> <span class="n">param_type</span><span class="p">,</span> <span class="n">param_description</span><span class="p">,</span> <span class="n">param_mode</span><span class="p">,</span> <span class="n">readlevel</span><span class="p">,</span> <span class="n">writelevel</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_read_cmds</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">:</span> <span class="n">Element</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Module</span><span class="p">,</span> <span class="n">Typedef</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Reads all commands of a DeCoP system model node.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            element (ElementTree): The DeCoP system model node.</span>
+<span class="sd">            node (Node): The node in this system model.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">cmd</span> <span class="ow">in</span> <span class="n">element</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="s1">&#39;cmd&#39;</span><span class="p">):</span>
+            <span class="n">cmd_name</span> <span class="o">=</span> <span class="n">cmd</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">cmd_name</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Command node has no name&#39;</span><span class="p">)</span>
+                <span class="k">continue</span>
+
+            <span class="n">cmd_in</span> <span class="o">=</span> <span class="n">stream_type</span><span class="p">(</span><span class="n">cmd</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;input&#39;</span><span class="p">))</span>
+            <span class="n">cmd_out</span> <span class="o">=</span> <span class="n">stream_type</span><span class="p">(</span><span class="n">cmd</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;output&#39;</span><span class="p">))</span>
+            <span class="n">execlevel</span> <span class="o">=</span> <span class="n">user_level</span><span class="p">(</span><span class="n">cmd</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;execlevel&#39;</span><span class="p">))</span>
+
+            <span class="n">ret_type</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">for</span> <span class="n">ret</span> <span class="ow">in</span> <span class="n">cmd</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="s1">&#39;ret&#39;</span><span class="p">):</span>
+                <span class="n">ret_type</span> <span class="o">=</span> <span class="n">ret</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;type&#39;</span><span class="p">)</span>
+
+            <span class="n">desc</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">cmd</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="s1">&#39;description&#39;</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">text</span><span class="p">:</span>
+                    <span class="n">desc</span> <span class="o">+=</span> <span class="n">item</span><span class="o">.</span><span class="n">text</span>
+
+            <span class="n">params</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">cmd</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="s1">&#39;arg&#39;</span><span class="p">):</span>
+                <span class="n">arg_name</span> <span class="o">=</span> <span class="n">arg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)</span>
+                <span class="n">arg_type</span> <span class="o">=</span> <span class="n">arg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;type&#39;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">arg_name</span> <span class="ow">and</span> <span class="n">arg_type</span><span class="p">:</span>
+                    <span class="n">params</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">arg_name</span><span class="p">,</span> <span class="n">arg_type</span><span class="p">))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Command parameter is invalid: name = &#39;</span><span class="si">%s</span><span class="s2">&#39;, type = &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span><span class="p">,</span> <span class="n">arg_name</span><span class="p">,</span> <span class="n">arg_type</span><span class="p">)</span>
+
+            <span class="n">node</span><span class="o">.</span><span class="n">cmds</span><span class="p">[</span><span class="n">cmd_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">Command</span><span class="p">(</span><span class="n">cmd_name</span><span class="p">,</span> <span class="n">desc</span><span class="p">,</span> <span class="n">cmd_in</span><span class="p">,</span> <span class="n">cmd_out</span><span class="p">,</span> <span class="n">execlevel</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">ret_type</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2018-2020, TOPTICA Photonics AG.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

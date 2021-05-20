@@ -1,0 +1,39 @@
+toptica.lasersdk package
+========================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   toptica.lasersdk.asyncio
+   toptica.lasersdk.dlcpro
+   toptica.lasersdk.utils
+
+Submodules
+----------
+
+toptica.lasersdk.client module
+------------------------------
+
+.. automodule:: toptica.lasersdk.client
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+toptica.lasersdk.decop module
+-----------------------------
+
+.. automodule:: toptica.lasersdk.decop
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: toptica.lasersdk
+   :members:
+   :undoc-members:
+   :show-inheritance:
