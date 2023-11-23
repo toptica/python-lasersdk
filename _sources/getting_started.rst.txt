@@ -1,0 +1,18 @@
+Getting Started
+===============
+
+Prerequisites
+-------------
+
+The **TOPTICA Python Laser SDK** supports Python 3.6 and later. It depends on `pyserial <https://pypi.org/project/pyserial/>`_ for serial and `ifaddr <https://pypi.org/project/ifaddr/>`_ for network connections. Both packages are installed automatically when using ``pip``.
+
+
+Installation
+------------
+
+Install or upgrade to the latest version of the package::
+
+    $ pip install --upgrade toptica_lasersdk
+
+.. warning::
+   This document describes Version 3 of the SDK which introduced some backward incompatible changes compared to previous versions. Please refer to the chapter :ref:`upgrade-to-version-3` for further information. If you need any further assistance, please open a ticket on `GitHub <https://github.com/toptica/python-lasersdk/issues>`_.

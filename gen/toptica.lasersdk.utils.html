@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>toptica.lasersdk.utils package &mdash; TOPTICA Python Laser SDK 3.1.2 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=4e920bdf"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            TOPTICA Python Laser SDK
+              <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                3.1.2
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_connected.html">Getting Connected</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../upgrade_to_v3.html">Upgrade to Version 3.x</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../low_level_api.html">The Low Level API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../synchronous_high_level_api.html">The Synchronous High Level API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../asynchronous_high_level_api.html">The Asynchronous High Level API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">TOPTICA Python Laser SDK</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">toptica.lasersdk.utils package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/gen/toptica.lasersdk.utils.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="toptica-lasersdk-utils-package">
+<h1>toptica.lasersdk.utils package<a class="headerlink" href="#toptica-lasersdk-utils-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-toptica.lasersdk.utils.dlcpro">
+<span id="toptica-lasersdk-utils-dlcpro-module"></span><h2>toptica.lasersdk.utils.dlcpro module<a class="headerlink" href="#module-toptica.lasersdk.utils.dlcpro" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.DataBlock">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">toptica.lasersdk.utils.dlcpro.</span></span><span class="sig-name descname"><span class="pre">DataBlock</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">payload</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.DataBlock" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.DataBlock.id">
+<span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.DataBlock.id" title="Link to this definition"></a></dt>
+<dd><p>Alias for field number 0</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.DataBlock.payload">
+<span class="sig-name descname"><span class="pre">payload</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">memoryview</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.DataBlock.payload" title="Link to this definition"></a></dt>
+<dd><p>Alias for field number 1</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.DataFormatError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">toptica.lasersdk.utils.dlcpro.</span></span><span class="sig-name descname"><span class="pre">DataFormatError</span></span><a class="reference internal" href="../_modules/toptica/lasersdk/utils/dlcpro.html#DataFormatError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.DataFormatError" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ValueError</span></code></p>
+<p>Exception raised for format errors in binary data.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">toptica.lasersdk.utils.dlcpro.</span></span><span class="sig-name descname"><span class="pre">SignalChannel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/toptica/lasersdk/utils/dlcpro.html#SignalChannel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">IntEnum</span></code></p>
+<p>An enum of the IDs of a DLC pro signal channel.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.AMP_CC_ANALOG_IN">
+<span class="sig-name descname"><span class="pre">AMP_CC_ANALOG_IN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">60</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.AMP_CC_ANALOG_IN" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.AMP_CURRENT_ACT">
+<span class="sig-name descname"><span class="pre">AMP_CURRENT_ACT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">64</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.AMP_CURRENT_ACT" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.AMP_CURRENT_SET">
+<span class="sig-name descname"><span class="pre">AMP_CURRENT_SET</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">63</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.AMP_CURRENT_SET" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.AMP_POWER">
+<span class="sig-name descname"><span class="pre">AMP_POWER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">62</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.AMP_POWER" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.AMP_SEED_POWER">
+<span class="sig-name descname"><span class="pre">AMP_SEED_POWER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">61</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.AMP_SEED_POWER" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.CC_ANALOG_IN1">
+<span class="sig-name descname"><span class="pre">CC_ANALOG_IN1</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">52</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.CC_ANALOG_IN1" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.CC_ANALOG_IN2">
+<span class="sig-name descname"><span class="pre">CC_ANALOG_IN2</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">53</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.CC_ANALOG_IN2" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.CTL_ERROR_SIGNAL">
+<span class="sig-name descname"><span class="pre">CTL_ERROR_SIGNAL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">73</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.CTL_ERROR_SIGNAL" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.CTL_INTENSITY">
+<span class="sig-name descname"><span class="pre">CTL_INTENSITY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">75</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.CTL_INTENSITY" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.CTL_MODE_CONTROL">
+<span class="sig-name descname"><span class="pre">CTL_MODE_CONTROL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">72</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.CTL_MODE_CONTROL" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.CTL_MOTOR_POSITION">
+<span class="sig-name descname"><span class="pre">CTL_MOTOR_POSITION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">71</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.CTL_MOTOR_POSITION" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.CTL_NORMALIZE_SIGNAL">
+<span class="sig-name descname"><span class="pre">CTL_NORMALIZE_SIGNAL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">74</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.CTL_NORMALIZE_SIGNAL" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.CTL_PHOTODIODE">
+<span class="sig-name descname"><span class="pre">CTL_PHOTODIODE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">69</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.CTL_PHOTODIODE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.CTL_POWER">
+<span class="sig-name descname"><span class="pre">CTL_POWER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">70</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.CTL_POWER" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.CTL_TONIC_I">
+<span class="sig-name descname"><span class="pre">CTL_TONIC_I</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">77</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.CTL_TONIC_I" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.CTL_TONIC_Q">
+<span class="sig-name descname"><span class="pre">CTL_TONIC_Q</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">76</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.CTL_TONIC_Q" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.CTL_WAVELENGTH_ACT">
+<span class="sig-name descname"><span class="pre">CTL_WAVELENGTH_ACT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">79</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.CTL_WAVELENGTH_ACT" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.CTL_WAVELENGTH_SET">
+<span class="sig-name descname"><span class="pre">CTL_WAVELENGTH_SET</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">78</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.CTL_WAVELENGTH_SET" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.DEBUG">
+<span class="sig-name descname"><span class="pre">DEBUG</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">-4</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.DEBUG" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.DL_CURRENT">
+<span class="sig-name descname"><span class="pre">DL_CURRENT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">51</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.DL_CURRENT" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.DL_EOM_VOLTAGE">
+<span class="sig-name descname"><span class="pre">DL_EOM_VOLTAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">58</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.DL_EOM_VOLTAGE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.DL_PHOTODIODE">
+<span class="sig-name descname"><span class="pre">DL_PHOTODIODE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">54</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.DL_PHOTODIODE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.DL_PIEZO_VOLTAGE">
+<span class="sig-name descname"><span class="pre">DL_PIEZO_VOLTAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">50</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.DL_PIEZO_VOLTAGE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.DL_TEMP_ACT">
+<span class="sig-name descname"><span class="pre">DL_TEMP_ACT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">57</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.DL_TEMP_ACT" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.DL_TEMP_SET">
+<span class="sig-name descname"><span class="pre">DL_TEMP_SET</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">56</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.DL_TEMP_SET" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.EXTERNAL_POWER">
+<span class="sig-name descname"><span class="pre">EXTERNAL_POWER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">55</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.EXTERNAL_POWER" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.FAST_IN3">
+<span class="sig-name descname"><span class="pre">FAST_IN3</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.FAST_IN3" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.FAST_IN3B">
+<span class="sig-name descname"><span class="pre">FAST_IN3B</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.FAST_IN3B" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.FAST_IN4">
+<span class="sig-name descname"><span class="pre">FAST_IN4</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.FAST_IN4" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.FAST_IN4B">
+<span class="sig-name descname"><span class="pre">FAST_IN4B</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.FAST_IN4B" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.FHG_CAVITY_ERROR_SIGNAL">
+<span class="sig-name descname"><span class="pre">FHG_CAVITY_ERROR_SIGNAL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">110</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.FHG_CAVITY_ERROR_SIGNAL" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.FHG_CAVITY_PIEZO_VOLTAGE_FAST">
+<span class="sig-name descname"><span class="pre">FHG_CAVITY_PIEZO_VOLTAGE_FAST</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">121</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.FHG_CAVITY_PIEZO_VOLTAGE_FAST" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.FHG_CAVITY_PIEZO_VOLTAGE_SLOW">
+<span class="sig-name descname"><span class="pre">FHG_CAVITY_PIEZO_VOLTAGE_SLOW</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">120</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.FHG_CAVITY_PIEZO_VOLTAGE_SLOW" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.FHG_CAVITY_REJECTION_SIGNAL">
+<span class="sig-name descname"><span class="pre">FHG_CAVITY_REJECTION_SIGNAL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">111</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.FHG_CAVITY_REJECTION_SIGNAL" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.FHG_INTRA_CAVITY_SIGNAL">
+<span class="sig-name descname"><span class="pre">FHG_INTRA_CAVITY_SIGNAL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">112</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.FHG_INTRA_CAVITY_SIGNAL" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.FHG_POWER">
+<span class="sig-name descname"><span class="pre">FHG_POWER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">113</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.FHG_POWER" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.FINE_IN1">
+<span class="sig-name descname"><span class="pre">FINE_IN1</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.FINE_IN1" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.FINE_IN2">
+<span class="sig-name descname"><span class="pre">FINE_IN2</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.FINE_IN2" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.FREQUENCY">
+<span class="sig-name descname"><span class="pre">FREQUENCY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">-1</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.FREQUENCY" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.LOCKIN_OUTPUT">
+<span class="sig-name descname"><span class="pre">LOCKIN_OUTPUT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">30</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.LOCKIN_OUTPUT" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.LOCK_INPUT_ALIAS">
+<span class="sig-name descname"><span class="pre">LOCK_INPUT_ALIAS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">100</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.LOCK_INPUT_ALIAS" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.NLO_AMP_POWER">
+<span class="sig-name descname"><span class="pre">NLO_AMP_POWER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">84</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.NLO_AMP_POWER" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.NLO_FIBER_POWER">
+<span class="sig-name descname"><span class="pre">NLO_FIBER_POWER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">86</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.NLO_FIBER_POWER" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.NLO_SEED_POWER">
+<span class="sig-name descname"><span class="pre">NLO_SEED_POWER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">85</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.NLO_SEED_POWER" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.NONE">
+<span class="sig-name descname"><span class="pre">NONE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">-3</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.NONE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.OPO_CAVITY_PIEZO_VOLTAGE_FAST">
+<span class="sig-name descname"><span class="pre">OPO_CAVITY_PIEZO_VOLTAGE_FAST</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">151</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.OPO_CAVITY_PIEZO_VOLTAGE_FAST" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.OPO_CAVITY_PIEZO_VOLTAGE_SLOW">
+<span class="sig-name descname"><span class="pre">OPO_CAVITY_PIEZO_VOLTAGE_SLOW</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">150</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.OPO_CAVITY_PIEZO_VOLTAGE_SLOW" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.OPO_DEPLETED_PUMP_POWER">
+<span class="sig-name descname"><span class="pre">OPO_DEPLETED_PUMP_POWER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">145</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.OPO_DEPLETED_PUMP_POWER" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.OPO_IDLER_POWER">
+<span class="sig-name descname"><span class="pre">OPO_IDLER_POWER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">147</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.OPO_IDLER_POWER" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.OPO_PUMP_POWER">
+<span class="sig-name descname"><span class="pre">OPO_PUMP_POWER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">144</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.OPO_PUMP_POWER" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.OPO_SIGNAL_POWER">
+<span class="sig-name descname"><span class="pre">OPO_SIGNAL_POWER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">146</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.OPO_SIGNAL_POWER" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.OUTPUT_A">
+<span class="sig-name descname"><span class="pre">OUTPUT_A</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">20</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.OUTPUT_A" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.OUTPUT_B">
+<span class="sig-name descname"><span class="pre">OUTPUT_B</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">21</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.OUTPUT_B" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.PDH1_ERROR1">
+<span class="sig-name descname"><span class="pre">PDH1_ERROR1</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">40</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.PDH1_ERROR1" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.PDH1_ERROR2">
+<span class="sig-name descname"><span class="pre">PDH1_ERROR2</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">42</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.PDH1_ERROR2" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.PDH1_IN1">
+<span class="sig-name descname"><span class="pre">PDH1_IN1</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">41</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.PDH1_IN1" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.PDH1_IN2">
+<span class="sig-name descname"><span class="pre">PDH1_IN2</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">43</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.PDH1_IN2" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.PDH2_ERROR1">
+<span class="sig-name descname"><span class="pre">PDH2_ERROR1</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">44</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.PDH2_ERROR1" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.PDH2_ERROR2">
+<span class="sig-name descname"><span class="pre">PDH2_ERROR2</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">46</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.PDH2_ERROR2" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.PDH2_IN1">
+<span class="sig-name descname"><span class="pre">PDH2_IN1</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">45</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.PDH2_IN1" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.PDH2_IN2">
+<span class="sig-name descname"><span class="pre">PDH2_IN2</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">47</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.PDH2_IN2" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.PID1_OUTPUT">
+<span class="sig-name descname"><span class="pre">PID1_OUTPUT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">31</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.PID1_OUTPUT" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.PID2_OUTPUT">
+<span class="sig-name descname"><span class="pre">PID2_OUTPUT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">32</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.PID2_OUTPUT" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.POWERLOCK_INPUT_ALIAS">
+<span class="sig-name descname"><span class="pre">POWERLOCK_INPUT_ALIAS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">102</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.POWERLOCK_INPUT_ALIAS" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.SCAN_AUX_OUTPUT">
+<span class="sig-name descname"><span class="pre">SCAN_AUX_OUTPUT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">35</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.SCAN_AUX_OUTPUT" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.SCAN_AUX_OUTPUT_ALIAS">
+<span class="sig-name descname"><span class="pre">SCAN_AUX_OUTPUT_ALIAS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">103</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.SCAN_AUX_OUTPUT_ALIAS" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.SCAN_OUTPUT">
+<span class="sig-name descname"><span class="pre">SCAN_OUTPUT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">34</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.SCAN_OUTPUT" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.SCAN_OUTPUT_ALIAS">
+<span class="sig-name descname"><span class="pre">SCAN_OUTPUT_ALIAS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">101</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.SCAN_OUTPUT_ALIAS" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.SHG_CAVITY_ERROR_SIGNAL">
+<span class="sig-name descname"><span class="pre">SHG_CAVITY_ERROR_SIGNAL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">80</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.SHG_CAVITY_ERROR_SIGNAL" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.SHG_CAVITY_PIEZO_VOLTAGE_FAST">
+<span class="sig-name descname"><span class="pre">SHG_CAVITY_PIEZO_VOLTAGE_FAST</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">91</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.SHG_CAVITY_PIEZO_VOLTAGE_FAST" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.SHG_CAVITY_PIEZO_VOLTAGE_SLOW">
+<span class="sig-name descname"><span class="pre">SHG_CAVITY_PIEZO_VOLTAGE_SLOW</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">90</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.SHG_CAVITY_PIEZO_VOLTAGE_SLOW" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.SHG_CAVITY_REJECTION_SIGNAL">
+<span class="sig-name descname"><span class="pre">SHG_CAVITY_REJECTION_SIGNAL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">81</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.SHG_CAVITY_REJECTION_SIGNAL" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.SHG_INPUT_POWER">
+<span class="sig-name descname"><span class="pre">SHG_INPUT_POWER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">87</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.SHG_INPUT_POWER" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.SHG_INTRA_CAVITY_SIGNAL">
+<span class="sig-name descname"><span class="pre">SHG_INTRA_CAVITY_SIGNAL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">82</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.SHG_INTRA_CAVITY_SIGNAL" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.SHG_POWER">
+<span class="sig-name descname"><span class="pre">SHG_POWER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">83</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.SHG_POWER" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.TIME">
+<span class="sig-name descname"><span class="pre">TIME</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">-2</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.TIME" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.SignalChannel.UV_SHG_POWERSTAB_SETPOINT">
+<span class="sig-name descname"><span class="pre">UV_SHG_POWERSTAB_SETPOINT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">130</span></em><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.SignalChannel.UV_SHG_POWERSTAB_SETPOINT" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.extract_float_arrays">
+<span class="sig-prename descclassname"><span class="pre">toptica.lasersdk.utils.dlcpro.</span></span><span class="sig-name descname"><span class="pre">extract_float_arrays</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">blockids</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">array</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/toptica/lasersdk/utils/dlcpro.html#extract_float_arrays"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.extract_float_arrays" title="Link to this definition"></a></dt>
+<dd><p>Extracts float arrays from raw scope, background trace, and recorder
+zoom binary data (block ids a, A, b, B, x, y, Y in the DLC pro ‘Scope,
+Lock, and Recorder Binary Data’ format).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>blockids</strong> – String of requested block id letters. Block ids not</p></li>
+<li><p><strong>ignored.</strong> (<em>available in the input data</em><em> or </em><em>in the above list are</em>) – </p></li>
+<li><p><strong>data</strong> – Input byte sequence.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary with found block ids as keys and arrays of floats
+(typecode ‘f’) as values.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="#toptica.lasersdk.utils.dlcpro.DataFormatError" title="toptica.lasersdk.utils.dlcpro.DataFormatError"><strong>DataFormatError</strong></a> – If the contents of <cite>data</cite> are not conform to the</p></li>
+<li><p><strong>'Scope</strong><strong>, </strong><strong>Lock</strong><strong>, </strong><strong>and Recorder Binary Data' format.</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.extract_lock_points">
+<span class="sig-prename descclassname"><span class="pre">toptica.lasersdk.utils.dlcpro.</span></span><span class="sig-name descname"><span class="pre">extract_lock_points</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">blockids</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Iterable</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/toptica/lasersdk/utils/dlcpro.html#extract_lock_points"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.extract_lock_points" title="Link to this definition"></a></dt>
+<dd><p>Extracts lock points from raw lock point data (block ids l, c, t in the
+DLC pro ‘Scope, Lock, and Recorder Binary Data’ format).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>blockids</strong> – String of requested block id letters. Block ids not</p></li>
+<li><p><strong>ignored.</strong> (<em>available in the input data</em><em> or </em><em>in the above list are</em>) – </p></li>
+<li><p><strong>data</strong> – Input byte sequence.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary with found block ids as keys with nested dicts as
+values. The nested dicts contain the keys x, y, t and lists of the
+respective field contents as values (float for keys x,y, str for key t).</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="#toptica.lasersdk.utils.dlcpro.DataFormatError" title="toptica.lasersdk.utils.dlcpro.DataFormatError"><strong>DataFormatError</strong></a> – If the contents of <cite>data</cite> are not conform to the</p></li>
+<li><p><strong>'Scope</strong><strong>, </strong><strong>Lock</strong><strong>, </strong><strong>and Recorder Binary Data' format.</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="toptica.lasersdk.utils.dlcpro.extract_lock_state">
+<span class="sig-prename descclassname"><span class="pre">toptica.lasersdk.utils.dlcpro.</span></span><span class="sig-name descname"><span class="pre">extract_lock_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/toptica/lasersdk/utils/dlcpro.html#extract_lock_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#toptica.lasersdk.utils.dlcpro.extract_lock_state" title="Link to this definition"></a></dt>
+<dd><p>Extracts the state of the locking module from raw lock point data (block
+id s in the DLC pro ‘Scope, Lock, and Recorder Binary Data’ format).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> – Input byte sequence.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Lock module’s state as integer if available, otherwise None.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="#toptica.lasersdk.utils.dlcpro.DataFormatError" title="toptica.lasersdk.utils.dlcpro.DataFormatError"><strong>DataFormatError</strong></a> – If the contents of <cite>data</cite> are not conform to the</p></li>
+<li><p><strong>'Scope</strong><strong>, </strong><strong>Lock</strong><strong>, </strong><strong>and Recorder Binary Data' format.</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-toptica.lasersdk.utils">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-toptica.lasersdk.utils" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2018-2020, TOPTICA Photonics AG.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

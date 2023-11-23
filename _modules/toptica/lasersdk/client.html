@@ -1,0 +1,1775 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>toptica.lasersdk.client &mdash; TOPTICA Python Laser SDK 3.1.2 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=4e920bdf"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            TOPTICA Python Laser SDK
+              <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                3.1.2
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting_connected.html">Getting Connected</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../upgrade_to_v3.html">Upgrade to Version 3.x</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../low_level_api.html">The Low Level API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../synchronous_high_level_api.html">The Synchronous High Level API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../asynchronous_high_level_api.html">The Asynchronous High Level API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">TOPTICA Python Laser SDK</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">toptica.lasersdk.client</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for toptica.lasersdk.client</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+
+<span class="kn">from</span> <span class="nn">asyncio</span> <span class="kn">import</span> <span class="n">AbstractEventLoop</span>
+<span class="kn">from</span> <span class="nn">concurrent.futures</span> <span class="kn">import</span> <span class="n">Future</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="kn">from</span> <span class="nn">queue</span> <span class="kn">import</span> <span class="n">Queue</span>
+<span class="kn">from</span> <span class="nn">queue</span> <span class="kn">import</span> <span class="n">Empty</span>
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">cast</span><span class="p">,</span> <span class="n">Coroutine</span><span class="p">,</span> <span class="n">Any</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span>
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Tuple</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span>
+
+<span class="kn">import</span> <span class="nn">toptica.lasersdk.asyncio.client</span> <span class="k">as</span> <span class="nn">async_client</span>
+
+<span class="kn">from</span> <span class="nn">.decop</span> <span class="kn">import</span> <span class="n">UserLevel</span>
+
+<span class="kn">from</span> <span class="nn">.decop</span> <span class="kn">import</span> <span class="n">DecopError</span>
+<span class="kn">from</span> <span class="nn">.decop</span> <span class="kn">import</span> <span class="n">DecopMetaType</span>
+<span class="kn">from</span> <span class="nn">.decop</span> <span class="kn">import</span> <span class="n">DecopStreamMetaType</span>
+<span class="kn">from</span> <span class="nn">.decop</span> <span class="kn">import</span> <span class="n">DecopStreamType</span>
+<span class="kn">from</span> <span class="nn">.decop</span> <span class="kn">import</span> <span class="n">DecopType</span>
+<span class="kn">from</span> <span class="nn">.decop</span> <span class="kn">import</span> <span class="n">DecopValueError</span>
+<span class="kn">from</span> <span class="nn">.decop</span> <span class="kn">import</span> <span class="n">SubscriptionValue</span>
+<span class="kn">from</span> <span class="nn">.decop</span> <span class="kn">import</span> <span class="n">Timestamp</span>
+
+<span class="kn">from</span> <span class="nn">.asyncio.connection</span> <span class="kn">import</span> <span class="n">Connection</span>
+<span class="kn">from</span> <span class="nn">.asyncio.connection</span> <span class="kn">import</span> <span class="n">NetworkConnection</span>
+<span class="kn">from</span> <span class="nn">.asyncio.connection</span> <span class="kn">import</span> <span class="n">SerialConnection</span>
+
+<span class="kn">from</span> <span class="nn">.asyncio.connection</span> <span class="kn">import</span> <span class="n">DeviceNotFoundError</span>
+<span class="kn">from</span> <span class="nn">.asyncio.connection</span> <span class="kn">import</span> <span class="n">UnavailableError</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Client&#39;</span><span class="p">,</span> <span class="s1">&#39;Connection&#39;</span><span class="p">,</span> <span class="s1">&#39;UserLevel&#39;</span><span class="p">,</span> <span class="s1">&#39;DecopType&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;NetworkConnection&#39;</span><span class="p">,</span> <span class="s1">&#39;SerialConnection&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;DecopError&#39;</span><span class="p">,</span> <span class="s1">&#39;DecopValueError&#39;</span><span class="p">,</span> <span class="s1">&#39;DeviceNotFoundError&#39;</span><span class="p">,</span> <span class="s1">&#39;DeviceTimeoutError&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;DecopBinary&#39;</span><span class="p">,</span> <span class="s1">&#39;MutableDecopBinary&#39;</span><span class="p">,</span> <span class="s1">&#39;SettableDecopBinary&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;DecopBoolean&#39;</span><span class="p">,</span> <span class="s1">&#39;MutableDecopBoolean&#39;</span><span class="p">,</span> <span class="s1">&#39;SettableDecopBoolean&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;DecopInteger&#39;</span><span class="p">,</span> <span class="s1">&#39;MutableDecopInteger&#39;</span><span class="p">,</span> <span class="s1">&#39;SettableDecopInteger&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;DecopReal&#39;</span><span class="p">,</span> <span class="s1">&#39;MutableDecopReal&#39;</span><span class="p">,</span> <span class="s1">&#39;SettableDecopReal&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;DecopString&#39;</span><span class="p">,</span> <span class="s1">&#39;MutableDecopString&#39;</span><span class="p">,</span> <span class="s1">&#39;SettableDecopString&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;Subscription&#39;</span><span class="p">,</span> <span class="s1">&#39;Timestamp&#39;</span><span class="p">,</span> <span class="s1">&#39;SubscriptionValue&#39;</span><span class="p">,</span> <span class="s1">&#39;DecopCallback&#39;</span><span class="p">]</span>
+
+<span class="n">DecopCallback</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[[</span><span class="s1">&#39;Subscription&#39;</span><span class="p">,</span> <span class="n">Timestamp</span><span class="p">,</span> <span class="n">SubscriptionValue</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="DeviceTimeoutError">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.DeviceTimeoutError">[docs]</a>
+<span class="k">class</span> <span class="nc">DeviceTimeoutError</span><span class="p">(</span><span class="n">DecopError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;An exception that is raised when connecting to a device has failed.&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="Client">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.Client">[docs]</a>
+<span class="k">class</span> <span class="nc">Client</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A client for devices that support the Device Control Protocol (DeCoP).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        connection (Connection):</span>
+<span class="sd">            A connection that is used to communicate with the device.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connection</span><span class="p">:</span> <span class="n">Connection</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span> <span class="o">=</span> <span class="n">connection</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_event_loop_thread</span><span class="p">,</span> <span class="n">daemon</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_init_barrier</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Barrier</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_async_client</span> <span class="o">=</span> <span class="n">async_client</span><span class="o">.</span><span class="n">Client</span><span class="p">(</span><span class="n">connection</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_loop</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">AbstractEventLoop</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_is_running</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_async_subscriptions</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">async_client</span><span class="o">.</span><span class="n">Subscription</span><span class="p">,</span> <span class="n">Future</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_subscriptions</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="n">DecopMetaType</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="n">Subscription</span><span class="p">]]]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_monitoring_line_queue</span><span class="p">:</span> <span class="n">Queue</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">Timestamp</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="n">SubscriptionValue</span><span class="p">]]</span> <span class="o">=</span> <span class="n">Queue</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;Client&#39;</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">open</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="fm">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<div class="viewcode-block" id="Client.open">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.Client.open">[docs]</a>
+    <span class="k">def</span> <span class="nf">open</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Opens a connection to the device.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            DeviceNotFoundError: If opening the connection to the device has failed.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_open</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="c1"># Create a barrier for this and the event loop thread to wait on</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_init_barrier</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Barrier</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="c1"># Start the event loop thread and wait for its initialization</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_event_loop_thread</span><span class="p">,</span> <span class="n">daemon</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_init_barrier</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+
+        <span class="c1"># Open and wait for the asynchronous client</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loop</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">fut</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">run_coroutine_threadsafe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_async_client</span><span class="o">.</span><span class="n">open</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loop</span><span class="p">)</span>
+                <span class="n">fut</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">BaseException</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="k">raise</span> <span class="n">error</span></div>
+
+
+<div class="viewcode-block" id="Client.close">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.Client.close">[docs]</a>
+    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Closes the connection to the device.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            DeviceTimeoutError: If the operation did not complete in time.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_open</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="n">subscriptions</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Subscription</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_subscriptions</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">subscriptions</span> <span class="o">+=</span> <span class="n">value</span>
+
+        <span class="k">for</span> <span class="n">subscription</span> <span class="ow">in</span> <span class="n">subscriptions</span><span class="p">:</span>
+            <span class="n">subscription</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># Close the asynchronous client</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_async_run</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_async_client</span><span class="o">.</span><span class="n">close</span><span class="p">())</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="c1"># Wrap the stop() in a coroutine</span>
+            <span class="k">async</span> <span class="k">def</span> <span class="nf">_async_stop</span><span class="p">():</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_loop</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+            <span class="c1"># Post a coroutine that will stop the event loop</span>
+            <span class="n">asyncio</span><span class="o">.</span><span class="n">run_coroutine_threadsafe</span><span class="p">(</span><span class="n">_async_stop</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loop</span><span class="p">)</span>
+
+            <span class="c1"># Wait for the event loop thread to exit</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_thread</span><span class="o">.</span><span class="n">join</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="Client.change_ul">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.Client.change_ul">[docs]</a>
+    <span class="k">def</span> <span class="nf">change_ul</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ul</span><span class="p">:</span> <span class="n">UserLevel</span><span class="p">,</span> <span class="n">password</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">UserLevel</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Changes the user level of the client connection.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            ul (UserLevel): The requested user level.</span>
+<span class="sd">            password (Optional[str]): The password for the requested user level.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            UserLevel: The new user level or the previous one if the password was incorrect.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            UnavailableError: If the connection is closed.</span>
+<span class="sd">            DeviceTimeoutError: If the operation did not complete in time.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_open</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">UnavailableError</span><span class="p">(</span><span class="s1">&#39;The client connection to the device is closed.&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">cast</span><span class="p">(</span><span class="n">UserLevel</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_async_run</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_async_client</span><span class="o">.</span><span class="n">change_ul</span><span class="p">(</span><span class="n">ul</span><span class="p">,</span> <span class="n">password</span><span class="p">)))</span></div>
+
+
+<div class="viewcode-block" id="Client.run">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.Client.run">[docs]</a>
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Invokes all scheduled callbacks until a timeout occurres.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            timeout (Optional[float]): An optional timeout (in seconds) after this function will return. Without a</span>
+<span class="sd">                                       timeout this function will run indefinitely (or until stop() is called). When</span>
+<span class="sd">                                       timeout=0 this function behaves like poll().</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            UnavailableError: If the connection is closed or the monitoring line is not available.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loop</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">UnavailableError</span><span class="p">(</span><span class="s1">&#39;Client connection to the device is closed&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">monitoring_line_available</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">UnavailableError</span><span class="p">(</span><span class="s1">&#39;Client connection does not have a monitoring line&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Only handle the values that are currently in the queue when timeout == 0</span>
+        <span class="k">if</span> <span class="n">timeout</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_monitoring_line_queue</span><span class="o">.</span><span class="n">qsize</span><span class="p">()):</span>
+                    <span class="n">timestamp</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_monitoring_line_queue</span><span class="o">.</span><span class="n">get_nowait</span><span class="p">()</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_update_subscriptions</span><span class="p">(</span><span class="n">timestamp</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+            <span class="k">except</span> <span class="n">Empty</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">return</span>
+
+        <span class="k">if</span> <span class="n">timeout</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">_t</span> <span class="o">=</span> <span class="mf">0.1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">_t</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">timeout</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
+
+        <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_is_running</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_running</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="c1"># Wait for new parameter update to arrive</span>
+                <span class="n">timestamp</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_monitoring_line_queue</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">block</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">_t</span><span class="p">)</span>
+
+                <span class="c1"># Update all subscriptions with the new value</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_update_subscriptions</span><span class="p">(</span><span class="n">timestamp</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+            <span class="k">except</span> <span class="n">Empty</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">timeout</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">now</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span>
+                    <span class="k">if</span> <span class="n">now</span> <span class="o">&lt;</span> <span class="n">start_time</span> <span class="o">+</span> <span class="n">timeout</span><span class="p">:</span>
+                        <span class="n">_t</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">start_time</span> <span class="o">+</span> <span class="n">timeout</span> <span class="o">-</span> <span class="n">now</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="k">return</span></div>
+
+
+<div class="viewcode-block" id="Client.stop">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.Client.stop">[docs]</a>
+    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Stops the event loop for the monitoring line.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_is_running</span> <span class="o">=</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="Client.poll">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.Client.poll">[docs]</a>
+    <span class="k">def</span> <span class="nf">poll</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Invokes the next queued callback.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            UnavailableError: If the connection is closed or the monitoring line is not available.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Client.get">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.Client.get">[docs]</a>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="n">param_types</span><span class="p">:</span> <span class="n">DecopMetaType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DecopType</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the current value of a DeCoP parameter.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            param_name (str): The name of the DeCoP parameter (e.g. &#39;laser1:enabled&#39;).</span>
+<span class="sd">            param_types (DecopMetaType): Zero or more types of the DeCoP parameter.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            DecopType: The current value of the parameter.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            UnavailableError: If the connection is closed or the command line is not available.</span>
+<span class="sd">            DecopValueError: If the provided types don&#39;t match the result from the device.</span>
+<span class="sd">            DeviceTimeoutError: If the operation did not complete in time.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_open</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">UnavailableError</span><span class="p">(</span><span class="s1">&#39;The client connection to the device is closed.&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">command_line_available</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">UnavailableError</span><span class="p">(</span><span class="s1">&#39;The command line of the client connection is not available.&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">cast</span><span class="p">(</span><span class="n">DecopType</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_async_run</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_async_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">param_name</span><span class="p">,</span> <span class="o">*</span><span class="n">param_types</span><span class="p">)))</span></div>
+
+
+<div class="viewcode-block" id="Client.get_set_value">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.Client.get_set_value">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_set_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="n">param_types</span><span class="p">:</span> <span class="n">DecopMetaType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DecopType</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the current &#39;set value&#39; of a DeCoP parameter.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            param_name (str): The name of the DeCoP parameter (e.g. &#39;laser1:enabled&#39;).</span>
+<span class="sd">            param_types (DecopMetaType): Zero or more types of the DeCoP parameter.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            DecopType: The &#39;set value&#39; of the parameter.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            UnavailableError: If the connection is closed or the command line is not available.</span>
+<span class="sd">            DecopValueError: If the provided types don&#39;t match the result from the device.</span>
+<span class="sd">            DeviceTimeoutError: If the operation did not complete in time.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_open</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">UnavailableError</span><span class="p">(</span><span class="s1">&#39;The client connection to the device is closed.&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">command_line_available</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">UnavailableError</span><span class="p">(</span><span class="s1">&#39;The command line of the client connection is not available.&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">cast</span><span class="p">(</span><span class="n">DecopType</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_async_run</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_async_client</span><span class="o">.</span><span class="n">get_set_value</span><span class="p">(</span><span class="n">param_name</span><span class="p">,</span> <span class="o">*</span><span class="n">param_types</span><span class="p">)))</span></div>
+
+
+<div class="viewcode-block" id="Client.set">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.Client.set">[docs]</a>
+    <span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="n">param_values</span><span class="p">:</span> <span class="n">DecopType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Sets a new value for a DeCoP parameter.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            param_name (str): The name of the DeCoP parameter (e.g. &#39;laser1:enabled&#39;).</span>
+<span class="sd">            param_values (DecopType): One or more parameter values.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: Zero if successful or a positive integer indicating a warning.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            UnavailableError: If the connection is closed or the command line is not available.</span>
+<span class="sd">            DecopError: If the device returned an error when setting the new value.</span>
+<span class="sd">            DeviceTimeoutError: If the operation did not complete in time.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_open</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">UnavailableError</span><span class="p">(</span><span class="s1">&#39;The client connection to the device is closed.&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">command_line_available</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">UnavailableError</span><span class="p">(</span><span class="s1">&#39;The command line of the client connection is not available.&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">cast</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_async_run</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_async_client</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">param_name</span><span class="p">,</span> <span class="o">*</span><span class="n">param_values</span><span class="p">)))</span></div>
+
+
+<div class="viewcode-block" id="Client.exec">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.Client.exec">[docs]</a>
+    <span class="k">def</span> <span class="nf">exec</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">input_stream</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">DecopStreamType</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+             <span class="n">output_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">DecopStreamMetaType</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+             <span class="n">return_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">DecopMetaType</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">DecopType</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Execute a DeCoP command.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name (str): The name of the command.</span>
+<span class="sd">            *args: The parameters of the command.</span>
+<span class="sd">            input_stream (DecopStreamType): The input stream data of the command.</span>
+<span class="sd">            output_type (DecopStreamMetaType): The type of the output stream of the command.</span>
+<span class="sd">            return_type (DecopMetaType): The type of the optional return value.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Optional[DecopType]: Either the output stream, the return value or a tuple of both.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            UnavailableError: If the connection is closed or the command line is not available.</span>
+<span class="sd">            DecopError: If the device returned an error when executing the command.</span>
+<span class="sd">            DeviceTimeoutError: If the operation did not complete in time.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_open</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">UnavailableError</span><span class="p">(</span><span class="s1">&#39;The client connection to the device is closed.&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">command_line_available</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">UnavailableError</span><span class="p">(</span><span class="s1">&#39;The command line of the client connection is not available.&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">cast</span><span class="p">(</span><span class="n">Optional</span><span class="p">[</span><span class="n">DecopType</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">_async_run</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_async_client</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">input_stream</span><span class="o">=</span><span class="n">input_stream</span><span class="p">,</span> <span class="n">output_type</span><span class="o">=</span><span class="n">output_type</span><span class="p">,</span>
+                                    <span class="n">return_type</span><span class="o">=</span><span class="n">return_type</span><span class="p">)))</span></div>
+
+
+<div class="viewcode-block" id="Client.subscribe">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.Client.subscribe">[docs]</a>
+    <span class="k">def</span> <span class="nf">subscribe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">callback</span><span class="p">:</span> <span class="n">DecopCallback</span><span class="p">,</span>
+                  <span class="n">param_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">DecopMetaType</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;Subscription&#39;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates a subscription to the value changes of a parameter.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            param_name (str): The name of the parameter.</span>
+<span class="sd">            callback (DecopCallback): The callback that will be invoked on parameter updates.</span>
+<span class="sd">            param_type (Optional[DecopMetaType]): The expected type of the parameter.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Subscription: A subscription to the value changes of the parameter.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            UnavailableError: If the connection is closed or the monitoring line is not available.</span>
+<span class="sd">            DeviceTimeoutError: If the operation did not complete in time.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">_await_next_value</span><span class="p">(</span><span class="n">sub</span><span class="p">:</span> <span class="n">async_client</span><span class="o">.</span><span class="n">Subscription</span><span class="p">):</span>
+            <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="n">value</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">DecopType</span><span class="p">,</span> <span class="n">DecopError</span><span class="p">]</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">timestamp</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="k">await</span> <span class="n">sub</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+                <span class="k">except</span> <span class="n">DecopError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+                    <span class="n">timestamp</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span> <span class="n">exc</span>
+
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loop</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">item</span> <span class="o">=</span> <span class="p">(</span><span class="n">timestamp</span><span class="p">,</span> <span class="n">sub</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">SubscriptionValue</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+                    <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loop</span><span class="o">.</span><span class="n">run_in_executor</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_monitoring_line_queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">item</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_open</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">UnavailableError</span><span class="p">(</span><span class="s1">&#39;The client connection to the device is closed.&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">monitoring_line_available</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">UnavailableError</span><span class="p">(</span><span class="s1">&#39;The monitoring line of the client connection is not available.&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">param_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_async_subscriptions</span><span class="p">:</span>
+            <span class="c1"># Subscribe the parameter in the async client if this is the first subscription</span>
+            <span class="n">async_subscription</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_async_run</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_async_client</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="n">param_name</span><span class="p">,</span> <span class="n">param_type</span><span class="p">))</span>
+
+            <span class="c1"># Create a task that will await the async subscription updates</span>
+            <span class="n">future</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">run_coroutine_threadsafe</span><span class="p">(</span><span class="n">_await_next_value</span><span class="p">(</span><span class="n">async_subscription</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loop</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_async_subscriptions</span><span class="p">[</span><span class="n">param_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">async_subscription</span><span class="p">,</span> <span class="n">future</span><span class="p">)</span>
+
+        <span class="n">subscription</span> <span class="o">=</span> <span class="n">Subscription</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param_name</span><span class="p">,</span> <span class="n">callback</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">param_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_subscriptions</span><span class="p">:</span>
+            <span class="n">_</span><span class="p">,</span> <span class="n">subscriptions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_subscriptions</span><span class="p">[</span><span class="n">param_name</span><span class="p">]</span>
+            <span class="n">subscriptions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">subscription</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_subscriptions</span><span class="p">[</span><span class="n">param_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">param_type</span><span class="p">,</span> <span class="p">[</span><span class="n">subscription</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="n">subscription</span></div>
+
+
+<div class="viewcode-block" id="Client.unsubscribe">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.Client.unsubscribe">[docs]</a>
+    <span class="k">def</span> <span class="nf">unsubscribe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subscription</span><span class="p">:</span> <span class="s1">&#39;Subscription&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Cancels a subscription to the value changes of a parameter.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            subscription (Subscription): The subscription to cancel.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            UnavailableError: If the connection is closed or the monitoring line is not available.</span>
+<span class="sd">            DeviceTimeoutError: If the operation did not complete in time.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_open</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">UnavailableError</span><span class="p">(</span><span class="s1">&#39;The client connection to the device is closed.&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">command_line_available</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">UnavailableError</span><span class="p">(</span><span class="s1">&#39;The monitoring line of the client connection is not available.&#39;</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">_</span><span class="p">,</span> <span class="n">subscriptions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_subscriptions</span><span class="p">[</span><span class="n">subscription</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+            <span class="n">subscriptions</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">subscription</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">subscriptions</span><span class="p">:</span>
+                <span class="c1"># Cancel the async subscription if this is the last subscription</span>
+                <span class="n">async_subscription</span><span class="p">,</span> <span class="n">future</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_async_subscriptions</span><span class="p">[</span><span class="n">subscription</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+
+                <span class="c1"># Cancel the task that awaits parameter updates</span>
+                <span class="n">future</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_async_run</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_async_client</span><span class="o">.</span><span class="n">unsubscribe</span><span class="p">(</span><span class="n">async_subscription</span><span class="p">))</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">_async_subscriptions</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">subscription</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_subscriptions</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">subscription</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">pass</span></div>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">is_open</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;bool: True if the client connection is open, False otherwise.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loop</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">command_line_available</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;bool: True if the command line is available, False otherwise.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">command_line_available</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">monitoring_line_available</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;bool: True if the monitoring line is available, False otherwise.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">monitoring_line_available</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">connection</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Connection</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Connection: The connection of the client to the device.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span>
+
+    <span class="k">def</span> <span class="nf">_event_loop_thread</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Thread function that runs its own asyncio event loop.&quot;&quot;&quot;</span>
+
+        <span class="c1"># Create a new event loop for this thread</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_loop</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">new_event_loop</span><span class="p">()</span>
+        <span class="n">asyncio</span><span class="o">.</span><span class="n">set_event_loop</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_loop</span><span class="p">)</span>
+
+        <span class="c1"># Signal that &#39;self._loop&#39; is valid</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_init_barrier</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+
+        <span class="c1"># Run the event loop until loop.stop() is posted</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_loop</span><span class="o">.</span><span class="n">run_forever</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_loop</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_loop</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">_async_run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coro</span><span class="p">:</span> <span class="n">Coroutine</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Runs a coroutine in the event loop thread.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            coro (Coroutine): The coroutine that should be run in the event loop thread.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Any: The return value of the coroutine.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">_run_with_timeout</span><span class="p">(</span><span class="n">_coro</span><span class="p">:</span> <span class="n">Coroutine</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">return</span> <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">wait_for</span><span class="p">(</span><span class="n">_coro</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">timeout</span><span class="p">)</span>
+            <span class="k">except</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">TimeoutError</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">DeviceTimeoutError</span> <span class="kn">from</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loop</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">future</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">run_coroutine_threadsafe</span><span class="p">(</span><span class="n">_run_with_timeout</span><span class="p">(</span><span class="n">coro</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loop</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">future</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_update_subscriptions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">:</span> <span class="n">Timestamp</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">SubscriptionValue</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Invokes all callbacks of a subscribed parameter with the new value.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            timestamp(Timestamp): The timestamp of the new value.</span>
+<span class="sd">            name (str): The name of the parameter.</span>
+<span class="sd">            value (SubscriptionValue): The new value of the parameter or an exception.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">subscription</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_subscriptions</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="mi">1</span><span class="p">]:</span>
+                <span class="n">subscription</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">timestamp</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">pass</span>  <span class="c1"># May have already been unsubscribed</span></div>
+
+
+
+<div class="viewcode-block" id="Subscription">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.Subscription">[docs]</a>
+<span class="k">class</span> <span class="nc">Subscription</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A subscription to the value changes of a parameter.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        client (Client):</span>
+<span class="sd">            A client that is used to access the parameter.</span>
+
+<span class="sd">        name (str):</span>
+<span class="sd">            The fully qualified name of the parameter (e.g. &#39;laser1:amp:ontime&#39;).</span>
+
+<span class="sd">        callback (DecopCallback):</span>
+<span class="sd">            A callback that will be invoked when the value of the parameter has changed.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">callback</span><span class="p">:</span> <span class="n">DecopCallback</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Client</span><span class="p">]</span> <span class="o">=</span> <span class="n">client</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_callback</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">DecopCallback</span><span class="p">]</span> <span class="o">=</span> <span class="n">callback</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">callback_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_callback</span><span class="o">.</span><span class="vm">__name__</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_callback</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s1">&#39;None&#39;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&lt;Subscription name=&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="si">}</span><span class="s2">&#39; callback=</span><span class="si">{</span><span class="n">callback_name</span><span class="si">}</span><span class="s2">&gt;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="fm">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>
+
+<div class="viewcode-block" id="Subscription.update">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.Subscription.update">[docs]</a>
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">:</span> <span class="n">Timestamp</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">SubscriptionValue</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Invokes the callback with an updated parameter value.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            timestamp (Timestamp): The timestamp of the parameter update.</span>
+<span class="sd">            value (SubscriptionValue): The new value of the parameter or an error.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_callback</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Subscription.cancel">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.Subscription.cancel">[docs]</a>
+    <span class="k">def</span> <span class="nf">cancel</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Cancels the subscription for parameter updates.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">unsubscribe</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_callback</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;str: The name of the parameter for this subscription.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">client</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Client</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Optional[Client]: The Client of this subscription (maybe None when it was canceled).&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span></div>
+
+
+
+<div class="viewcode-block" id="DecopBoolean">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.DecopBoolean">[docs]</a>
+<span class="k">class</span> <span class="nc">DecopBoolean</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A read-only DeCoP boolean parameter.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        client (Client):</span>
+<span class="sd">            A DeCoP client that is used to access the parameter on a device.</span>
+
+<span class="sd">        name (str):</span>
+<span class="sd">            The fully qualified name of the parameter (e.g. &#39;laser1:amp:ontime&#39;).</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="n">client</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;str: The fully qualified name of the parameter.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
+
+<div class="viewcode-block" id="DecopBoolean.get">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.DecopBoolean.get">[docs]</a>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the current value of the parameter.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: The current value of the parameter.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="nb">bool</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span> <span class="nb">bool</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="DecopBoolean.subscribe">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.DecopBoolean.subscribe">[docs]</a>
+    <span class="k">def</span> <span class="nf">subscribe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">:</span> <span class="n">DecopCallback</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;Subscription&#39;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates a subscription to the value changes of the parameter.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            callback (DecopCallback): A callback that will be invoked when the value of the parameter has changed.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Subscription: A subscription to the value changes of the parameter.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="MutableDecopBoolean">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.MutableDecopBoolean">[docs]</a>
+<span class="k">class</span> <span class="nc">MutableDecopBoolean</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A read/write DeCoP boolean parameter.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        client (Client):</span>
+<span class="sd">            A DeCoP client that is used to access the parameter on a device.</span>
+
+<span class="sd">        name (str):</span>
+<span class="sd">            The fully qualified name of the parameter (e.g. &#39;laser1:amp:ontime&#39;).</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="n">client</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;str: The fully qualified name of the parameter.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
+
+<div class="viewcode-block" id="MutableDecopBoolean.get">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.MutableDecopBoolean.get">[docs]</a>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the current value of the parameter.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: The current value of the parameter.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="nb">bool</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span> <span class="nb">bool</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="MutableDecopBoolean.set">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.MutableDecopBoolean.set">[docs]</a>
+    <span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Updates the value of the parameter.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            value (bool): The new value of the parameter.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: Zero if successful or a positive integer indicating a warning.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            UnavailableError: If the connection is closed or the command line is not available.</span>
+<span class="sd">            DecopError: If the device returned an error when setting the new value.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">bool</span><span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;expected type &#39;bool&#39; for &#39;value&#39;, got &#39;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="si">}</span><span class="s2">&#39;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="MutableDecopBoolean.subscribe">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.MutableDecopBoolean.subscribe">[docs]</a>
+    <span class="k">def</span> <span class="nf">subscribe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">:</span> <span class="n">DecopCallback</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;Subscription&#39;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates a subscription to the value changes of the parameter.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            callback (DecopCallback): A callback that will be invoked when the value of the parameter has changed.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Subscription: A subscription to the value changes of the parameter.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="SettableDecopBoolean">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.SettableDecopBoolean">[docs]</a>
+<span class="k">class</span> <span class="nc">SettableDecopBoolean</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A settable DeCoP boolean parameter.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        client (Client):</span>
+<span class="sd">            A DeCoP client that is used to access the parameter on a device.</span>
+
+<span class="sd">        name (str):</span>
+<span class="sd">            The fully qualified name of the parameter (e.g. &#39;laser1:amp:ontime&#39;).</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="n">client</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;str: The fully qualified name of the parameter.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
+
+<div class="viewcode-block" id="SettableDecopBoolean.get">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.SettableDecopBoolean.get">[docs]</a>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the current value of the parameter.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: The current value of the parameter.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="nb">bool</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span> <span class="nb">bool</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="SettableDecopBoolean.get_set_value">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.SettableDecopBoolean.get_set_value">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_set_value</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the current set-value of the parameter.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: The current set-value of the parameter.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="nb">bool</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get_set_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span> <span class="nb">bool</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="SettableDecopBoolean.set">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.SettableDecopBoolean.set">[docs]</a>
+    <span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Updates the value of the parameter.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            value (bool): The new value of the parameter.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: Zero if successful or a positive integer indicating a warning.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            UnavailableError: If the connection is closed or the command line is not available.</span>
+<span class="sd">            DecopError: If the device returned an error when setting the new value.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">bool</span><span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;expected type &#39;bool&#39; for &#39;value&#39;, got &#39;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="si">}</span><span class="s2">&#39;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SettableDecopBoolean.subscribe">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.SettableDecopBoolean.subscribe">[docs]</a>
+    <span class="k">def</span> <span class="nf">subscribe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">:</span> <span class="n">DecopCallback</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;Subscription&#39;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates a subscription to the value changes of the parameter.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            callback (DecopCallback): A callback that will be invoked when the value of the parameter has changed.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Subscription: A subscription to the value changes of the parameter.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="DecopInteger">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.DecopInteger">[docs]</a>
+<span class="k">class</span> <span class="nc">DecopInteger</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A read-only DeCoP integer parameter.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        client (Client):</span>
+<span class="sd">            A DeCoP client that is used to access the parameter on a device.</span>
+
+<span class="sd">        name (str):</span>
+<span class="sd">            The fully qualified name of the parameter (e.g. &#39;laser1:amp:ontime&#39;).</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="n">client</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;str: The fully qualified name of the parameter.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
+
+<div class="viewcode-block" id="DecopInteger.get">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.DecopInteger.get">[docs]</a>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the current value of the parameter.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: The current value of the parameter.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span> <span class="nb">int</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="DecopInteger.subscribe">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.DecopInteger.subscribe">[docs]</a>
+    <span class="k">def</span> <span class="nf">subscribe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">:</span> <span class="n">DecopCallback</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;Subscription&#39;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates a subscription to the value changes of the parameter.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            callback (DecopCallback): A callback that will be invoked when the value of the parameter has changed.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Subscription: A subscription to the value changes of the parameter.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="MutableDecopInteger">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.MutableDecopInteger">[docs]</a>
+<span class="k">class</span> <span class="nc">MutableDecopInteger</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A read/write DeCoP integer parameter.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        client (Client):</span>
+<span class="sd">            A DeCoP client that is used to access the parameter on a device.</span>
+
+<span class="sd">        name (str):</span>
+<span class="sd">            The fully qualified name of the parameter (e.g. &#39;laser1:amp:ontime&#39;).</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="n">client</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;str: The fully qualified name of the parameter.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
+
+<div class="viewcode-block" id="MutableDecopInteger.get">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.MutableDecopInteger.get">[docs]</a>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the current value of the parameter.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: The current value of the parameter.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span> <span class="nb">int</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="MutableDecopInteger.set">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.MutableDecopInteger.set">[docs]</a>
+    <span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Updates the value of the parameter.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            value (int): The new value of the parameter.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: Zero if successful or a positive integer indicating a warning.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            UnavailableError: If the connection is closed or the command line is not available.</span>
+<span class="sd">            DecopError: If the device returned an error when setting the new value.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">int</span><span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;expected type &#39;int&#39; for &#39;value&#39;, got &#39;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="si">}</span><span class="s2">&#39;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="MutableDecopInteger.subscribe">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.MutableDecopInteger.subscribe">[docs]</a>
+    <span class="k">def</span> <span class="nf">subscribe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">:</span> <span class="n">DecopCallback</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;Subscription&#39;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates a subscription to the value changes of the parameter.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            callback (DecopCallback): A callback that will be invoked when the value of the parameter has changed.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Subscription: A subscription to the value changes of the parameter.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="SettableDecopInteger">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.SettableDecopInteger">[docs]</a>
+<span class="k">class</span> <span class="nc">SettableDecopInteger</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A settable DeCoP integer parameter.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        client (Client):</span>
+<span class="sd">            A DeCoP client that is used to access the parameter on a device.</span>
+
+<span class="sd">        name (str):</span>
+<span class="sd">            The fully qualified name of the parameter (e.g. &#39;laser1:amp:ontime&#39;).</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="n">client</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;str: The fully qualified name of the parameter.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
+
+<div class="viewcode-block" id="SettableDecopInteger.get">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.SettableDecopInteger.get">[docs]</a>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the current value of the parameter.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: The current value of the parameter.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span> <span class="nb">int</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="SettableDecopInteger.get_set_value">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.SettableDecopInteger.get_set_value">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_set_value</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the current set-value of the parameter.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: The current set-value of the parameter.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get_set_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span> <span class="nb">int</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="SettableDecopInteger.set">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.SettableDecopInteger.set">[docs]</a>
+    <span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Updates the value of the parameter.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            value (int): The new value of the parameter.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: Zero if successful or a positive integer indicating a warning.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            UnavailableError: If the connection is closed or the command line is not available.</span>
+<span class="sd">            DecopError: If the device returned an error when setting the new value.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">int</span><span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;expected type &#39;int&#39; for &#39;value&#39;, got &#39;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="si">}</span><span class="s2">&#39;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SettableDecopInteger.subscribe">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.SettableDecopInteger.subscribe">[docs]</a>
+    <span class="k">def</span> <span class="nf">subscribe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">:</span> <span class="n">DecopCallback</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;Subscription&#39;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates a subscription to the value changes of the parameter.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            callback (DecopCallback): A callback that will be invoked when the value of the parameter has changed.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Subscription: A subscription to the value changes of the parameter.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="DecopReal">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.DecopReal">[docs]</a>
+<span class="k">class</span> <span class="nc">DecopReal</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A read-only DeCoP floating point parameter.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        client (Client):</span>
+<span class="sd">            A DeCoP client that is used to access the parameter on a device.</span>
+
+<span class="sd">        name (str):</span>
+<span class="sd">            The fully qualified name of the parameter (e.g. &#39;laser1:amp:ontime&#39;).</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="n">client</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;str: The fully qualified name of the parameter.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
+
+<div class="viewcode-block" id="DecopReal.get">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.DecopReal.get">[docs]</a>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the current value of the parameter.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: The current value of the parameter.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="DecopReal.subscribe">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.DecopReal.subscribe">[docs]</a>
+    <span class="k">def</span> <span class="nf">subscribe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">:</span> <span class="n">DecopCallback</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;Subscription&#39;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates a subscription to the value changes of the parameter.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            callback (DecopCallback): A callback that will be invoked when the value of the parameter has changed.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Subscription: A subscription to the value changes of the parameter.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="MutableDecopReal">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.MutableDecopReal">[docs]</a>
+<span class="k">class</span> <span class="nc">MutableDecopReal</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A read/write DeCoP floating point parameter.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        client (Client):</span>
+<span class="sd">            A DeCoP client that is used to access the parameter on a device.</span>
+
+<span class="sd">        name (str): The fully qualified name of the parameter (e.g. &#39;laser1:amp:ontime&#39;).</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="n">client</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;str: The fully qualified name of the parameter.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
+
+<div class="viewcode-block" id="MutableDecopReal.get">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.MutableDecopReal.get">[docs]</a>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the current value of the parameter.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: The current value of the parameter.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="MutableDecopReal.set">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.MutableDecopReal.set">[docs]</a>
+    <span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Updates the value of the parameter.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            value Union[int, float]: The new value of the parameter.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: Zero if successful or a positive integer indicating a warning.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            UnavailableError: If the connection is closed or the command line is not available.</span>
+<span class="sd">            DecopError: If the device returned an error when setting the new value.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)),</span> <span class="sa">f</span><span class="s2">&quot;expected type &#39;int&#39; or &#39;float&#39; for &#39;value&#39;, got &#39;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="si">}</span><span class="s2">&#39;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="MutableDecopReal.subscribe">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.MutableDecopReal.subscribe">[docs]</a>
+    <span class="k">def</span> <span class="nf">subscribe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">:</span> <span class="n">DecopCallback</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;Subscription&#39;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates a subscription to the value changes of the parameter.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            callback (DecopCallback): A callback that will be invoked when the value of the parameter has changed.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Subscription: A subscription to the value changes of the parameter.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="SettableDecopReal">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.SettableDecopReal">[docs]</a>
+<span class="k">class</span> <span class="nc">SettableDecopReal</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A settable DeCoP floating point parameter.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        client (Client):</span>
+<span class="sd">            A DeCoP client that is used to access the parameter on a device.</span>
+
+<span class="sd">        name (str):</span>
+<span class="sd">            The fully qualified name of the parameter (e.g. &#39;laser1:amp:ontime&#39;).</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="n">client</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;str: The fully qualified name of the parameter.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
+
+<div class="viewcode-block" id="SettableDecopReal.get">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.SettableDecopReal.get">[docs]</a>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the current value of the parameter.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: The current value of the parameter.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="SettableDecopReal.get_set_value">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.SettableDecopReal.get_set_value">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_set_value</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the current set-value of the parameter.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: The current set-value of the parameter.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get_set_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="SettableDecopReal.set">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.SettableDecopReal.set">[docs]</a>
+    <span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Updates the value of the parameter.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            value Union[int, float]: The new value of the parameter.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: Zero if successful or a positive integer indicating a warning.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            UnavailableError: If the connection is closed or the command line is not available.</span>
+<span class="sd">            DecopError: If the device returned an error when setting the new value.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)),</span> <span class="sa">f</span><span class="s2">&quot;expected type &#39;int&#39; or &#39;float&#39; for &#39;value&#39;, got &#39;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="si">}</span><span class="s2">&#39;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="SettableDecopReal.subscribe">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.SettableDecopReal.subscribe">[docs]</a>
+    <span class="k">def</span> <span class="nf">subscribe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">:</span> <span class="n">DecopCallback</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;Subscription&#39;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates a subscription to the value changes of the parameter.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            callback (DecopCallback): A callback that will be invoked when the value of the parameter has changed.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Subscription: A subscription to the value changes of the parameter.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="DecopString">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.DecopString">[docs]</a>
+<span class="k">class</span> <span class="nc">DecopString</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A read-only DeCoP string parameter.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        client (Client):</span>
+<span class="sd">            A DeCoP client that is used to access the parameter on a device.</span>
+
+<span class="sd">        name (str):</span>
+<span class="sd">            The fully qualified name of the parameter (e.g. &#39;laser1:amp:ontime&#39;).</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="n">client</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;str: The fully qualified name of the parameter.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
+
+<div class="viewcode-block" id="DecopString.get">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.DecopString.get">[docs]</a>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the current value of the parameter.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: The current value of the parameter.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span> <span class="nb">str</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="DecopString.subscribe">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.DecopString.subscribe">[docs]</a>
+    <span class="k">def</span> <span class="nf">subscribe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">:</span> <span class="n">DecopCallback</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;Subscription&#39;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates a subscription to the value changes of the parameter.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            callback (DecopCallback): A callback that will be invoked when the value of the parameter has changed.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Subscription: A subscription to the value changes of the parameter.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="MutableDecopString">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.MutableDecopString">[docs]</a>
+<span class="k">class</span> <span class="nc">MutableDecopString</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A read/write DeCoP string parameter.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        client (Client):</span>
+<span class="sd">            A DeCoP client that is used to access the parameter on a device.</span>
+
+<span class="sd">        name (str):</span>
+<span class="sd">            The fully qualified name of the parameter (e.g. &#39;laser1:amp:ontime&#39;).</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="n">client</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;str: The fully qualified name of the parameter.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
+
+<div class="viewcode-block" id="MutableDecopString.get">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.MutableDecopString.get">[docs]</a>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the current value of the parameter.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: The current value of the parameter.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span> <span class="nb">str</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="MutableDecopString.set">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.MutableDecopString.set">[docs]</a>
+    <span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Updates the value of the parameter.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            value (str): The new value of the parameter.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: Zero if successful or a positive integer indicating a warning.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            UnavailableError: If the connection is closed or the command line is not available.</span>
+<span class="sd">            DecopError: If the device returned an error when setting the new value.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;expected type &#39;str&#39; for &#39;value&#39;, got &#39;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="si">}</span><span class="s2">&#39;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="MutableDecopString.subscribe">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.MutableDecopString.subscribe">[docs]</a>
+    <span class="k">def</span> <span class="nf">subscribe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">:</span> <span class="n">DecopCallback</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;Subscription&#39;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates a subscription to the value changes of the parameter.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            callback (DecopCallback): A callback that will be invoked when the value of the parameter has changed.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Subscription: A subscription to the value changes of the parameter.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="SettableDecopString">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.SettableDecopString">[docs]</a>
+<span class="k">class</span> <span class="nc">SettableDecopString</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A settable DeCoP string parameter.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        client (Client):</span>
+<span class="sd">            A DeCoP client that is used to access the parameter on a device.</span>
+
+<span class="sd">        name (str):</span>
+<span class="sd">            The fully qualified name of the parameter (e.g. &#39;laser1:amp:ontime&#39;).</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="n">client</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;str: The fully qualified name of the parameter.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
+
+<div class="viewcode-block" id="SettableDecopString.get">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.SettableDecopString.get">[docs]</a>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the current value of the parameter.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: The current value of the parameter.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span> <span class="nb">str</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="SettableDecopString.get_set_value">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.SettableDecopString.get_set_value">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_set_value</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the current set-value of the parameter.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: The current set-value of the parameter.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get_set_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span> <span class="nb">str</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="SettableDecopString.set">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.SettableDecopString.set">[docs]</a>
+    <span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Updates the value of the parameter.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            value (str): The new value of the parameter.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: Zero if successful or a positive integer indicating a warning.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            UnavailableError: If the connection is closed or the command line is not available.</span>
+<span class="sd">            DecopError: If the device returned an error when setting the new value.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;expected type &#39;str&#39; for &#39;value&#39;, got &#39;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="si">}</span><span class="s2">&#39;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SettableDecopString.subscribe">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.SettableDecopString.subscribe">[docs]</a>
+    <span class="k">def</span> <span class="nf">subscribe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">:</span> <span class="n">DecopCallback</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;Subscription&#39;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates a subscription to the value changes of the parameter.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            callback (DecopCallback): A callback that will be invoked when the value of the parameter has changed.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Subscription: A subscription to the value changes of the parameter.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="DecopBinary">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.DecopBinary">[docs]</a>
+<span class="k">class</span> <span class="nc">DecopBinary</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A read-only DeCoP binary parameter.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        client (Client):</span>
+<span class="sd">            A DeCoP client that is used to access the parameter on a device.</span>
+
+<span class="sd">        name (str):</span>
+<span class="sd">            The fully qualified name of the parameter (e.g. &#39;laser1:amp:ontime&#39;).</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="n">client</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;str: The fully qualified name of the parameter.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
+
+<div class="viewcode-block" id="DecopBinary.get">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.DecopBinary.get">[docs]</a>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the current value of the parameter.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bytes: The current value of the parameter.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="nb">bytes</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="DecopBinary.subscribe">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.DecopBinary.subscribe">[docs]</a>
+    <span class="k">def</span> <span class="nf">subscribe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">:</span> <span class="n">DecopCallback</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;Subscription&#39;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates a subscription to the value changes of the parameter.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            callback (DecopCallback): A callback that will be invoked when the value of the parameter has changed.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Subscription: A subscription to the value changes of the parameter.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="MutableDecopBinary">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.MutableDecopBinary">[docs]</a>
+<span class="k">class</span> <span class="nc">MutableDecopBinary</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A read/write DeCoP binary parameter.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        client (Client):</span>
+<span class="sd">            A DeCoP client that is used to access the parameter on a device.</span>
+
+<span class="sd">        name (str):</span>
+<span class="sd">            The fully qualified name of the parameter (e.g. &#39;laser1:amp:ontime&#39;).</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="n">client</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;str: The fully qualified name of the parameter.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
+
+<div class="viewcode-block" id="MutableDecopBinary.get">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.MutableDecopBinary.get">[docs]</a>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the current value of the parameter.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bytes: The current value of the parameter.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="nb">bytes</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="MutableDecopBinary.set">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.MutableDecopBinary.set">[docs]</a>
+    <span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="nb">bytearray</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Updates the value of the parameter.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            value (Union[bytes, bytearray]): The new value of the parameter.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: Zero if successful or a positive integer indicating a warning.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            UnavailableError: If the connection is closed or the command line is not available.</span>
+<span class="sd">            DecopError: If the device returned an error when setting the new value.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="nb">bytes</span><span class="p">,</span> <span class="nb">bytearray</span><span class="p">)),</span> \
+            <span class="sa">f</span><span class="s2">&quot;expected type &#39;bytes&#39; or &#39;bytearray&#39; for &#39;value&#39;, got &#39;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="si">}</span><span class="s2">&#39;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="MutableDecopBinary.subscribe">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.MutableDecopBinary.subscribe">[docs]</a>
+    <span class="k">def</span> <span class="nf">subscribe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">:</span> <span class="n">DecopCallback</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;Subscription&#39;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates a subscription to the value changes of the parameter.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            callback (DecopCallback): A callback that will be invoked when the value of the parameter has changed.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Subscription: A subscription to the value changes of the parameter.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="SettableDecopBinary">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.SettableDecopBinary">[docs]</a>
+<span class="k">class</span> <span class="nc">SettableDecopBinary</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A settable DeCoP binary parameter.</span>
+
+<span class="sd">     Args:</span>
+<span class="sd">         client (Client):</span>
+<span class="sd">            A DeCoP client that is used to access the parameter on a device.</span>
+
+<span class="sd">         name (str):</span>
+<span class="sd">            The fully qualified name of the parameter (e.g. &#39;laser1:amp:ontime&#39;).</span>
+
+<span class="sd">     &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="n">client</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;str: The fully qualified name of the parameter.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
+
+<div class="viewcode-block" id="SettableDecopBinary.get">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.SettableDecopBinary.get">[docs]</a>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the current value of the parameter.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bytes: The current value of the parameter.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="nb">bytes</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="SettableDecopBinary.get_set_value">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.SettableDecopBinary.get_set_value">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_set_value</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the current set-value of the parameter.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bytes: The current set-value of the parameter.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="nb">bytes</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get_set_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="SettableDecopBinary.set">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.SettableDecopBinary.set">[docs]</a>
+    <span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="nb">bytearray</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Updates the value of the parameter.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            value (Union[bytes, bytearray]): The new value of the parameter.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: Zero if successful or a positive integer indicating a warning.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            UnavailableError: If the connection is closed or the command line is not available.</span>
+<span class="sd">            DecopError: If the device returned an error when setting the new value.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="nb">bytes</span><span class="p">,</span> <span class="nb">bytearray</span><span class="p">)),</span> \
+            <span class="sa">f</span><span class="s2">&quot;expected type &#39;bytes&#39; or &#39;bytearray&#39; for &#39;value&#39;, got &#39;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="si">}</span><span class="s2">&#39;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SettableDecopBinary.subscribe">
+<a class="viewcode-back" href="../../../gen/toptica.lasersdk.html#toptica.lasersdk.client.SettableDecopBinary.subscribe">[docs]</a>
+    <span class="k">def</span> <span class="nf">subscribe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">:</span> <span class="n">DecopCallback</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;Subscription&#39;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates a subscription to the value changes of the parameter.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            callback (DecopCallback): A callback that will be invoked when the value of the parameter has changed.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Subscription: A subscription to the value changes of the parameter.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2018-2020, TOPTICA Photonics AG.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

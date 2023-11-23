@@ -1,0 +1,35 @@
+The Asynchronous High Level API
+===============================
+
+The asynchronous high level API provides the same features and the same convenience with respect to automatic parameter name completion as its synchronous counterpart. Additionally, it provides asynchronous communication with the laser device based on Python's `asyncio`_. This makes sense if you want to communicate with more than one laser device at the same time or if you want to integrate the laser device control code into a larger code base where the usage of blocking calls are not an option.
+
+.. note:: Python 3.7 changed ``async`` and ``await`` to reserved keywords. Since version 2.0 of the SDK every module starting with ``toptica.lasersdk.async.*`` has therefore been renamed to ``toptica.lasersdk.asyncio.*``.
+
+The following code example demonstrates the usage of the asynchronous high level API by asynchronous retrieval of a parameter value of two different laser devices. The communication with the two laser devices takes place in a chronologically interleaved fashion, rather than strictly sequential:
+
+.. code-block:: python
+
+    import asyncio
+
+    from toptica.lasersdk.asyncio.dlcpro.v2_0_1 import DLCpro, NetworkConnection
+
+
+    async def get_labels():
+        async with DLCpro(NetworkConnection('Laser 1')) as dlcpro:
+            print(await dlcpro.system_label.get())
+        
+        async with DLCpro(NetworkConnection('Laser 2')) as dlcpro:
+            print(await dlcpro.system_label.get())
+        
+
+    if __name__ == "__main__":
+        loop = asyncio.get_event_loop()
+        loop.run_until_complete(get_labels())
+        loop.close()
+
+Example
+-------
+
+See :ref:`asynchronous_api_example`.
+
+.. _asyncio: https://docs.python.org/3/library/asyncio.html
