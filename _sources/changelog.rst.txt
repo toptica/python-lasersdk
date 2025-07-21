@@ -1,0 +1,153 @@
+Changelog
+=========
+
+This document records all notable changes to `TOPTICA Python Laser SDK <https://pypi.org/project/toptica-lasersdk>`_.
+This project adheres to `Semantic Versioning <http://semver.org/>`_.
+
+1.0.0 — 2018-02
+---------------
+* Initial release
+
+1.0.1 — 2018-03
+---------------
+* ``Fixed`` ``Client.exec()`` fails when ``input_stream`` is empty
+
+1.1.0 — 2018-04
+---------------
+* ``Added`` DLC pro v1.8.1
+* ``Fixed`` Cancellation sometimes creates an error when using a serial connection
+
+1.2.0 — 2018-08
+---------------
+* ``Added`` DLC pro v1.9.0
+* ``Fixed`` Handle errors when receiving invalid UTF-8 characters
+
+1.3.0 — 2019-01
+---------------
+* ``Added`` DLC pro v2.0.1
+* ``Fixed`` Allow hostnames when using a network connection
+
+1.3.1 — 2019-01
+---------------
+* ``Fixed`` Prevent warning when using ``MutableDecofBoolean.set()``
+
+1.4.0 — 2019-02
+---------------
+* ``Added`` DLC pro v2.0.3
+
+2.0.0 — 2019-03
+---------------
+* ``Changed`` Renamed ``.async.*`` to ``.asyncio.*`` to support Python 3.7+
+* ``Changed`` Renamed ``.decof.AccessLevel`` to ``.decop.UserLevel``
+
+* ``Changed`` Renamed ``.decof.Decof*`` to ``.decop.Decop*``
+
+* ``Changed`` Renamed ``.client.Decof*`` to ``.client.Decop*``
+* ``Changed`` Renamed ``.client.MutableDecof*`` to ``.client.MutableDecop*``
+
+* ``Changed`` Renamed ``.async.client.Decof*`` to ``.asyncio.client.Decop*``
+* ``Changed`` Renamed ``.async.client.MutableDecof*`` to ``.asyncio.client.MutableDecop*``
+
+2.1.0 — 2019-05
+---------------
+* ``Added`` Support for GSV parameters that are still in use by some iChrome family products
+* ``Fixed`` Issue with line endings on Monitoring Line of some fiber lasers
+
+2.2.0 — 2020-04
+---------------
+* ``Added`` DLC pro v2.1.0
+* ``Fixed`` Handle multiple Monitoring Line messages within the same TCP packet
+* ``Fixed`` Handle errors even when they are not the first line in a response
+* ``Fixed`` Allow to call ``stop()`` within subscription callbacks
+
+2.2.1 — 2020-04
+---------------
+* ``Fixed`` Issue with handling long error messages
+
+2.3.0 — 2020-05
+---------------
+* ``Added`` DLC pro v2.2.0
+
+2.4.0 — 2020-10
+---------------
+* ``Added`` DLC pro v2.3.0
+* ``Added`` Deprecate optional 'loop' parameter in connection classes
+* ``Fixed`` Remove parameter from monitoring line when last subscription was canceled
+* ``Fixed`` Fix canceling subscriptions when closing a connection
+* ``Fixed`` Replace NotImplemented with NotImplementedError
+* ``Fixed`` Use the broadcast address of each network interface for device discovery
+* ``Fixed`` Stream operations in NetworkConnection ignore timeout
+* ``Fixed`` Remove callbacks when closing a NetworkConnection
+
+2.5.0 — 2020-11
+---------------
+* ``Added`` DLC pro v2.4.0
+* ``Changed`` Make 'type' parameter optional in low-level API
+
+2.6.0 — 2021-05
+---------------
+* ``Added`` Add IDs for DLC pro signal channels
+* ``Added`` Add source distribution on PyPI
+* ``Added`` Allow integer values for REAL parameters
+* ``Fixed`` Allow calling Client.stop() only if Client.run() was called before
+
+2.7.0 — 2021-10
+---------------
+* ``Added`` iCHROME CLE v1.0.8
+* ``Added`` iCHROME CLE v1.1.3
+* ``Added`` iCHROME CLE v2.2.5
+* ``Added`` iCHROME MLE v1.8.1
+* ``Added`` iCHROME MLE v2.2.0
+* ``Added`` iCHROME MLE v2.3.1
+* ``Added`` DLC pro v2.3.2
+* ``Added`` DLC pro v2.5.2
+* ``Added`` Add improved example for the low-level API
+
+2.7.1 — 2022-02
+---------------
+* ``Changed`` Prevent installation on Python 3.10 and higher
+
+2.8.0 — 2022-04
+---------------
+* ``Added`` DLC pro v2.6.0
+
+3.0.0 — 2022-04
+---------------
+* ``Added`` Allow use of the synchronous API in event loops
+* ``Changed`` Remove support for Python 3.5
+* ``Changed`` Improve overall API (see :ref:`upgrade-to-version-3`)
+
+3.0.1 — 2022-05
+---------------
+* ``Fixed`` Allow patch versions of Python 3.10
+
+3.1.0 — 2023-03
+---------------
+* ``Added`` DLC pro v2.5.2
+* ``Added`` DLC pro v2.5.3
+* ``Added`` DLC pro v2.5.4
+* ``Added`` DLC pro v2.7.2
+* ``Added`` DLC pro v3.0.1
+
+3.1.1 — 2023-09
+---------------
+* ``Added`` Example for the DLC pro recorder / Wide Scan
+* ``Added`` Example for a monitoring line data logger
+* ``Fixed`` Allow using connections on threads without an event loop
+
+3.1.2 — 2023-11
+---------------
+* ``Changed`` Relaxed the requirements for unreleased Python versions
+
+3.2.0 — 2024-04
+---------------
+* ``Added`` DLC pro v3.1.0
+* ``Added`` DLC pro v3.2.0
+
+3.3.0 — 2024-07
+---------------
+* ``Added`` DLC pro v3.3.3
+* ``Added`` iChrome FLE 1.2.1
+* ``Added`` Add update interval and threshold for parameter subscriptions
+* ``Changed`` Use implicit namespace for `toptica`
+* ``Removed`` Remove support for Python 3.6 and 3.7

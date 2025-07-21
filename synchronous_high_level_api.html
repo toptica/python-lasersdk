@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Synchronous High Level API &mdash; TOPTICA Python Laser SDK 3.3.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=3eb8911e"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="The Asynchronous High Level API" href="asynchronous_high_level_api.html" />
+    <link rel="prev" title="The Low Level API" href="low_level_api.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            TOPTICA Python Laser SDK
+              <img src="_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                3.3.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_connected.html">Getting Connected</a></li>
+<li class="toctree-l1"><a class="reference internal" href="upgrade_to_v3.html">Upgrade to Version 3.x</a></li>
+<li class="toctree-l1"><a class="reference internal" href="low_level_api.html">The Low Level API</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">The Synchronous High Level API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#client-access-to-parameters">Client Access to Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#parameter-subscription">Parameter Subscription</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#example">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="asynchronous_high_level_api.html">The Asynchronous High Level API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">TOPTICA Python Laser SDK</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">The Synchronous High Level API</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/synchronous_high_level_api.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="the-synchronous-high-level-api">
+<h1>The Synchronous High Level API<a class="headerlink" href="#the-synchronous-high-level-api" title="Link to this heading"></a></h1>
+<p>The main advantage of using the high level APIs over their low level counterparts is the support of automatic parameter name completion in Python IDEs. With the high level APIs parameter name typing errors are a thing of the past.</p>
+<p>The Python classes and modules needed for this feature are autogenerated from the parameter models of the supported laser types. A separate Python module is provided for each software release.</p>
+<section id="client-access-to-parameters">
+<h2>Client Access to Parameters<a class="headerlink" href="#client-access-to-parameters" title="Link to this heading"></a></h2>
+<p>Reading or writing parameter values works as follows:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">toptica.lasersdk.dlcpro.v1_6_3</span><span class="w"> </span><span class="kn">import</span> <span class="n">DLCpro</span><span class="p">,</span> <span class="n">NetworkConnection</span>
+
+<span class="k">with</span> <span class="n">DLCpro</span><span class="p">(</span><span class="n">NetworkConnection</span><span class="p">(</span><span class="s1">&#39;My Laser&#39;</span><span class="p">))</span> <span class="k">as</span> <span class="n">dlcpro</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">dlcpro</span><span class="o">.</span><span class="n">system_label</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+    <span class="n">dlcpro</span><span class="o">.</span><span class="n">system_label</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;Please do not touch!&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The separator character (‘:’) used within full parameter names is replaced by the Python dot operator (‘.’). Hyphens (‘-’) are replaced by underscores (‘_’).</p>
+<p>Invoking events works as expected:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dlcpro</span><span class="o">.</span><span class="n">laser1</span><span class="o">.</span><span class="n">dl</span><span class="o">.</span><span class="n">lock</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The same applies for events with extensions (aka commands):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Execute command with two arguments that returns a bytes object</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">dlcpro</span><span class="o">.</span><span class="n">laser1</span><span class="o">.</span><span class="n">recorder</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+<span class="c1"># Execute command with binary output stream and no return value</span>
+<span class="n">output_stream</span> <span class="o">=</span> <span class="n">dlcpro</span><span class="o">.</span><span class="n">system_service_report</span><span class="o">.</span><span class="n">service_report</span><span class="p">()</span>
+
+<span class="c1"># Execute command with one argument, binary input stream, string-type</span>
+<span class="c1"># output stream, and no return value</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;DLCpro-archive.fw&#39;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+<span class="n">output_stream</span> <span class="o">=</span> <span class="n">dlcpro</span><span class="o">.</span><span class="n">fw_update</span><span class="o">.</span><span class="n">upload</span><span class="p">(</span><span class="n">input_stream</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">f</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="parameter-subscription">
+<h2>Parameter Subscription<a class="headerlink" href="#parameter-subscription" title="Link to this heading"></a></h2>
+<p>Parameter value subscription is also possible. Change notifications are delivered via a callback function:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">toptica.lasersdk.dlcpro.v2_6_0</span><span class="w"> </span><span class="kn">import</span> <span class="n">DLCpro</span><span class="p">,</span> <span class="n">NetworkConnection</span><span class="p">,</span> <span class="n">Subscription</span><span class="p">,</span> <span class="n">Timestamp</span><span class="p">,</span> <span class="n">SubscriptionValue</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">callback</span><span class="p">(</span><span class="n">subscription</span><span class="p">:</span> <span class="n">Subscription</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">:</span> <span class="n">Timestamp</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">SubscriptionValue</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">: Parameter &#39;</span><span class="si">{}</span><span class="s2">&#39; changed its value to </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">timestamp</span><span class="o">.</span><span class="n">time</span><span class="p">(),</span> <span class="n">subscription</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="o">.</span><span class="n">get</span><span class="p">()))</span>
+
+<span class="k">with</span> <span class="n">DLCpro</span><span class="p">(</span><span class="n">NetworkConnection</span><span class="p">(</span><span class="s1">&#39;172.16.109.112&#39;</span><span class="p">))</span> <span class="k">as</span> <span class="n">dlc</span><span class="p">:</span>
+    <span class="k">with</span> <span class="n">dlc</span><span class="o">.</span><span class="n">laser1</span><span class="o">.</span><span class="n">dl</span><span class="o">.</span><span class="n">cc</span><span class="o">.</span><span class="n">current_act</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="n">callback</span><span class="p">):</span>
+        <span class="n">dlc</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="example">
+<h2>Example<a class="headerlink" href="#example" title="Link to this heading"></a></h2>
+<p>See <a class="reference internal" href="examples.html#synchronous-api-example"><span class="std std-ref">Synchronous API Example</span></a>.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="low_level_api.html" class="btn btn-neutral float-left" title="The Low Level API" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="asynchronous_high_level_api.html" class="btn btn-neutral float-right" title="The Asynchronous High Level API" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2018–2025, TOPTICA Photonics SE.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

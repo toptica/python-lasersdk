@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Examples &mdash; TOPTICA Python Laser SDK 3.3.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=3eb8911e"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Changelog" href="changelog.html" />
+    <link rel="prev" title="The Asynchronous High Level API" href="asynchronous_high_level_api.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            TOPTICA Python Laser SDK
+              <img src="_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                3.3.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_connected.html">Getting Connected</a></li>
+<li class="toctree-l1"><a class="reference internal" href="upgrade_to_v3.html">Upgrade to Version 3.x</a></li>
+<li class="toctree-l1"><a class="reference internal" href="low_level_api.html">The Low Level API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="synchronous_high_level_api.html">The Synchronous High Level API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="asynchronous_high_level_api.html">The Asynchronous High Level API</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#low-level-api-example">Low Level API Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#synchronous-api-example">Synchronous API Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#asynchronous-api-example">Asynchronous API Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dlc-pro-scope-and-lock-example">DLC pro Scope and Lock Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dlc-pro-recorder-example">DLC pro Recorder Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#simple-data-logger-example">Simple Data Logger Example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">TOPTICA Python Laser SDK</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Examples</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/examples.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="examples">
+<h1>Examples<a class="headerlink" href="#examples" title="Link to this heading"></a></h1>
+<section id="low-level-api-example">
+<span id="id1"></span><h2>Low Level API Example<a class="headerlink" href="#low-level-api-example" title="Link to this heading"></a></h2>
+<p>This example shows how to use the low level API.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">time</span><span class="w"> </span><span class="kn">import</span> <span class="n">sleep</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">toptica.lasersdk.client</span><span class="w"> </span><span class="kn">import</span> <span class="n">Client</span><span class="p">,</span> <span class="n">NetworkConnection</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">toptica.lasersdk.client</span><span class="w"> </span><span class="kn">import</span> <span class="n">UserLevel</span><span class="p">,</span> <span class="n">Subscription</span><span class="p">,</span> <span class="n">Timestamp</span><span class="p">,</span> <span class="n">SubscriptionValue</span>
+
+
+<span class="c1"># The following string is used to define the connection to the device. It can be either</span>
+<span class="c1"># an IP address, a serial number or system label (when it is in the same subnet),</span>
+<span class="c1"># or a DNS entry (e.g. &#39;dlcpro.example.com&#39;).</span>
+<span class="n">DLCPRO_CONNECTION</span> <span class="o">=</span> <span class="s1">&#39;172.16.109.105&#39;</span>
+
+
+<span class="c1"># This will create a new Client and connect to the device via Ethernet. The with-statement</span>
+<span class="c1"># will automatically call Client.open() and Client.close() at the appropriate times (without</span>
+<span class="c1"># it these methods have to be called explicitly).</span>
+<span class="k">with</span> <span class="n">Client</span><span class="p">(</span><span class="n">NetworkConnection</span><span class="p">(</span><span class="n">DLCPRO_CONNECTION</span><span class="p">))</span> <span class="k">as</span> <span class="n">client</span><span class="p">:</span>
+
+    <span class="c1">#</span>
+    <span class="c1"># --- Client.get() ---</span>
+
+    <span class="c1"># Client.get() allows to query the current value of a parameter. The type of the parameter</span>
+    <span class="c1"># value is inferred from the response sent by the device.</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== Connected Device ===&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;This is a </span><span class="si">{}</span><span class="s2"> with serial number </span><span class="si">{}</span><span class="s2">.</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;system-type&#39;</span><span class="p">),</span> <span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;serial-number&#39;</span><span class="p">)))</span>
+
+    <span class="c1"># Client.get() has an optional second parameter that defines the expected type of the</span>
+    <span class="c1"># parameter value.</span>
+    <span class="c1">#</span>
+    <span class="c1"># The following line would raise a DecopValueError exception because the &#39;uptime-txt&#39;</span>
+    <span class="c1"># parameter is a string (therefore would require &#39;str&#39; as second parameter).</span>
+    <span class="c1">#</span>
+    <span class="c1"># print(client.get(&#39;uptime-txt&#39;, int))</span>
+
+    <span class="c1">#</span>
+    <span class="c1"># --- Client.set() ---</span>
+
+    <span class="c1"># Save the current value of the display brightness.</span>
+    <span class="n">display_brightness</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;display:brightness&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== Display Brightness ===&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Display Brightness - before:&#39;</span><span class="p">,</span> <span class="n">display_brightness</span><span class="p">)</span>
+
+    <span class="c1"># Client.set() allows to change the value of every writable parameter.</span>
+    <span class="n">client</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;display:brightness&#39;</span><span class="p">,</span> <span class="mi">80</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Display Brightness - after: &#39;</span><span class="p">,</span> <span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;display:brightness&#39;</span><span class="p">),</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Restore the original display brightness.</span>
+    <span class="n">client</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;display:brightness&#39;</span><span class="p">,</span> <span class="n">display_brightness</span><span class="p">)</span>
+
+    <span class="c1">#</span>
+    <span class="c1"># --- Client.change_ul() ---</span>
+
+    <span class="c1"># Client.change_ul() allows to change the userlevel of the connection.</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== Userlevel ===&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Userlevel - before:&#39;</span><span class="p">,</span> <span class="n">UserLevel</span><span class="p">(</span><span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;ul&#39;</span><span class="p">)))</span>
+
+    <span class="c1"># Change the userlevel to &quot;MAINTENANCE&quot;.</span>
+    <span class="n">client</span><span class="o">.</span><span class="n">change_ul</span><span class="p">(</span><span class="n">UserLevel</span><span class="o">.</span><span class="n">MAINTENANCE</span><span class="p">,</span> <span class="s1">&#39;CAUTION&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Userlevel - after: &#39;</span><span class="p">,</span> <span class="n">UserLevel</span><span class="p">(</span><span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;ul&#39;</span><span class="p">)),</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Change the userlevel back to &quot;NORMAL&quot; (this usually doesn&#39;t require a password).</span>
+    <span class="n">client</span><span class="o">.</span><span class="n">change_ul</span><span class="p">(</span><span class="n">UserLevel</span><span class="o">.</span><span class="n">NORMAL</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+    <span class="c1">#</span>
+    <span class="c1"># --- Client.exec() ---</span>
+
+    <span class="c1"># Client.exec() allows the execution of commands. The optional &#39;output_type=str&#39;</span>
+    <span class="c1"># specifies that the command has additional output that should be returned as a</span>
+    <span class="c1"># string (the system messages in this case).</span>
+    <span class="n">system_messages</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s1">&#39;system-messages:show-all&#39;</span><span class="p">,</span> <span class="n">output_type</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== System Messages ===&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">system_messages</span><span class="p">)</span>
+
+    <span class="c1">#</span>
+    <span class="c1"># --- Client.subscribe() ---</span>
+
+    <span class="c1"># This callback is used to print value changes of the parameter &#39;uptime-txt&#39;.</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">uptime_txt_changed</span><span class="p">(</span><span class="n">subscription</span><span class="p">:</span> <span class="n">Subscription</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">:</span> <span class="n">Timestamp</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">SubscriptionValue</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">: &#39;</span><span class="si">{}</span><span class="s2">&#39; = &#39;</span><span class="si">{}</span><span class="s2">&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">timestamp</span><span class="o">.</span><span class="n">time</span><span class="p">(),</span> <span class="n">subscription</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="o">.</span><span class="n">get</span><span class="p">()))</span>
+
+    <span class="c1"># Client.subscribe() allows adding callbacks for value changes of parameters.</span>
+    <span class="c1"># Subscribing to value changes requires to either regularly call Client.poll()</span>
+    <span class="c1"># (which will process all currently queued up callbacks) or Client.run() (which</span>
+    <span class="c1"># will continuously process callbacks and block until Client.stop() is called).</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== Uptime Subscription ===&quot;</span><span class="p">)</span>
+    <span class="n">client</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="s1">&#39;uptime-txt&#39;</span><span class="p">,</span> <span class="n">uptime_txt_changed</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+        <span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># Sleep for one second to simulate some work being done</span>
+        <span class="n">client</span><span class="o">.</span><span class="n">poll</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="synchronous-api-example">
+<span id="id2"></span><h2>Synchronous API Example<a class="headerlink" href="#synchronous-api-example" title="Link to this heading"></a></h2>
+<p>This example shows the usage of the synchronous high level API.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">base64</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">toptica.lasersdk.dlcpro.v2_0_3</span><span class="w"> </span><span class="kn">import</span> <span class="n">DLCpro</span><span class="p">,</span> <span class="n">NetworkConnection</span><span class="p">,</span> <span class="n">DeviceNotFoundError</span><span class="p">,</span> <span class="n">DecopError</span><span class="p">,</span> <span class="n">UserLevel</span>
+
+<span class="n">script</span> <span class="o">=</span> <span class="s1">&#39;OyBjaGVja3N1bSBmYzc4NDcwOWE5MTQwY2M1Mjg3ZWNiN2M1ZTAxYTQ3YQo7CihwYXJhbS1zZXQh&#39;</span> \
+         <span class="s1">&#39;ICd1cHRpbWUgMTIzNCkKKGRpc3BsYXkgIkhhbGxpaGFsbG9cbiIp&#39;</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">my_callback</span><span class="p">(</span><span class="n">subscription</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;--------------------------------------&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Timestamp: &#39;</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;     Name: &#39;</span><span class="p">,</span> <span class="n">subscription</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;    Value: &#39;</span><span class="p">,</span> <span class="n">value</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;--------------------------------------&#39;</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">DLCpro</span><span class="p">(</span><span class="n">NetworkConnection</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span> <span class="k">as</span> <span class="n">dlc</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">=== Sync Read ===</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;     System Time :&#39;</span><span class="p">,</span> <span class="n">dlc</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;          Uptime :&#39;</span><span class="p">,</span> <span class="n">dlc</span><span class="o">.</span><span class="n">uptime</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Firmware Version :&#39;</span><span class="p">,</span> <span class="n">dlc</span><span class="o">.</span><span class="n">fw_ver</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;   System Health :&#39;</span><span class="p">,</span> <span class="n">dlc</span><span class="o">.</span><span class="n">system_health_txt</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;        Emission :&#39;</span><span class="p">,</span> <span class="n">dlc</span><span class="o">.</span><span class="n">emission</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  Scan Frequency :&#39;</span><span class="p">,</span> <span class="n">dlc</span><span class="o">.</span><span class="n">laser1</span><span class="o">.</span><span class="n">scan</span><span class="o">.</span><span class="n">frequency</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">=== Sync Write ===</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">old_label</span> <span class="o">=</span> <span class="n">dlc</span><span class="o">.</span><span class="n">system_label</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;     System Label:&#39;</span><span class="p">,</span> <span class="n">old_label</span><span class="p">)</span>
+                <span class="n">dlc</span><span class="o">.</span><span class="n">system_label</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;::: THE LABEL :::&#39;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;     System Label:&#39;</span><span class="p">,</span> <span class="n">dlc</span><span class="o">.</span><span class="n">system_label</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+                <span class="n">dlc</span><span class="o">.</span><span class="n">system_label</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">old_label</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;     System Label:&#39;</span><span class="p">,</span> <span class="n">dlc</span><span class="o">.</span><span class="n">system_label</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">=== Sync Command Output ===</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">dlc</span><span class="o">.</span><span class="n">system_summary</span><span class="p">())</span>
+
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">=== Sync Command Output+Return ===</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">dlc</span><span class="o">.</span><span class="n">change_ul</span><span class="p">(</span><span class="n">UserLevel</span><span class="o">.</span><span class="n">MAINTENANCE</span><span class="p">,</span> <span class="s1">&#39;CAUTION&#39;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;System Connections:&#39;</span><span class="p">,</span> <span class="n">dlc</span><span class="o">.</span><span class="n">system_connections</span><span class="p">())</span>
+                <span class="n">dlc</span><span class="o">.</span><span class="n">ul</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">=== Sync Command Input ===</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;           Uptime:&#39;</span><span class="p">,</span> <span class="n">dlc</span><span class="o">.</span><span class="n">uptime</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+                <span class="n">dlc</span><span class="o">.</span><span class="n">service_script</span><span class="p">(</span><span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">script</span><span class="p">))</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;           Uptime:&#39;</span><span class="p">,</span> <span class="n">dlc</span><span class="o">.</span><span class="n">uptime</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">=== Sync Command Normal ===</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39; User Level:&#39;</span><span class="p">,</span> <span class="n">dlc</span><span class="o">.</span><span class="n">ul</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+                <span class="n">dlc</span><span class="o">.</span><span class="n">change_ul</span><span class="p">(</span><span class="n">UserLevel</span><span class="o">.</span><span class="n">MAINTENANCE</span><span class="p">,</span> <span class="s1">&#39;CAUTION&#39;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39; User Level:&#39;</span><span class="p">,</span> <span class="n">dlc</span><span class="o">.</span><span class="n">ul</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+                <span class="n">dlc</span><span class="o">.</span><span class="n">ul</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39; User Level:&#39;</span><span class="p">,</span> <span class="n">dlc</span><span class="o">.</span><span class="n">ul</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">=== Monitoring ===</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">with</span> <span class="n">dlc</span><span class="o">.</span><span class="n">uptime</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="n">my_callback</span><span class="p">):</span>
+                    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+                        <span class="n">dlc</span><span class="o">.</span><span class="n">poll</span><span class="p">()</span>
+                        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+            <span class="k">except</span> <span class="n">DecopError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">DeviceNotFoundError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Device not found&#39;</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="asynchronous-api-example">
+<span id="id3"></span><h2>Asynchronous API Example<a class="headerlink" href="#asynchronous-api-example" title="Link to this heading"></a></h2>
+<p>This example shows the usage of the asynchronous high level API.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">base64</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">toptica.lasersdk.asyncio.dlcpro.v2_0_3</span><span class="w"> </span><span class="kn">import</span> <span class="n">DLCpro</span><span class="p">,</span> <span class="n">NetworkConnection</span><span class="p">,</span> <span class="n">DeviceNotFoundError</span><span class="p">,</span> <span class="n">DecopError</span><span class="p">,</span> <span class="n">UserLevel</span>
+
+<span class="n">script</span> <span class="o">=</span> <span class="s1">&#39;OyBjaGVja3N1bSBmYzc4NDcwOWE5MTQwY2M1Mjg3ZWNiN2M1ZTAxYTQ3YQo7CihwYXJhbS1zZXQh&#39;</span> \
+         <span class="s1">&#39;ICd1cHRpbWUgMTIzNCkKKGRpc3BsYXkgIkhhbGxpaGFsbG9cbiIp&#39;</span>
+
+<span class="n">asyncio</span><span class="o">.</span><span class="n">get_event_loop</span><span class="p">()</span><span class="o">.</span><span class="n">set_debug</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">async</span> <span class="k">with</span> <span class="n">DLCpro</span><span class="p">(</span><span class="n">NetworkConnection</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span> <span class="k">as</span> <span class="n">dlc</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">=== Async Read ===</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;     System Time :&#39;</span><span class="p">,</span> <span class="k">await</span> <span class="n">dlc</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;          Uptime :&#39;</span><span class="p">,</span> <span class="k">await</span> <span class="n">dlc</span><span class="o">.</span><span class="n">uptime</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Firmware Version :&#39;</span><span class="p">,</span> <span class="k">await</span> <span class="n">dlc</span><span class="o">.</span><span class="n">fw_ver</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;   System Health :&#39;</span><span class="p">,</span> <span class="k">await</span> <span class="n">dlc</span><span class="o">.</span><span class="n">system_health_txt</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;        Emission :&#39;</span><span class="p">,</span> <span class="k">await</span> <span class="n">dlc</span><span class="o">.</span><span class="n">emission</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  Scan Frequency :&#39;</span><span class="p">,</span> <span class="k">await</span> <span class="n">dlc</span><span class="o">.</span><span class="n">laser1</span><span class="o">.</span><span class="n">scan</span><span class="o">.</span><span class="n">frequency</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">=== Async Write ===</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">old_label</span> <span class="o">=</span> <span class="k">await</span> <span class="n">dlc</span><span class="o">.</span><span class="n">system_label</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;     System Label:&#39;</span><span class="p">,</span> <span class="n">old_label</span><span class="p">)</span>
+                <span class="k">await</span> <span class="n">dlc</span><span class="o">.</span><span class="n">system_label</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;::: THE LABEL :::&#39;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;     System Label:&#39;</span><span class="p">,</span> <span class="k">await</span> <span class="n">dlc</span><span class="o">.</span><span class="n">system_label</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+                <span class="k">await</span> <span class="n">dlc</span><span class="o">.</span><span class="n">system_label</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">old_label</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;     System Label:&#39;</span><span class="p">,</span> <span class="k">await</span> <span class="n">dlc</span><span class="o">.</span><span class="n">system_label</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">=== Async Command Output ===</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="k">await</span> <span class="n">dlc</span><span class="o">.</span><span class="n">system_summary</span><span class="p">())</span>
+
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">=== Async Command Output+Return ===</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">await</span> <span class="n">dlc</span><span class="o">.</span><span class="n">change_ul</span><span class="p">(</span><span class="n">UserLevel</span><span class="o">.</span><span class="n">MAINTENANCE</span><span class="p">,</span> <span class="s1">&#39;CAUTION&#39;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;System Connections:&#39;</span><span class="p">,</span> <span class="k">await</span> <span class="n">dlc</span><span class="o">.</span><span class="n">system_connections</span><span class="p">())</span>
+                <span class="k">await</span> <span class="n">dlc</span><span class="o">.</span><span class="n">ul</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">=== Async Command Input ===</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;           Uptime:&#39;</span><span class="p">,</span> <span class="k">await</span> <span class="n">dlc</span><span class="o">.</span><span class="n">uptime</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+                <span class="k">await</span> <span class="n">dlc</span><span class="o">.</span><span class="n">service_script</span><span class="p">(</span><span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">script</span><span class="p">))</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;           Uptime:&#39;</span><span class="p">,</span> <span class="k">await</span> <span class="n">dlc</span><span class="o">.</span><span class="n">uptime</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">=== Async Command Normal ===</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39; User Level:&#39;</span><span class="p">,</span> <span class="k">await</span> <span class="n">dlc</span><span class="o">.</span><span class="n">ul</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+                <span class="k">await</span> <span class="n">dlc</span><span class="o">.</span><span class="n">change_ul</span><span class="p">(</span><span class="n">UserLevel</span><span class="o">.</span><span class="n">MAINTENANCE</span><span class="p">,</span> <span class="s1">&#39;CAUTION&#39;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39; User Level:&#39;</span><span class="p">,</span> <span class="k">await</span> <span class="n">dlc</span><span class="o">.</span><span class="n">ul</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+                <span class="k">await</span> <span class="n">dlc</span><span class="o">.</span><span class="n">ul</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39; User Level:&#39;</span><span class="p">,</span> <span class="k">await</span> <span class="n">dlc</span><span class="o">.</span><span class="n">ul</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">=== Async Monitoring ===</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">subscription</span> <span class="o">=</span> <span class="k">await</span> <span class="n">dlc</span><span class="o">.</span><span class="n">uptime</span><span class="o">.</span><span class="n">subscribe</span><span class="p">()</span>
+
+                <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+                    <span class="n">timestamp</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="k">await</span> <span class="n">subscription</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39; </span><span class="si">{</span><span class="n">timestamp</span><span class="si">}</span><span class="s1">: Uptime: </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+            <span class="k">except</span> <span class="n">DecopError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+
+    <span class="k">except</span> <span class="n">DeviceNotFoundError</span><span class="p">:</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;Device not found&#39;</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">loop</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">get_event_loop</span><span class="p">()</span>
+    <span class="n">loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+    <span class="n">loop</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="dlc-pro-scope-and-lock-example">
+<h2>DLC pro Scope and Lock Example<a class="headerlink" href="#dlc-pro-scope-and-lock-example" title="Link to this heading"></a></h2>
+<p>This example shows how to read and display scope and lock data from a DLC pro scientific laser using <a class="reference external" href="https://matplotlib.org/">Matplotlib</a>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pyplot</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">toptica.lasersdk.dlcpro.v2_0_3</span><span class="w"> </span><span class="kn">import</span> <span class="n">DLCpro</span><span class="p">,</span> <span class="n">NetworkConnection</span><span class="p">,</span> <span class="n">DeviceNotFoundError</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">toptica.lasersdk.utils.dlcpro</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">DLCpro</span><span class="p">(</span><span class="n">NetworkConnection</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span> <span class="k">as</span> <span class="n">dlcpro</span><span class="p">:</span>
+            <span class="c1"># Retrieve scan, lock raw data from device</span>
+            <span class="n">scope_data</span> <span class="o">=</span> <span class="n">extract_float_arrays</span><span class="p">(</span><span class="s1">&#39;xyY&#39;</span><span class="p">,</span> <span class="n">dlcpro</span><span class="o">.</span><span class="n">laser1</span><span class="o">.</span><span class="n">scope</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+            <span class="n">raw_lock_candidates</span> <span class="o">=</span> <span class="n">dlcpro</span><span class="o">.</span><span class="n">laser1</span><span class="o">.</span><span class="n">dl</span><span class="o">.</span><span class="n">lock</span><span class="o">.</span><span class="n">candidates</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+            <span class="n">lock_candidates</span> <span class="o">=</span> <span class="n">extract_lock_points</span><span class="p">(</span><span class="s1">&#39;clt&#39;</span><span class="p">,</span> <span class="n">raw_lock_candidates</span><span class="p">)</span>
+            <span class="n">lock_state</span> <span class="o">=</span> <span class="n">extract_lock_state</span><span class="p">(</span><span class="n">raw_lock_candidates</span><span class="p">)</span>
+
+            <span class="c1"># Create double y axis plot</span>
+            <span class="n">fig</span><span class="p">,</span> <span class="n">laxis</span> <span class="o">=</span> <span class="n">pyplot</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+            <span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;DLC pro Scope Output&#39;</span><span class="p">)</span>
+
+            <span class="n">ch1_available</span> <span class="o">=</span> <span class="n">dlcpro</span><span class="o">.</span><span class="n">laser1</span><span class="o">.</span><span class="n">scope</span><span class="o">.</span><span class="n">channel1</span><span class="o">.</span><span class="n">signal</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">3</span>  <span class="c1"># Signal is &#39;none&#39;</span>
+            <span class="n">ch2_available</span> <span class="o">=</span> <span class="n">dlcpro</span><span class="o">.</span><span class="n">laser1</span><span class="o">.</span><span class="n">scope</span><span class="o">.</span><span class="n">channel2</span><span class="o">.</span><span class="n">signal</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">3</span>
+
+            <span class="c1"># Set label and unit of X axis</span>
+            <span class="n">laxis</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> [</span><span class="si">{}</span><span class="s2">]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">dlcpro</span><span class="o">.</span><span class="n">laser1</span><span class="o">.</span><span class="n">scope</span><span class="o">.</span><span class="n">channelx</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">get</span><span class="p">(),</span>
+                <span class="n">dlcpro</span><span class="o">.</span><span class="n">laser1</span><span class="o">.</span><span class="n">scope</span><span class="o">.</span><span class="n">channelx</span><span class="o">.</span><span class="n">unit</span><span class="o">.</span><span class="n">get</span><span class="p">()))</span>
+
+            <span class="k">if</span> <span class="n">ch1_available</span><span class="p">:</span>
+                <span class="n">red</span> <span class="o">=</span> <span class="n">laxis</span>
+
+                <span class="c1"># Set label and unit of left Y axis</span>
+                <span class="n">red</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> [</span><span class="si">{}</span><span class="s2">]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">dlcpro</span><span class="o">.</span><span class="n">laser1</span><span class="o">.</span><span class="n">scope</span><span class="o">.</span><span class="n">channel1</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">get</span><span class="p">(),</span>
+                    <span class="n">dlcpro</span><span class="o">.</span><span class="n">laser1</span><span class="o">.</span><span class="n">scope</span><span class="o">.</span><span class="n">channel1</span><span class="o">.</span><span class="n">unit</span><span class="o">.</span><span class="n">get</span><span class="p">()),</span>
+                    <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+
+                <span class="c1"># Plot first scope channel data</span>
+                <span class="n">red</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+                    <span class="n">scope_data</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">],</span>
+                    <span class="n">scope_data</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">],</span>
+                    <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;solid&#39;</span><span class="p">,</span>
+                    <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span>
+                    <span class="n">zorder</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+                <span class="c1"># Plot lock candidate points if available</span>
+                <span class="k">if</span> <span class="s1">&#39;c&#39;</span> <span class="ow">in</span> <span class="n">lock_candidates</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="n">red</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+                        <span class="n">lock_candidates</span><span class="p">[</span><span class="s1">&#39;c&#39;</span><span class="p">][</span><span class="s1">&#39;x&#39;</span><span class="p">],</span>
+                        <span class="n">lock_candidates</span><span class="p">[</span><span class="s1">&#39;c&#39;</span><span class="p">][</span><span class="s1">&#39;y&#39;</span><span class="p">],</span>
+                        <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;None&#39;</span><span class="p">,</span>
+                        <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span>
+                        <span class="n">markersize</span><span class="o">=</span><span class="mf">12.0</span><span class="p">,</span>
+                        <span class="n">color</span><span class="o">=</span><span class="s1">&#39;grey&#39;</span><span class="p">,</span>
+                        <span class="n">zorder</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+                <span class="c1"># Plot selected lock candidate point if available</span>
+                <span class="k">if</span> <span class="s1">&#39;l&#39;</span> <span class="ow">in</span> <span class="n">lock_candidates</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="ow">and</span> <span class="n">lock_state</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>  <span class="c1"># State is &#39;Selected&#39;</span>
+                    <span class="n">red</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+                        <span class="n">lock_candidates</span><span class="p">[</span><span class="s1">&#39;l&#39;</span><span class="p">][</span><span class="s1">&#39;x&#39;</span><span class="p">],</span>
+                        <span class="n">lock_candidates</span><span class="p">[</span><span class="s1">&#39;l&#39;</span><span class="p">][</span><span class="s1">&#39;y&#39;</span><span class="p">],</span>
+                        <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;None&#39;</span><span class="p">,</span>
+                        <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span>
+                        <span class="n">markersize</span><span class="o">=</span><span class="mf">16.0</span><span class="p">,</span>
+                        <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span>
+                        <span class="n">markerfacecolor</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span>
+                        <span class="n">zorder</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+                <span class="c1"># Retrieve and plot background trace data if lock is closed</span>
+                <span class="k">if</span> <span class="n">lock_state</span> <span class="o">==</span> <span class="mi">5</span><span class="p">:</span>  <span class="c1"># State is &#39;Locked&#39;</span>
+                    <span class="n">background_trace</span> <span class="o">=</span> <span class="n">extract_float_arrays</span><span class="p">(</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">dlcpro</span><span class="o">.</span><span class="n">laser1</span><span class="o">.</span><span class="n">dl</span><span class="o">.</span><span class="n">lock</span><span class="o">.</span><span class="n">background_trace</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+
+                    <span class="n">red</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+                        <span class="n">background_trace</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">],</span>
+                        <span class="n">background_trace</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">],</span>
+                        <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;solid&#39;</span><span class="p">,</span>
+                        <span class="n">color</span><span class="o">=</span><span class="s1">&#39;lightgrey&#39;</span><span class="p">,</span>
+                        <span class="n">zorder</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+                <span class="c1"># Plot lock tracking position if available</span>
+                <span class="k">if</span> <span class="s1">&#39;t&#39;</span> <span class="ow">in</span> <span class="n">lock_candidates</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="n">red</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+                        <span class="n">lock_candidates</span><span class="p">[</span><span class="s1">&#39;t&#39;</span><span class="p">][</span><span class="s1">&#39;x&#39;</span><span class="p">],</span>
+                        <span class="n">lock_candidates</span><span class="p">[</span><span class="s1">&#39;t&#39;</span><span class="p">][</span><span class="s1">&#39;y&#39;</span><span class="p">],</span>
+                        <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;None&#39;</span><span class="p">,</span>
+                        <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span>
+                        <span class="n">markersize</span><span class="o">=</span><span class="mf">20.0</span><span class="p">,</span>
+                        <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span>
+                        <span class="n">markerfacecolor</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span>
+                        <span class="n">zorder</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+            <span class="c1"># Plot second scope channel data if available</span>
+            <span class="k">if</span> <span class="n">ch2_available</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">ch1_available</span><span class="p">:</span>
+                    <span class="n">blue</span> <span class="o">=</span> <span class="n">laxis</span><span class="o">.</span><span class="n">twinx</span><span class="p">()</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">blue</span> <span class="o">=</span> <span class="n">laxis</span>
+
+                <span class="n">blue</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> [</span><span class="si">{}</span><span class="s2">]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">dlcpro</span><span class="o">.</span><span class="n">laser1</span><span class="o">.</span><span class="n">scope</span><span class="o">.</span><span class="n">channel2</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">get</span><span class="p">(),</span>
+                    <span class="n">dlcpro</span><span class="o">.</span><span class="n">laser1</span><span class="o">.</span><span class="n">scope</span><span class="o">.</span><span class="n">channel2</span><span class="o">.</span><span class="n">unit</span><span class="o">.</span><span class="n">get</span><span class="p">()),</span>
+                    <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+
+                <span class="n">blue</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+                    <span class="n">scope_data</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">],</span>
+                    <span class="n">scope_data</span><span class="p">[</span><span class="s1">&#39;Y&#39;</span><span class="p">],</span>
+                    <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;solid&#39;</span><span class="p">,</span>
+                    <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span>
+                    <span class="n">zorder</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+                <span class="n">laxis</span><span class="o">.</span><span class="n">set_zorder</span><span class="p">(</span><span class="n">blue</span><span class="o">.</span><span class="n">get_zorder</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="n">laxis</span><span class="o">.</span><span class="n">patch</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+            <span class="n">pyplot</span><span class="o">.</span><span class="n">margins</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+            <span class="n">pyplot</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+    <span class="k">except</span> <span class="n">DeviceNotFoundError</span><span class="p">:</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;Device not found&#39;</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="dlc-pro-recorder-example">
+<h2>DLC pro Recorder Example<a class="headerlink" href="#dlc-pro-recorder-example" title="Link to this heading"></a></h2>
+<p>This example demonstrates how to download and save data, recorded by
+a DLC pro recorder.</p>
+<p>First use the WideScan of laser 1 to record data and then the following
+example can be used to download the raw data to a CSV file named
+“test.csv”.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example showing how to read the results from a WideScan</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">toptica.lasersdk.dlcpro.v2_0_3</span><span class="w"> </span><span class="kn">import</span> <span class="n">DLCpro</span><span class="p">,</span> <span class="n">NetworkConnection</span><span class="p">,</span> <span class="n">DeviceNotFoundError</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">toptica.lasersdk.utils.dlcpro</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span> <span class="c1"># for extract_float_arrays(...)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">get_recorder_data</span><span class="p">(</span><span class="n">laser</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Read the data, recorded by the laser&#39;s recorder unit, into a dictionary</span>
+<span class="sd">    with the following content:</span>
+<span class="sd">    x-axis data:       &#39;x&#39; : {&#39;title&#39;: _label_and_physical_unit_, </span>
+<span class="sd">                              &#39;data&#39;: _array_with_x_values_}</span>
+<span class="sd">    channel1 data:     &#39;y&#39; : {&#39;title&#39;: _label_and_physical_unit_, </span>
+<span class="sd">                              &#39;data&#39;: _array_with_y_values_}</span>
+<span class="sd">    channel2 data:     &#39;Y&#39; : {&#39;title&#39;: _label_and_physical_unit_, </span>
+<span class="sd">                              &#39;data&#39;: _array_with_y_values_}</span>
+<span class="sd">    sampling interval: &#39;dt&#39;: _sampling_interval_in_milliseconds_</span>
+<span class="sd">    </span>
+<span class="sd">    channel1 and channel2 data will only be available if they have been recorded,</span>
+<span class="sd">    i.e. the respective selection was not None.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">Y</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="c1"># read info about recorded signals and sample count</span>
+    <span class="n">x_title</span>           <span class="o">=</span> <span class="n">laser</span><span class="o">.</span><span class="n">recorder</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">channelx</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> \
+                      <span class="o">+</span> <span class="s2">&quot; (&quot;</span> <span class="o">+</span> <span class="n">laser</span><span class="o">.</span><span class="n">recorder</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">channelx</span><span class="o">.</span><span class="n">unit</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;)&quot;</span>
+    <span class="n">y_title</span>           <span class="o">=</span> <span class="n">laser</span><span class="o">.</span><span class="n">recorder</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">channel1</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> \
+                      <span class="o">+</span> <span class="s2">&quot; (&quot;</span> <span class="o">+</span> <span class="n">laser</span><span class="o">.</span><span class="n">recorder</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">channel1</span><span class="o">.</span><span class="n">unit</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;)&quot;</span>
+    <span class="n">Y_title</span>           <span class="o">=</span> <span class="n">laser</span><span class="o">.</span><span class="n">recorder</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">channel2</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> \
+                      <span class="o">+</span> <span class="s2">&quot; (&quot;</span> <span class="o">+</span> <span class="n">laser</span><span class="o">.</span><span class="n">recorder</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">channel2</span><span class="o">.</span><span class="n">unit</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;)&quot;</span>
+    <span class="n">sampling_interval</span> <span class="o">=</span> <span class="n">laser</span><span class="o">.</span><span class="n">recorder</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">recorded_sampling_interval</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+    
+    <span class="c1"># read recorded data in chunks of up to 1024 samples per channel</span>
+    <span class="n">sample_count</span> <span class="o">=</span> <span class="n">laser</span><span class="o">.</span><span class="n">recorder</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">recorded_sample_count</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+    <span class="n">index</span>        <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">index</span> <span class="o">&lt;</span> <span class="n">sample_count</span><span class="p">:</span>
+        <span class="c1"># read a chunk of binary data and convert it into xy arrays</span>
+        <span class="n">new_data</span> <span class="o">=</span> <span class="n">extract_float_arrays</span><span class="p">(</span><span class="s1">&#39;xyY&#39;</span><span class="p">,</span> <span class="n">laser</span><span class="o">.</span><span class="n">recorder</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="mi">1024</span><span class="p">))</span>
+        <span class="n">x</span>       <span class="o">+=</span> <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="s1">&#39;y&#39;</span> <span class="ow">in</span> <span class="n">new_data</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">y</span> <span class="o">+=</span> <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="s1">&#39;Y&#39;</span> <span class="ow">in</span> <span class="n">new_data</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">Y</span> <span class="o">+=</span> <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;Y&#39;</span><span class="p">]</span>
+        <span class="n">index</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">])</span>
+        
+    <span class="c1"># assemble result dictionary</span>
+    <span class="n">result</span>       <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="n">x_title</span><span class="p">,</span> <span class="s1">&#39;data&#39;</span> <span class="p">:</span> <span class="n">x</span><span class="p">}}</span>
+    <span class="n">result</span><span class="p">[</span><span class="s1">&#39;dt&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sampling_interval</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">result</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="n">y_title</span><span class="p">,</span> <span class="s1">&#39;data&#39;</span><span class="p">:</span> <span class="n">y</span><span class="p">}</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">Y</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">result</span><span class="p">[</span><span class="s1">&#39;Y&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="n">Y_title</span><span class="p">,</span> <span class="s1">&#39;data&#39;</span><span class="p">:</span> <span class="n">Y</span><span class="p">}</span>
+        
+    <span class="k">return</span> <span class="n">result</span>
+    
+<span class="k">def</span><span class="w"> </span><span class="nf">save_recorder_data</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Write a dictionary, returned by the get_recorder_data(..) function into</span>
+<span class="sd">    a comma separated file.</span>
+<span class="sd">    First row will contain headers.</span>
+<span class="sd">    First column will contain x-axis values.</span>
+<span class="sd">    Second column will contain y-values of channel1, if available.</span>
+<span class="sd">    Next column will contain y-values of channel2, if available.</span>
+<span class="sd">    Last column will contain sampling time in milliseconds.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">headers</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">headers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">][</span><span class="s1">&#39;title&#39;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="s1">&#39;y&#39;</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">headers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">][</span><span class="s1">&#39;title&#39;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="s1">&#39;Y&#39;</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">headers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Y&#39;</span><span class="p">][</span><span class="s1">&#39;title&#39;</span><span class="p">])</span>
+        <span class="n">headers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;time (ms)&#39;</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">headers</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="n">size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">][</span><span class="s1">&#39;data&#39;</span><span class="p">])</span>
+        <span class="n">dt</span>   <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;dt&#39;</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">size</span><span class="p">):</span>
+            <span class="n">values</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">][</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]))</span>
+            <span class="k">if</span> <span class="s1">&#39;y&#39;</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">][</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]))</span>
+            <span class="k">if</span> <span class="s1">&#39;Y&#39;</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Y&#39;</span><span class="p">][</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]))</span>
+            <span class="n">values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">dt</span> <span class="o">*</span> <span class="n">i</span><span class="p">))</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">values</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">DLCpro</span><span class="p">(</span><span class="n">NetworkConnection</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span> <span class="k">as</span> <span class="n">dlcpro</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">get_recorder_data</span><span class="p">(</span><span class="n">dlcpro</span><span class="o">.</span><span class="n">laser1</span><span class="p">)</span>
+            <span class="n">save_recorder_data</span><span class="p">(</span><span class="s2">&quot;test.csv&quot;</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+            
+
+    <span class="k">except</span> <span class="n">DeviceNotFoundError</span><span class="p">:</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;Device not found&#39;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="simple-data-logger-example">
+<h2>Simple Data Logger Example<a class="headerlink" href="#simple-data-logger-example" title="Link to this heading"></a></h2>
+<p>This example demonstrates how to use the low-level API and the monitoring
+line to realize a simple data logger, periodically saving parameter values
+into a text file.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">toptica.lasersdk.client</span><span class="w"> </span><span class="kn">import</span> <span class="n">Client</span><span class="p">,</span> <span class="n">NetworkConnection</span><span class="p">,</span> <span class="n">DeviceNotFoundError</span><span class="p">,</span> <span class="n">Subscription</span><span class="p">,</span> <span class="n">Timestamp</span><span class="p">,</span> <span class="n">SubscriptionValue</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+
+
+<span class="n">params</span>    <span class="o">=</span> <span class="p">[</span>                               <span class="c1"># list of parameters to be logged</span>
+            <span class="s2">&quot;time&quot;</span><span class="p">,</span> 
+            <span class="s2">&quot;laser1:dl:cc:current-act&quot;</span><span class="p">,</span> 
+            <span class="s2">&quot;laser1:dl:tc:temp-set&quot;</span><span class="p">,</span> 
+            <span class="s2">&quot;laser1:dl:tc:temp-act&quot;</span>
+            <span class="p">]</span>
+                
+<span class="n">interval</span>  <span class="o">=</span> <span class="mf">0.2</span>                             <span class="c1"># sampling interval in seconds</span>
+<span class="n">separator</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span>                            <span class="c1"># separator string for result table</span>
+<span class="n">snapshots</span> <span class="o">=</span> <span class="p">{}</span>                              <span class="c1"># global dictionary for parameter values</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">update_snaptshots</span><span class="p">(</span><span class="n">subscription</span><span class="p">:</span> <span class="n">Subscription</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">:</span> <span class="n">Timestamp</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">SubscriptionValue</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Callback to replace new parameter value in global dictionary&quot;&quot;&quot;</span>
+    <span class="n">snapshots</span><span class="p">[</span><span class="n">subscription</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">print_header</span><span class="p">(</span><span class="n">output</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Print header row of result table. First column is elapsed time since start of logging.</span>
+<span class="sd">    Argument gives file object for writing to.&quot;&quot;&quot;</span>
+    <span class="n">line</span> <span class="o">=</span> <span class="s2">&quot;elapsed time&quot;</span> <span class="o">+</span> <span class="n">separator</span> <span class="o">+</span> <span class="n">separator</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">params</span><span class="p">)</span> 
+    <span class="n">output</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">line</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">print_snapshot</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">elapsed_time</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Print row with current parameters values from global dictionary.</span>
+<span class="sd">    Argument one gives file object for writing to.</span>
+<span class="sd">    Argument two gives elapsed time since start of looging in seconds for first column.&quot;&quot;&quot;</span>
+    <span class="n">line</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{:.3f}{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">elapsed_time</span><span class="p">,</span> <span class="n">separator</span><span class="p">)</span> <span class="o">+</span> <span class="n">separator</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">snapshots</span><span class="p">[</span><span class="n">p</span><span class="p">])</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">params</span><span class="p">])</span>
+    <span class="n">output</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">line</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;usage: python paramlog.py ip-address/serial-number  filename&quot;</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+
+    <span class="n">dlcpro_network_address</span>   <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">log_filename</span>             <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">Client</span><span class="p">(</span><span class="n">NetworkConnection</span><span class="p">(</span><span class="n">dlcpro_network_address</span><span class="p">))</span> <span class="k">as</span> <span class="n">dlc</span><span class="p">:</span>
+            
+            <span class="c1"># Store current value of all parameters in global dictionary</span>
+            <span class="c1"># and subscribe for value changes on monitoring line</span>
+            <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">params</span><span class="p">:</span>
+                <span class="n">snapshots</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> <span class="n">dlc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+                <span class="n">dlc</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">update_snaptshots</span><span class="p">)</span>
+
+            <span class="c1"># Initialize timekeeping</span>
+            <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">next_sampling_due</span>  <span class="o">=</span> <span class="n">start_time</span>
+            
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">log_filename</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="c1"># Initialize result table</span>
+                <span class="n">print_header</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+                <span class="n">print_snapshot</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+                <span class="c1"># Loop until stopped by CTRL-C</span>
+                <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+                    <span class="n">next_sampling_due</span> <span class="o">=</span> <span class="n">next_sampling_due</span> <span class="o">+</span> <span class="n">interval</span>
+                    
+                    <span class="c1"># First wait until 50ms before next sampling is due</span>
+                    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">interval</span> <span class="o">-</span> <span class="mf">0.05</span><span class="p">)</span>
+                    
+                    <span class="c1"># Then process all parameter updates received from the monitoring line so far</span>
+                    <span class="c1"># and continue processing until next sampling is due</span>
+                    <span class="k">while</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">next_sampling_due</span><span class="p">:</span>
+                        <span class="n">dlc</span><span class="o">.</span><span class="n">poll</span><span class="p">()</span>
+                        
+                    <span class="c1"># Finally print snapshot</span>
+                    <span class="n">print_snapshot</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span>
+                
+    <span class="k">except</span> <span class="n">DeviceNotFoundError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Device not found&#39;</span><span class="p">)</span>
+        
+    <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+        <span class="c1"># use CTRL+C to stop logging</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Finished.&quot;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="asynchronous_high_level_api.html" class="btn btn-neutral float-left" title="The Asynchronous High Level API" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="changelog.html" class="btn btn-neutral float-right" title="Changelog" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2018–2025, TOPTICA Photonics SE.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

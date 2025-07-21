@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TOPTICA Python Laser SDK Documentation &mdash; TOPTICA Python Laser SDK 3.3.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=3eb8911e"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Getting Started" href="getting_started.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            TOPTICA Python Laser SDK
+              <img src="_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                3.3.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_connected.html">Getting Connected</a></li>
+<li class="toctree-l1"><a class="reference internal" href="upgrade_to_v3.html">Upgrade to Version 3.x</a></li>
+<li class="toctree-l1"><a class="reference internal" href="low_level_api.html">The Low Level API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="synchronous_high_level_api.html">The Synchronous High Level API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="asynchronous_high_level_api.html">The Asynchronous High Level API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">TOPTICA Python Laser SDK</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">TOPTICA Python Laser SDK Documentation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="toptica-python-laser-sdk-documentation">
+<h1>TOPTICA Python Laser SDK Documentation<a class="headerlink" href="#toptica-python-laser-sdk-documentation" title="Link to this heading"></a></h1>
+<p>The <strong>TOPTICA Python Laser SDK</strong> enables the control of TOPTICA laser products from the Python programming language. It provides the pure Python package <a class="reference external" href="https://pypi.org/project/toptica-lasersdk/">toptica-lasersdk</a> and works on all platforms that are supported by Python.</p>
+<section id="key-features">
+<h2>Key features<a class="headerlink" href="#key-features" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Provides full control over all laser features</p></li>
+<li><p>Ethernet and USB/serial connection</p></li>
+<li><p>Laser device network discovery</p></li>
+<li><p>Simple synchronous low level API</p></li>
+<li><p>Sophisticated high level synchronous/asynchronous APIs</p></li>
+<li><p>Enables code completion for laser parameters in Python IDEs</p></li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This document describes Version 3 of the SDK which introduced some backward incompatible changes compared to previous versions. Please refer to the chapter <a class="reference internal" href="upgrade_to_v3.html#upgrade-to-version-3"><span class="std std-ref">Upgrade to Version 3.x</span></a> for further information. If you need any further assistance, please open a ticket on <a class="reference external" href="https://github.com/toptica/python-lasersdk/issues">GitHub</a>.</p>
+</div>
+</section>
+<section id="contribution">
+<h2>Contribution<a class="headerlink" href="#contribution" title="Link to this heading"></a></h2>
+<p>Bug reports and feature requests are welcome on the <a class="reference external" href="https://github.com/toptica/python-lasersdk/issues">Github project</a>.</p>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#installation">Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="getting_connected.html">Getting Connected</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="getting_connected.html#network-connections">Network Connections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_connected.html#serial-connection">Serial Connection</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="upgrade_to_v3.html">Upgrade to Version 3.x</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="upgrade_to_v3.html#removed-support-for-python-3-5">Removed support for Python 3.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="upgrade_to_v3.html#added-support-for-spyder-and-jupyter">Added support for Spyder and Jupyter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="upgrade_to_v3.html#backward-incompatible-changes">Backward incompatible changes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="low_level_api.html">The Low Level API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="low_level_api.html#client-access-to-parameters">Client Access to Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="low_level_api.html#parameter-subscription">Parameter Subscription</a></li>
+<li class="toctree-l2"><a class="reference internal" href="low_level_api.html#example">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="synchronous_high_level_api.html">The Synchronous High Level API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="synchronous_high_level_api.html#client-access-to-parameters">Client Access to Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="synchronous_high_level_api.html#parameter-subscription">Parameter Subscription</a></li>
+<li class="toctree-l2"><a class="reference internal" href="synchronous_high_level_api.html#example">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="asynchronous_high_level_api.html">The Asynchronous High Level API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="asynchronous_high_level_api.html#example">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#low-level-api-example">Low Level API Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#synchronous-api-example">Synchronous API Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#asynchronous-api-example">Asynchronous API Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#dlc-pro-scope-and-lock-example">DLC pro Scope and Lock Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#dlc-pro-recorder-example">DLC pro Recorder Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#simple-data-logger-example">Simple Data Logger Example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id1">1.0.0 — 2018-02</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id2">1.0.1 — 2018-03</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id3">1.1.0 — 2018-04</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id4">1.2.0 — 2018-08</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id5">1.3.0 — 2019-01</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id6">1.3.1 — 2019-01</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id7">1.4.0 — 2019-02</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id8">2.0.0 — 2019-03</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id9">2.1.0 — 2019-05</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id10">2.2.0 — 2020-04</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id11">2.2.1 — 2020-04</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id12">2.3.0 — 2020-05</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id13">2.4.0 — 2020-10</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id14">2.5.0 — 2020-11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id15">2.6.0 — 2021-05</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id16">2.7.0 — 2021-10</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id17">2.7.1 — 2022-02</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id18">2.8.0 — 2022-04</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id19">3.0.0 — 2022-04</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id20">3.0.1 — 2022-05</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id21">3.1.0 — 2023-03</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id22">3.1.1 — 2023-09</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id23">3.1.2 — 2023-11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id24">3.2.0 — 2024-04</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id25">3.3.0 — 2024-07</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+</section>
+<section id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Link to this heading"></a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="getting_started.html" class="btn btn-neutral float-right" title="Getting Started" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2018–2025, TOPTICA Photonics SE.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

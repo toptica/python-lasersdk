@@ -1,0 +1,196 @@
+.. _upgrade-to-version-3:
+
+Upgrade to Version 3.x
+======================
+
+Python 3.8 deprecated the explicit passing of a *loop* argument in the high-level ``asyncio`` API. It has since been removed from Python 3.10 and later versions.
+
+For this reason the optional loop argument in the ``__init__`` method of the ``NetworkConnection`` and ``SerialConnection`` classes had to be removed as well. Since this change required a new major release of the SDK, the opportunity has been used to make several improvements to the API.
+
+The following sections list all notable changes compared to the previous 2.x releases.
+
+
+Removed support for Python 3.5
+------------------------------
+Due to several changes in the ``asyncio`` library in recent Python releases, the support for Python 3.5 has been removed. The SDK now requires Python 3.6 or later.
+
+
+Added support for Spyder and Jupyter
+------------------------------------
+The SDK uses Python’s ``asyncio`` library for all device communication. In software (notably `Spyder <https://www.spyder-ide.org/>`_ and `Jupyter <https://jupyter.org/>`_) that already uses an event loop to run Python code, it was not possible to use the synchronous API (*"RuntimeError: This event loop is already running"*).
+
+Several internal improvements have been made to support this use case. The previously recommended ``nest_asyncio`` package is now unnecessary and can be removed.
+
+
+Backward incompatible changes
+-----------------------------
+
+This section lists all backward incompatible changes to the API and their respective replacements.
+
+
+:py:class:`toptica.lasersdk.asyncio.connection.Connection`
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The optional *loop* argument of the ``__init__`` method of the ``NetworkConnection`` and ``SerialConnection`` classes has been removed. ``asyncio.get_event_loop()`` is now used in all cases where access to the event loop is required.
+
+.. code-block:: python
+
+    # Previous versions
+    def __init__(self, ..., loop: asyncio.AbstractEventLoop = None)
+
+    # Since version 3.0
+    def __init__(self, ...)
+
+
+The ``monitoring_line_supported`` property has been renamed to ``monitoring_line_available`` to more clearly reflect its behaviour.
+
+.. code-block:: python
+
+    # Previous versions
+    def monitoring_line_supported(self) -> bool
+
+    # Since version 3.0
+    def monitoring_line_available(self) -> bool
+
+
+:py:class:`toptica.lasersdk.client.Client`
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The ``set`` method no longer raises an exception when a device emits a warning. It now returns the code of the warning as an *int* (errors continue to raise an exception).
+
+.. code-block:: python
+
+    # Previous versions
+    def set(self, param_name: str, *param_values: DecopType) -> None
+    
+    # Since version 3.0
+    def set(self, param_name: str, *param_values: DecopType) -> int
+
+
+The *param_type* argument of the ``subscribe`` method is now optional; if it is not provided the type is inferred from the data sent by the device. The *callback* argument is now required (it was previously optional). The order of both arguments has been swapped.
+
+.. code-block:: python
+
+    # Previous versions
+    def subscribe(self, param_name: str, param_type: DecopMetaType, callback: DecopCallback = None) -> Subscription
+
+    # Since version 3.0
+    def subscribe(self, param_name: str, callback: DecopCallback, param_type: DecopMetaType = None) -> Subscription
+
+
+:py:class:`toptica.lasersdk.asyncio.client.Client`
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The ``set`` method no longer raises an exception when a device emits a warning. It now returns the code of the warning as an *int* (errors continue to raise an exception).
+
+.. code-block:: python
+
+    # Previous versions
+    def set(self, param_name: str, *param_values: DecopType) -> None
+
+    # Since Version 3.0
+    def set(self, param_name: str, *param_values: DecopType) -> int
+
+
+The *param_type* argument of the ``subscribe`` method is now optional; if it is not provided the type is inferred from the data sent by the device. The optional *callback* argument has been removed.
+
+.. code-block:: python
+
+    # Previous versions
+    async def subscribe(self, param_name: str, param_type: DecopMetaType, callback: DecopCallback = None) -> Subscription
+
+    # Since Version 3.0
+    async def subscribe(self, param_name: str, param_type: DecopMetaType = None) -> Subscription
+
+
+:py:class:`toptica.lasersdk.client.Subscription`
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The *callback* argument of the ``__init__`` method is now required (it was previously optional).
+
+.. code-block:: python
+
+    # Previous versions
+    def __init__(self, client: Client, name: str, callback: DecopCallback = None) -> None
+
+    # Since version 3.0
+    def __init__(self, client: Client, name: str, callback: DecopCallback) -> None
+
+
+The *value* and *exc* arguments of the ``update`` method have been merged to more clearly indicate that only one of them can be valid at a time. The ``update`` method can now be *awaited*.
+
+.. code-block:: python
+
+    # Previous versions
+    def update(self, timestamp: datetime, value: DecopType, exc: DecopError = None) -> None
+
+    # Since version 3.0
+    def update(self, timestamp: Timestamp, value: SubscriptionValue) -> None
+
+
+:py:class:`toptica.lasersdk.asyncio.client.Subscription`
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The optional *callback* argument of the ``__init__`` method has been removed.
+
+.. code-block:: python
+
+    # Previous versions
+    def __init__(self, client: Client, name: str, callback: DecopCallback = None) -> None
+
+    # Since Version 3.0
+    def __init__(self, client: Client, name: str) -> None
+
+
+The *value* and *exc* arguments of the ``update`` method have been merged to more clearly indicate that only one of them can be valid at a time. The ``update`` method can now be *awaited*.
+
+.. code-block:: python
+
+    # Previous versions
+    def update(self, timestamp: datetime, value: DecopType, exc: DecopError = None) -> None
+
+    # Since Version 3.0
+    async def update(self, timestamp: Timestamp, value: SubscriptionValue) -> None
+
+
+:py:class:`toptica.lasersdk.[asyncio].client.MutableDecop\<Type\>|SettableDecop\<Type\>`
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The ``set`` method of all mutable and settable DeCoP type classes (``MutableDecopInteger``, ``SettableDecopString``, etc.) no longer raises an exception when a device emits a warning. It now returns the code of the warning as an *int* (errors continue to raise an exception).
+
+.. code-block:: python
+
+    # Previous versions
+    def set(self, value: int) -> None
+
+    # Since Version 3.0
+    def set(self, value: int) -> int
+
+
+:py:class:`toptica.lasersdk.client.[Mutable|Settable]Decop\<Type\>`
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The *callback* argument of the ``subscribe`` method of all DeCoP type classes (``DecopInteger``, ``MutableDecopString``, etc.) is now required (this applies only to the synchronous version of the API).
+
+.. code-block:: python
+
+    # Previous versions
+    def subscribe(self, callback: DecopCallback = None) -> Subscription
+
+    # Since version 3.0
+    def subscribe(self, callback: DecopCallback) -> Subscription
+
+
+:py:class:`toptica.lasersdk.asyncio.client.MutableDecop\<Type\>|SettableDecop\<Type\>`
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The *callback* argument of the ``subscribe`` method of all async DeCoP type classes (``DecopInteger``, ``MutableDecopString``, etc.) has been removed.
+
+.. code-block:: python
+
+    # Previous versions
+    async def subscribe(self, callback: DecopCallback = None) -> Subscription
+
+    # Since version 3.0
+    async def subscribe(self) -> Subscription
+

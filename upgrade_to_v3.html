@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Upgrade to Version 3.x &mdash; TOPTICA Python Laser SDK 3.3.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=3eb8911e"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="The Low Level API" href="low_level_api.html" />
+    <link rel="prev" title="Getting Connected" href="getting_connected.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            TOPTICA Python Laser SDK
+              <img src="_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                3.3.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_connected.html">Getting Connected</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Upgrade to Version 3.x</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#removed-support-for-python-3-5">Removed support for Python 3.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#added-support-for-spyder-and-jupyter">Added support for Spyder and Jupyter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#backward-incompatible-changes">Backward incompatible changes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#toptica-lasersdk-asyncio-connection-connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">toptica.lasersdk.asyncio.connection.Connection</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#toptica-lasersdk-client-client"><code class="xref py py-class docutils literal notranslate"><span class="pre">toptica.lasersdk.client.Client</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#toptica-lasersdk-asyncio-client-client"><code class="xref py py-class docutils literal notranslate"><span class="pre">toptica.lasersdk.asyncio.client.Client</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#toptica-lasersdk-client-subscription"><code class="xref py py-class docutils literal notranslate"><span class="pre">toptica.lasersdk.client.Subscription</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#toptica-lasersdk-asyncio-client-subscription"><code class="xref py py-class docutils literal notranslate"><span class="pre">toptica.lasersdk.asyncio.client.Subscription</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#toptica-lasersdk-asyncio-client-mutabledecop-type-settabledecop-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">toptica.lasersdk.[asyncio].client.MutableDecop&lt;Type&gt;|SettableDecop&lt;Type&gt;</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#toptica-lasersdk-client-mutable-settable-decop-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">toptica.lasersdk.client.[Mutable|Settable]Decop&lt;Type&gt;</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id1"><code class="xref py py-class docutils literal notranslate"><span class="pre">toptica.lasersdk.asyncio.client.MutableDecop&lt;Type&gt;|SettableDecop&lt;Type&gt;</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="low_level_api.html">The Low Level API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="synchronous_high_level_api.html">The Synchronous High Level API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="asynchronous_high_level_api.html">The Asynchronous High Level API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">TOPTICA Python Laser SDK</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Upgrade to Version 3.x</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/upgrade_to_v3.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="upgrade-to-version-3-x">
+<span id="upgrade-to-version-3"></span><h1>Upgrade to Version 3.x<a class="headerlink" href="#upgrade-to-version-3-x" title="Link to this heading"></a></h1>
+<p>Python 3.8 deprecated the explicit passing of a <em>loop</em> argument in the high-level <code class="docutils literal notranslate"><span class="pre">asyncio</span></code> API. It has since been removed from Python 3.10 and later versions.</p>
+<p>For this reason the optional loop argument in the <code class="docutils literal notranslate"><span class="pre">__init__</span></code> method of the <code class="docutils literal notranslate"><span class="pre">NetworkConnection</span></code> and <code class="docutils literal notranslate"><span class="pre">SerialConnection</span></code> classes had to be removed as well. Since this change required a new major release of the SDK, the opportunity has been used to make several improvements to the API.</p>
+<p>The following sections list all notable changes compared to the previous 2.x releases.</p>
+<section id="removed-support-for-python-3-5">
+<h2>Removed support for Python 3.5<a class="headerlink" href="#removed-support-for-python-3-5" title="Link to this heading"></a></h2>
+<p>Due to several changes in the <code class="docutils literal notranslate"><span class="pre">asyncio</span></code> library in recent Python releases, the support for Python 3.5 has been removed. The SDK now requires Python 3.6 or later.</p>
+</section>
+<section id="added-support-for-spyder-and-jupyter">
+<h2>Added support for Spyder and Jupyter<a class="headerlink" href="#added-support-for-spyder-and-jupyter" title="Link to this heading"></a></h2>
+<p>The SDK uses Python’s <code class="docutils literal notranslate"><span class="pre">asyncio</span></code> library for all device communication. In software (notably <a class="reference external" href="https://www.spyder-ide.org/">Spyder</a> and <a class="reference external" href="https://jupyter.org/">Jupyter</a>) that already uses an event loop to run Python code, it was not possible to use the synchronous API (<em>“RuntimeError: This event loop is already running”</em>).</p>
+<p>Several internal improvements have been made to support this use case. The previously recommended <code class="docutils literal notranslate"><span class="pre">nest_asyncio</span></code> package is now unnecessary and can be removed.</p>
+</section>
+<section id="backward-incompatible-changes">
+<h2>Backward incompatible changes<a class="headerlink" href="#backward-incompatible-changes" title="Link to this heading"></a></h2>
+<p>This section lists all backward incompatible changes to the API and their respective replacements.</p>
+<section id="toptica-lasersdk-asyncio-connection-connection">
+<h3><code class="xref py py-class docutils literal notranslate"><span class="pre">toptica.lasersdk.asyncio.connection.Connection</span></code><a class="headerlink" href="#toptica-lasersdk-asyncio-connection-connection" title="Link to this heading"></a></h3>
+<p>The optional <em>loop</em> argument of the <code class="docutils literal notranslate"><span class="pre">__init__</span></code> method of the <code class="docutils literal notranslate"><span class="pre">NetworkConnection</span></code> and <code class="docutils literal notranslate"><span class="pre">SerialConnection</span></code> classes has been removed. <code class="docutils literal notranslate"><span class="pre">asyncio.get_event_loop()</span></code> is now used in all cases where access to the event loop is required.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Previous versions</span>
+<span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="n">loop</span><span class="p">:</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">AbstractEventLoop</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
+
+<span class="c1"># Since version 3.0</span>
+<span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">monitoring_line_supported</span></code> property has been renamed to <code class="docutils literal notranslate"><span class="pre">monitoring_line_available</span></code> to more clearly reflect its behaviour.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Previous versions</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">monitoring_line_supported</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span>
+
+<span class="c1"># Since version 3.0</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">monitoring_line_available</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span>
+</pre></div>
+</div>
+</section>
+<section id="toptica-lasersdk-client-client">
+<h3><code class="xref py py-class docutils literal notranslate"><span class="pre">toptica.lasersdk.client.Client</span></code><a class="headerlink" href="#toptica-lasersdk-client-client" title="Link to this heading"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">set</span></code> method no longer raises an exception when a device emits a warning. It now returns the code of the warning as an <em>int</em> (errors continue to raise an exception).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Previous versions</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="n">param_values</span><span class="p">:</span> <span class="n">DecopType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+
+<span class="c1"># Since version 3.0</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="n">param_values</span><span class="p">:</span> <span class="n">DecopType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span>
+</pre></div>
+</div>
+<p>The <em>param_type</em> argument of the <code class="docutils literal notranslate"><span class="pre">subscribe</span></code> method is now optional; if it is not provided the type is inferred from the data sent by the device. The <em>callback</em> argument is now required (it was previously optional). The order of both arguments has been swapped.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Previous versions</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">subscribe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">param_type</span><span class="p">:</span> <span class="n">DecopMetaType</span><span class="p">,</span> <span class="n">callback</span><span class="p">:</span> <span class="n">DecopCallback</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Subscription</span>
+
+<span class="c1"># Since version 3.0</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">subscribe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">callback</span><span class="p">:</span> <span class="n">DecopCallback</span><span class="p">,</span> <span class="n">param_type</span><span class="p">:</span> <span class="n">DecopMetaType</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Subscription</span>
+</pre></div>
+</div>
+</section>
+<section id="toptica-lasersdk-asyncio-client-client">
+<h3><code class="xref py py-class docutils literal notranslate"><span class="pre">toptica.lasersdk.asyncio.client.Client</span></code><a class="headerlink" href="#toptica-lasersdk-asyncio-client-client" title="Link to this heading"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">set</span></code> method no longer raises an exception when a device emits a warning. It now returns the code of the warning as an <em>int</em> (errors continue to raise an exception).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Previous versions</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="n">param_values</span><span class="p">:</span> <span class="n">DecopType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+
+<span class="c1"># Since Version 3.0</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="n">param_values</span><span class="p">:</span> <span class="n">DecopType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span>
+</pre></div>
+</div>
+<p>The <em>param_type</em> argument of the <code class="docutils literal notranslate"><span class="pre">subscribe</span></code> method is now optional; if it is not provided the type is inferred from the data sent by the device. The optional <em>callback</em> argument has been removed.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Previous versions</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">subscribe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">param_type</span><span class="p">:</span> <span class="n">DecopMetaType</span><span class="p">,</span> <span class="n">callback</span><span class="p">:</span> <span class="n">DecopCallback</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Subscription</span>
+
+<span class="c1"># Since Version 3.0</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">subscribe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">param_type</span><span class="p">:</span> <span class="n">DecopMetaType</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Subscription</span>
+</pre></div>
+</div>
+</section>
+<section id="toptica-lasersdk-client-subscription">
+<h3><code class="xref py py-class docutils literal notranslate"><span class="pre">toptica.lasersdk.client.Subscription</span></code><a class="headerlink" href="#toptica-lasersdk-client-subscription" title="Link to this heading"></a></h3>
+<p>The <em>callback</em> argument of the <code class="docutils literal notranslate"><span class="pre">__init__</span></code> method is now required (it was previously optional).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Previous versions</span>
+<span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">callback</span><span class="p">:</span> <span class="n">DecopCallback</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+
+<span class="c1"># Since version 3.0</span>
+<span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">callback</span><span class="p">:</span> <span class="n">DecopCallback</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+</pre></div>
+</div>
+<p>The <em>value</em> and <em>exc</em> arguments of the <code class="docutils literal notranslate"><span class="pre">update</span></code> method have been merged to more clearly indicate that only one of them can be valid at a time. The <code class="docutils literal notranslate"><span class="pre">update</span></code> method can now be <em>awaited</em>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Previous versions</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">:</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">DecopType</span><span class="p">,</span> <span class="n">exc</span><span class="p">:</span> <span class="n">DecopError</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+
+<span class="c1"># Since version 3.0</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">:</span> <span class="n">Timestamp</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">SubscriptionValue</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+</pre></div>
+</div>
+</section>
+<section id="toptica-lasersdk-asyncio-client-subscription">
+<h3><code class="xref py py-class docutils literal notranslate"><span class="pre">toptica.lasersdk.asyncio.client.Subscription</span></code><a class="headerlink" href="#toptica-lasersdk-asyncio-client-subscription" title="Link to this heading"></a></h3>
+<p>The optional <em>callback</em> argument of the <code class="docutils literal notranslate"><span class="pre">__init__</span></code> method has been removed.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Previous versions</span>
+<span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">callback</span><span class="p">:</span> <span class="n">DecopCallback</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+
+<span class="c1"># Since Version 3.0</span>
+<span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+</pre></div>
+</div>
+<p>The <em>value</em> and <em>exc</em> arguments of the <code class="docutils literal notranslate"><span class="pre">update</span></code> method have been merged to more clearly indicate that only one of them can be valid at a time. The <code class="docutils literal notranslate"><span class="pre">update</span></code> method can now be <em>awaited</em>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Previous versions</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">:</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">DecopType</span><span class="p">,</span> <span class="n">exc</span><span class="p">:</span> <span class="n">DecopError</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+
+<span class="c1"># Since Version 3.0</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">:</span> <span class="n">Timestamp</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">SubscriptionValue</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+</pre></div>
+</div>
+</section>
+<section id="toptica-lasersdk-asyncio-client-mutabledecop-type-settabledecop-type">
+<h3><code class="xref py py-class docutils literal notranslate"><span class="pre">toptica.lasersdk.[asyncio].client.MutableDecop&lt;Type&gt;|SettableDecop&lt;Type&gt;</span></code><a class="headerlink" href="#toptica-lasersdk-asyncio-client-mutabledecop-type-settabledecop-type" title="Link to this heading"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">set</span></code> method of all mutable and settable DeCoP type classes (<code class="docutils literal notranslate"><span class="pre">MutableDecopInteger</span></code>, <code class="docutils literal notranslate"><span class="pre">SettableDecopString</span></code>, etc.) no longer raises an exception when a device emits a warning. It now returns the code of the warning as an <em>int</em> (errors continue to raise an exception).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Previous versions</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+
+<span class="c1"># Since Version 3.0</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span>
+</pre></div>
+</div>
+</section>
+<section id="toptica-lasersdk-client-mutable-settable-decop-type">
+<h3><code class="xref py py-class docutils literal notranslate"><span class="pre">toptica.lasersdk.client.[Mutable|Settable]Decop&lt;Type&gt;</span></code><a class="headerlink" href="#toptica-lasersdk-client-mutable-settable-decop-type" title="Link to this heading"></a></h3>
+<p>The <em>callback</em> argument of the <code class="docutils literal notranslate"><span class="pre">subscribe</span></code> method of all DeCoP type classes (<code class="docutils literal notranslate"><span class="pre">DecopInteger</span></code>, <code class="docutils literal notranslate"><span class="pre">MutableDecopString</span></code>, etc.) is now required (this applies only to the synchronous version of the API).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Previous versions</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">subscribe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">:</span> <span class="n">DecopCallback</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Subscription</span>
+
+<span class="c1"># Since version 3.0</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">subscribe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">:</span> <span class="n">DecopCallback</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Subscription</span>
+</pre></div>
+</div>
+</section>
+<section id="id1">
+<h3><code class="xref py py-class docutils literal notranslate"><span class="pre">toptica.lasersdk.asyncio.client.MutableDecop&lt;Type&gt;|SettableDecop&lt;Type&gt;</span></code><a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<p>The <em>callback</em> argument of the <code class="docutils literal notranslate"><span class="pre">subscribe</span></code> method of all async DeCoP type classes (<code class="docutils literal notranslate"><span class="pre">DecopInteger</span></code>, <code class="docutils literal notranslate"><span class="pre">MutableDecopString</span></code>, etc.) has been removed.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Previous versions</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">subscribe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">:</span> <span class="n">DecopCallback</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Subscription</span>
+
+<span class="c1"># Since version 3.0</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">subscribe</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Subscription</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="getting_connected.html" class="btn btn-neutral float-left" title="Getting Connected" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="low_level_api.html" class="btn btn-neutral float-right" title="The Low Level API" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2018–2025, TOPTICA Photonics SE.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

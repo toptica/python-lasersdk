@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Getting Connected &mdash; TOPTICA Python Laser SDK 3.3.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=3eb8911e"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Upgrade to Version 3.x" href="upgrade_to_v3.html" />
+    <link rel="prev" title="Getting Started" href="getting_started.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            TOPTICA Python Laser SDK
+              <img src="_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                3.3.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Getting Connected</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#network-connections">Network Connections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#serial-connection">Serial Connection</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="upgrade_to_v3.html">Upgrade to Version 3.x</a></li>
+<li class="toctree-l1"><a class="reference internal" href="low_level_api.html">The Low Level API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="synchronous_high_level_api.html">The Synchronous High Level API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="asynchronous_high_level_api.html">The Asynchronous High Level API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">TOPTICA Python Laser SDK</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Getting Connected</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/getting_connected.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="getting-connected">
+<h1>Getting Connected<a class="headerlink" href="#getting-connected" title="Link to this heading"></a></h1>
+<p>Communicating with a system requires in most cases two classes: a <em>Device</em> class and a <em>Connection</em> class. The <em>Device</em> class contains all parameters and functions of a device (e.g. a laser controller), the <em>Connection</em> class handles the data transfer between the <em>Device</em> class and the hardware.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">toptica.lasersdk.dlcpro.v2_2_0</span><span class="w"> </span><span class="kn">import</span> <span class="n">DLCpro</span><span class="p">,</span> <span class="n">NetworkConnection</span>
+
+<span class="c1"># This example prints the current uptime of a DLC pro. It does so by importing</span>
+<span class="c1"># two classes: DLCpro is the device class (for firmware version 2.2.0) and</span>
+<span class="c1"># NetworkConnection is the connection class for Ethernet-capable devices.</span>
+
+<span class="c1"># Note: The with-statement automatically calls open() and close()</span>
+<span class="c1">#       of the connection class at the appropriate times.</span>
+
+<span class="k">with</span> <span class="n">DLCpro</span><span class="p">(</span><span class="n">NetworkConnection</span><span class="p">(</span><span class="s1">&#39;192.168.178.1&#39;</span><span class="p">))</span> <span class="k">as</span> <span class="n">dlc</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">dlc</span><span class="o">.</span><span class="n">uptime_txt</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The SDK contains a generic device class for every laser that can be controlled by a DLC pro. For more complex systems that combine different types of hardware (e.g. lasers, frequency combs, cesium clocks, wavelength meters, etc.) a specialized device class is shipped on the USB stick containing the control software and documentation.</p>
+</div>
+<section id="network-connections">
+<h2>Network Connections<a class="headerlink" href="#network-connections" title="Link to this heading"></a></h2>
+<p>A <code class="xref py py-class docutils literal notranslate"><span class="pre">NetworkConnection</span></code> can be used for all devices supporting Ethernet or for software that acts as a server. For most devices two connections on different TCP ports are maintained internally: a general connection which handles reading/writing parameters (the <em>command line</em>) and a second connection which allows subscribing to parameter changes (the <em>monitoring line</em>).</p>
+<p><strong>Required parameter</strong></p>
+<dl>
+<dt><em>host: str</em></dt><dd><p>A system label or serial number (e.g. <em>iCHROME-MLE-30631</em>), an IP address (e.g. <em>192.168.178.32</em>) or a DNS hostname (<em>dfc_core.example.com</em>).</p>
+<p>When using a serial number or system label a UDP broadcast is sent to the network to find the device. This will only work when the computer running the Python code and the device share the same network segment / VLAN or when UDP broadcasts are forwarded across network segments. IP addresses or DNS hostnames, however, will always work as long as there is a route in the network.</p>
+</dd>
+</dl>
+<p><strong>Optional parameter</strong></p>
+<dl class="simple">
+<dt><em>command_line_port: int = 1998</em></dt><dd><p>The TCP port of the command line connection (default is 1998).</p>
+</dd>
+<dt><em>monitoring_line_port: int = 1999</em></dt><dd><p>The TCP port of the monitoring line connection (default is 1999).</p>
+</dd>
+<dt><em>timeout: int = 5</em></dt><dd><p>The timeout for each operation in seconds (default is 5s).</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Most devices use as default TCP port 1998 for the command line connection and TCP port 1999 for the monitoring line connection. It’s therefore sufficient to use the default values of these parameters.</p>
+<p>The exception are multi-laser engines from the iChrome family. They don’t have a monitoring line and use as default TCP port 50000 for the command line connection. It’s therefore necessary to either set <em>command_line_port=50000</em> and <em>monitoring_line_port=0</em> or use the system label or serial number of the device, as this will use the correct ports from the response of the device.</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># This examples shows some of the different ways to define a NetworkConnection.</span>
+
+<span class="c1"># Note: For most devices and connection settings it isn&#39;t necessary to</span>
+<span class="c1">#       manually provide the correct TCP ports.</span>
+
+<span class="c1"># DFC CORE+ via DNS entry (using the default TCP ports)</span>
+<span class="n">NetworkConnection</span><span class="p">(</span><span class="s1">&#39;dfc_core_11002.example.com&#39;</span><span class="p">)</span>
+
+<span class="c1"># DLC pro via IP address (using the default TCP ports)</span>
+<span class="n">NetworkConnection</span><span class="p">(</span><span class="s1">&#39;192.168.178.12&#39;</span><span class="p">)</span>
+
+<span class="c1"># iChrome MLE via its serial number (using TCP ports reported by the device)</span>
+<span class="n">NetworkConnection</span><span class="p">(</span><span class="s1">&#39;iCHROME-MLE-30631&#39;</span><span class="p">)</span>
+
+<span class="c1"># iChrome MLE via IP address (requires specifying the TCP ports)</span>
+<span class="n">NetworkConnection</span><span class="p">(</span><span class="s1">&#39;192.168.178.32&#39;</span><span class="p">,</span> <span class="n">command_line_port</span><span class="o">=</span><span class="mi">50000</span><span class="p">,</span> <span class="n">monitoring_line_port</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+</section>
+<section id="serial-connection">
+<h2>Serial Connection<a class="headerlink" href="#serial-connection" title="Link to this heading"></a></h2>
+<p>A <code class="xref py py-class docutils literal notranslate"><span class="pre">SerialConnection</span></code> class can be used for all devices supporting RS-232 or USB (which in turn will create a virtual RS-232 port). Serial connections only support a single command line but no monitoring line (i.e. it’s not possible to subscribe to parameter changes).</p>
+<p><strong>Required parameter</strong></p>
+<dl class="simple">
+<dt><em>Port: str</em></dt><dd><p>The name of the serial port (e.g. <em>COM1</em> or <em>/dev/ttyS0</em>).</p>
+</dd>
+</dl>
+<p><strong>Optional parameter</strong></p>
+<dl class="simple">
+<dt><em>Baudrate: int = 115200</em></dt><dd><p>The number of transferred bits per second (default is 115200).</p>
+</dd>
+<dt><em>Timeout: int = 5</em></dt><dd><p>The timeout for each operation in seconds (default is 5s).</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>All devices supported by this library use a default baud rate of 115200 with eight data bits, no parity bit and one stop bit (8-N-1). Therefore it’s sufficient to only provide a port unless the baud rate of the device has been changed manually.</p>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="getting_started.html" class="btn btn-neutral float-left" title="Getting Started" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="upgrade_to_v3.html" class="btn btn-neutral float-right" title="Upgrade to Version 3.x" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2018–2025, TOPTICA Photonics SE.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,50 @@
+lasersdk package
+================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   lasersdk.asyncio
+   lasersdk.dlcpro
+   lasersdk.ichrome_cle
+   lasersdk.ichrome_fle
+   lasersdk.ichrome_mle
+   lasersdk.utils
+
+Submodules
+----------
+
+lasersdk.client module
+----------------------
+
+.. automodule:: lasersdk.client
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+lasersdk.decop module
+---------------------
+
+.. automodule:: lasersdk.decop
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+lasersdk.parameter module
+-------------------------
+
+.. automodule:: lasersdk.parameter
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: lasersdk
+   :members:
+   :undoc-members:
+   :show-inheritance:
