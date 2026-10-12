@@ -1,0 +1,91 @@
+Getting Connected
+=================
+
+Communicating with a system requires in most cases two classes: a *Device* class and a *Connection* class. The *Device* class contains all parameters and functions of a device (e.g. a laser controller), the *Connection* class handles the data transfer between the *Device* class and the hardware.
+
+.. code-block:: python
+
+    from toptica.lasersdk.dlcpro.v2_2_0 import DLCpro, NetworkConnection
+
+    # This example prints the current uptime of a DLC pro. It does so by importing
+    # two classes: DLCpro is the device class (for firmware version 2.2.0) and
+    # NetworkConnection is the connection class for Ethernet-capable devices.
+
+    # Note: The with-statement automatically calls open() and close()
+    #       of the connection class at the appropriate times.
+
+    with DLCpro(NetworkConnection('192.168.178.1')) as dlc:
+        print(dlc.uptime_txt.get())
+
+.. note:: The SDK contains a generic device class for every laser that can be controlled by a DLC pro. For more complex systems that combine different types of hardware (e.g. lasers, frequency combs, cesium clocks, wavelength meters, etc.) a specialized device class is shipped on the USB stick containing the control software and documentation.
+
+Network Connections
+-------------------
+
+A :py:class:`~toptica.lasersdk.asyncio.connection.NetworkConnection` can be used for all devices supporting Ethernet or for software that acts as a server. For most devices two connections on different TCP ports are maintained internally: a general connection which handles reading/writing parameters (the *command line*) and a second connection which allows subscribing to parameter changes (the *monitoring line*).
+
+
+**Required parameter**
+
+*host: str*
+  A system label or serial number (e.g. *iCHROME-MLE-30631*), an IP address (e.g. *192.168.178.32*) or a DNS hostname (*dfc_core.example.com*).
+
+  When using a serial number or system label a UDP broadcast is sent to the network to find the device. This will only work when the computer running the Python code and the device share the same network segment / VLAN or when UDP broadcasts are forwarded across network segments. IP addresses or DNS hostnames, however, will always work as long as there is a route in the network.
+
+
+**Optional parameter**
+
+*command_line_port: int = 1998*
+  The TCP port of the command line connection (default is 1998).
+
+*monitoring_line_port: int = 1999*
+  The TCP port of the monitoring line connection (default is 1999).
+
+*timeout: int = 5*
+  The timeout for each operation in seconds (default is 5s).
+
+.. note:: Most devices use as default TCP port 1998 for the command line connection and TCP port 1999 for the monitoring line connection. It's therefore sufficient to use the default values of these parameters.
+
+  The exception are multi-laser engines from the iChrome family. They don't have a monitoring line and use as default TCP port 50000 for the command line connection. It's therefore necessary to either set *command_line_port=50000* and *monitoring_line_port=0* or use the system label or serial number of the device, as this will use the correct ports from the response of the device.
+
+    .. code-block:: python
+
+        # This examples shows some of the different ways to define a NetworkConnection.
+
+        # Note: For most devices and connection settings it isn't necessary to
+        #       manually provide the correct TCP ports.
+
+        # DFC CORE+ via DNS entry (using the default TCP ports)
+        NetworkConnection('dfc_core_11002.example.com')
+
+        # DLC pro via IP address (using the default TCP ports)
+        NetworkConnection('192.168.178.12')
+
+        # iChrome MLE via its serial number (using TCP ports reported by the device)
+        NetworkConnection('iCHROME-MLE-30631')
+
+        # iChrome MLE via IP address (requires specifying the TCP ports)
+        NetworkConnection('192.168.178.32', command_line_port=50000, monitoring_line_port=0)
+
+
+Serial Connection
+-----------------
+
+A :py:class:`~toptica.lasersdk.asyncio.connection.SerialConnection` class can be used for all devices supporting RS-232 or USB (which in turn will create a virtual RS-232 port). Serial connections only support a single command line but no monitoring line (i.e. it's not possible to subscribe to parameter changes).
+
+**Required parameter**
+
+*Port: str*
+  The name of the serial port (e.g. *COM1* or */dev/ttyS0*).
+
+**Optional parameter**
+
+*Baudrate: int = 115200*
+  The number of transferred bits per second (default is 115200).
+
+*Timeout: int = 5*
+  The timeout for each operation in seconds (default is 5s).
+
+.. note:: All devices supported by this library use a default baud rate of 115200 with eight data bits, no parity bit and one stop bit (8-N-1). Therefore it's sufficient to only provide a port unless the baud rate of the device has been changed manually.
+
+

@@ -1,0 +1,49 @@
+.. toptica documentation master file, created by
+   sphinx-quickstart on Mon Oct 30 16:55:40 2017.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+TOPTICA Python Laser SDK Documentation
+======================================
+
+The **TOPTICA Python Laser SDK** enables the control of TOPTICA laser products from the Python programming language. It provides the pure Python package `toptica-lasersdk <https://pypi.org/project/toptica-lasersdk/>`_ and works on all platforms that are supported by Python.
+
+Key features
+------------
+
+* Provides full control over all laser features
+* Ethernet and USB/serial connection
+* Laser device network discovery
+* Simple synchronous low level API
+* Sophisticated high level synchronous/asynchronous APIs
+* Enables code completion for laser parameters in Python IDEs
+
+.. warning::
+   This document describes Version 3 of the SDK which introduced some backward incompatible changes compared to previous versions. Please refer to the chapter :ref:`upgrade-to-version-3` for further information. If you need any further assistance, please open a ticket on `GitHub <https://github.com/toptica/python-lasersdk/issues>`_.
+
+Contribution
+------------
+
+Bug reports and feature requests are welcome on the `Github project`_.
+
+.. _Github project: https://github.com/toptica/python-lasersdk/issues
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+
+   getting_started
+   getting_connected
+   upgrade_to_v3
+   low_level_api
+   synchronous_high_level_api
+   asynchronous_high_level_api
+   examples
+   changelog   
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`

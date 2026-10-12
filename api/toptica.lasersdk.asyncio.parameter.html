@@ -1,0 +1,1284 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>toptica.lasersdk.asyncio.parameter module &mdash; TOPTICA Python Laser SDK  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            TOPTICA Python Laser SDK
+              <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_connected.html">Getting Connected</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../upgrade_to_v3.html">Upgrade to Version 3.x</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../low_level_api.html">The Low Level API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../synchronous_high_level_api.html">The Synchronous High Level API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../asynchronous_high_level_api.html">The Asynchronous High Level API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">TOPTICA Python Laser SDK</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">toptica.lasersdk.asyncio.parameter module</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-toptica.lasersdk.asyncio.parameter">
+<span id="toptica-lasersdk-asyncio-parameter-module"></span><h1>toptica.lasersdk.asyncio.parameter module<a class="headerlink" href="#module-toptica.lasersdk.asyncio.parameter" title="Link to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.DecopBinary">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">toptica.lasersdk.asyncio.parameter.</span></span><span class="sig-name descname"><span class="pre">DecopBinary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="toptica.lasersdk.asyncio.client.html#toptica.lasersdk.asyncio.client.Client" title="toptica.lasersdk.asyncio.client.Client"><span class="pre">Client</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.DecopBinary" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A read-only DeCoP binary parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>client</strong> (<a class="reference internal" href="toptica.lasersdk.asyncio.client.html#toptica.lasersdk.asyncio.client.Client" title="toptica.lasersdk.asyncio.client.Client"><em>Client</em></a>) – A DeCoP client that is used to access the parameter on a device.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – The fully qualified name of the parameter (e.g. ‘laser1:amp:ontime’).</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.DecopBinary.get">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bytes</span></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.DecopBinary.get" title="Link to this definition"></a></dt>
+<dd><p>Returns the current value of the parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The current value of the parameter.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>bytes</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.DecopBinary.name">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.DecopBinary.name" title="Link to this definition"></a></dt>
+<dd><p>The fully qualified name of the parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.DecopBinary.subscribe">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">subscribe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="toptica.lasersdk.asyncio.client.html#toptica.lasersdk.asyncio.client.Subscription" title="toptica.lasersdk.asyncio.client.Subscription"><span class="pre">Subscription</span></a></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.DecopBinary.subscribe" title="Link to this definition"></a></dt>
+<dd><p>Creates a subscription to the value changes of the parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>interval</strong> (<em>int</em><em> | </em><em>None</em>) – The minimum update interval (in milliseconds).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A subscription to the value changes of the parameter.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="toptica.lasersdk.asyncio.client.html#toptica.lasersdk.asyncio.client.Subscription" title="toptica.lasersdk.asyncio.client.Subscription">Subscription</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.DecopBoolean">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">toptica.lasersdk.asyncio.parameter.</span></span><span class="sig-name descname"><span class="pre">DecopBoolean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="toptica.lasersdk.asyncio.client.html#toptica.lasersdk.asyncio.client.Client" title="toptica.lasersdk.asyncio.client.Client"><span class="pre">Client</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.DecopBoolean" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A read-only boolean parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>client</strong> (<a class="reference internal" href="toptica.lasersdk.asyncio.client.html#toptica.lasersdk.asyncio.client.Client" title="toptica.lasersdk.asyncio.client.Client"><em>Client</em></a>) – A client that is used to access the parameter.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – The fully qualified name of the parameter (e.g. ‘laser1:amp:ontime’).</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.DecopBoolean.get">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.DecopBoolean.get" title="Link to this definition"></a></dt>
+<dd><p>Returns the current value of the parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The current value of the parameter.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.DecopBoolean.name">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.DecopBoolean.name" title="Link to this definition"></a></dt>
+<dd><p>The fully qualified name of the parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.DecopBoolean.subscribe">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">subscribe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="toptica.lasersdk.asyncio.client.html#toptica.lasersdk.asyncio.client.Subscription" title="toptica.lasersdk.asyncio.client.Subscription"><span class="pre">Subscription</span></a></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.DecopBoolean.subscribe" title="Link to this definition"></a></dt>
+<dd><p>Creates a subscription to the value changes of the parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>interval</strong> (<em>int</em><em> | </em><em>None</em>) – The minimum update interval (in milliseconds).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A subscription to the value changes of the parameter.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="toptica.lasersdk.asyncio.client.html#toptica.lasersdk.asyncio.client.Subscription" title="toptica.lasersdk.asyncio.client.Subscription">Subscription</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.DecopInteger">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">toptica.lasersdk.asyncio.parameter.</span></span><span class="sig-name descname"><span class="pre">DecopInteger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="toptica.lasersdk.asyncio.client.html#toptica.lasersdk.asyncio.client.Client" title="toptica.lasersdk.asyncio.client.Client"><span class="pre">Client</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.DecopInteger" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A read-only DeCoP integer parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>client</strong> (<a class="reference internal" href="toptica.lasersdk.asyncio.client.html#toptica.lasersdk.asyncio.client.Client" title="toptica.lasersdk.asyncio.client.Client"><em>Client</em></a>) – A DeCoP client that is used to access the parameter on a device.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – The fully qualified name of the parameter (e.g. ‘laser1:amp:ontime’).</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.DecopInteger.get">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.DecopInteger.get" title="Link to this definition"></a></dt>
+<dd><p>Returns the current value of the parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The current value of the parameter.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.DecopInteger.name">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.DecopInteger.name" title="Link to this definition"></a></dt>
+<dd><p>The fully qualified name of the parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.DecopInteger.subscribe">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">subscribe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="toptica.lasersdk.asyncio.client.html#toptica.lasersdk.asyncio.client.Subscription" title="toptica.lasersdk.asyncio.client.Subscription"><span class="pre">Subscription</span></a></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.DecopInteger.subscribe" title="Link to this definition"></a></dt>
+<dd><p>Creates a subscription to the value changes of the parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>interval</strong> (<em>int</em><em> | </em><em>None</em>) – The minimum update interval (in milliseconds).</p></li>
+<li><p><strong>threshold</strong> (<em>int</em><em> | </em><em>None</em>) – The minimum change of the value for an update.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A subscription to the value changes of the parameter.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="toptica.lasersdk.asyncio.client.html#toptica.lasersdk.asyncio.client.Subscription" title="toptica.lasersdk.asyncio.client.Subscription">Subscription</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.DecopReal">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">toptica.lasersdk.asyncio.parameter.</span></span><span class="sig-name descname"><span class="pre">DecopReal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="toptica.lasersdk.asyncio.client.html#toptica.lasersdk.asyncio.client.Client" title="toptica.lasersdk.asyncio.client.Client"><span class="pre">Client</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.DecopReal" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A read-only DeCoP floating point parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>client</strong> (<a class="reference internal" href="toptica.lasersdk.asyncio.client.html#toptica.lasersdk.asyncio.client.Client" title="toptica.lasersdk.asyncio.client.Client"><em>Client</em></a>) – A DeCoP client that is used to access the parameter on a device.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – The fully qualified name of the parameter (e.g. ‘laser1:amp:ontime’).</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.DecopReal.get">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.DecopReal.get" title="Link to this definition"></a></dt>
+<dd><p>Returns the current value of the parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The current value of the parameter.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.DecopReal.name">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.DecopReal.name" title="Link to this definition"></a></dt>
+<dd><p>The fully qualified name of the parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.DecopReal.subscribe">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">subscribe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="toptica.lasersdk.asyncio.client.html#toptica.lasersdk.asyncio.client.Subscription" title="toptica.lasersdk.asyncio.client.Subscription"><span class="pre">Subscription</span></a></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.DecopReal.subscribe" title="Link to this definition"></a></dt>
+<dd><p>Creates a subscription to the value changes of the parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>interval</strong> (<em>int</em><em> | </em><em>None</em>) – The minimum update interval (in milliseconds).</p></li>
+<li><p><strong>threshold</strong> (<em>float</em><em> | </em><em>None</em>) – The minimum change of the value for an update.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A subscription to updates of the parameter.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="toptica.lasersdk.asyncio.client.html#toptica.lasersdk.asyncio.client.Subscription" title="toptica.lasersdk.asyncio.client.Subscription">Subscription</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.DecopString">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">toptica.lasersdk.asyncio.parameter.</span></span><span class="sig-name descname"><span class="pre">DecopString</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="toptica.lasersdk.asyncio.client.html#toptica.lasersdk.asyncio.client.Client" title="toptica.lasersdk.asyncio.client.Client"><span class="pre">Client</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.DecopString" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A read-only DeCoP string parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>client</strong> (<a class="reference internal" href="toptica.lasersdk.asyncio.client.html#toptica.lasersdk.asyncio.client.Client" title="toptica.lasersdk.asyncio.client.Client"><em>Client</em></a>) – A DeCoP client that is used to access the parameter on a device.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – The fully qualified name of the parameter (e.g. ‘laser1:amp:ontime’).</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.DecopString.get">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.DecopString.get" title="Link to this definition"></a></dt>
+<dd><p>Returns the current value of the parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The current value of the parameter.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.DecopString.name">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.DecopString.name" title="Link to this definition"></a></dt>
+<dd><p>The fully qualified name of the parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.DecopString.subscribe">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">subscribe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="toptica.lasersdk.asyncio.client.html#toptica.lasersdk.asyncio.client.Subscription" title="toptica.lasersdk.asyncio.client.Subscription"><span class="pre">Subscription</span></a></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.DecopString.subscribe" title="Link to this definition"></a></dt>
+<dd><p>Creates a subscription to the value changes of the parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>interval</strong> (<em>int</em><em> | </em><em>None</em>) – The minimum update interval (in milliseconds).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A subscription to the value changes of the parameter.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="toptica.lasersdk.asyncio.client.html#toptica.lasersdk.asyncio.client.Subscription" title="toptica.lasersdk.asyncio.client.Subscription">Subscription</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.MutableDecopBinary">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">toptica.lasersdk.asyncio.parameter.</span></span><span class="sig-name descname"><span class="pre">MutableDecopBinary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="toptica.lasersdk.asyncio.client.html#toptica.lasersdk.asyncio.client.Client" title="toptica.lasersdk.asyncio.client.Client"><span class="pre">Client</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.MutableDecopBinary" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A read/write DeCoP binary parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>client</strong> (<a class="reference internal" href="toptica.lasersdk.asyncio.client.html#toptica.lasersdk.asyncio.client.Client" title="toptica.lasersdk.asyncio.client.Client"><em>Client</em></a>) – A DeCoP client that is used to access the parameter on a device.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – The fully qualified name of the parameter (e.g. ‘laser1:amp:ontime’).</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.MutableDecopBinary.get">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bytes</span></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.MutableDecopBinary.get" title="Link to this definition"></a></dt>
+<dd><p>Returns the current value of the parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The current value of the parameter.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>bytes</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.MutableDecopBinary.name">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.MutableDecopBinary.name" title="Link to this definition"></a></dt>
+<dd><p>The fully qualified name of the parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.MutableDecopBinary.set">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">bytearray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.MutableDecopBinary.set" title="Link to this definition"></a></dt>
+<dd><p>Updates the value of the parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>value</strong> (<em>bytes</em><em> | </em><em>bytearray</em>) – The new value of the parameter.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Zero if successful or a positive integer indicating a warning.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="toptica.lasersdk.asyncio.connection.html#toptica.lasersdk.asyncio.connection.UnavailableError" title="toptica.lasersdk.asyncio.connection.UnavailableError"><strong>UnavailableError</strong></a> – If the connection is closed or the command line is not available.</p></li>
+<li><p><a class="reference internal" href="toptica.lasersdk.decop.html#toptica.lasersdk.decop.DecopError" title="toptica.lasersdk.decop.DecopError"><strong>DecopError</strong></a> – If the device returned an error when setting the new value.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.MutableDecopBinary.subscribe">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">subscribe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="toptica.lasersdk.asyncio.client.html#toptica.lasersdk.asyncio.client.Subscription" title="toptica.lasersdk.asyncio.client.Subscription"><span class="pre">Subscription</span></a></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.MutableDecopBinary.subscribe" title="Link to this definition"></a></dt>
+<dd><p>Creates a subscription to the value changes of the parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>interval</strong> (<em>int</em><em> | </em><em>None</em>) – The minimum update interval (in milliseconds).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A subscription to updates of the parameter.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="toptica.lasersdk.asyncio.client.html#toptica.lasersdk.asyncio.client.Subscription" title="toptica.lasersdk.asyncio.client.Subscription">Subscription</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.MutableDecopBoolean">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">toptica.lasersdk.asyncio.parameter.</span></span><span class="sig-name descname"><span class="pre">MutableDecopBoolean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="toptica.lasersdk.asyncio.client.html#toptica.lasersdk.asyncio.client.Client" title="toptica.lasersdk.asyncio.client.Client"><span class="pre">Client</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.MutableDecopBoolean" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A read/write DeCoP boolean parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>client</strong> (<a class="reference internal" href="toptica.lasersdk.asyncio.client.html#toptica.lasersdk.asyncio.client.Client" title="toptica.lasersdk.asyncio.client.Client"><em>Client</em></a>) – A DeCoP client that is used to access the parameter on a device.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – The fully qualified name of the parameter (e.g. ‘laser1:amp:ontime’).</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.MutableDecopBoolean.get">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.MutableDecopBoolean.get" title="Link to this definition"></a></dt>
+<dd><p>Returns the current value of the parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The current value of the parameter.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.MutableDecopBoolean.name">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.MutableDecopBoolean.name" title="Link to this definition"></a></dt>
+<dd><p>The fully qualified name of the parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.MutableDecopBoolean.set">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.MutableDecopBoolean.set" title="Link to this definition"></a></dt>
+<dd><p>Updates the value of the parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>value</strong> (<em>bool</em>) – The new value of the parameter.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Zero if successful or a positive integer indicating a warning.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="toptica.lasersdk.asyncio.connection.html#toptica.lasersdk.asyncio.connection.UnavailableError" title="toptica.lasersdk.asyncio.connection.UnavailableError"><strong>UnavailableError</strong></a> – If the connection is closed or the command line is not available.</p></li>
+<li><p><a class="reference internal" href="toptica.lasersdk.decop.html#toptica.lasersdk.decop.DecopError" title="toptica.lasersdk.decop.DecopError"><strong>DecopError</strong></a> – If the device returned an error when setting the new value.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.MutableDecopBoolean.subscribe">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">subscribe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="toptica.lasersdk.asyncio.client.html#toptica.lasersdk.asyncio.client.Subscription" title="toptica.lasersdk.asyncio.client.Subscription"><span class="pre">Subscription</span></a></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.MutableDecopBoolean.subscribe" title="Link to this definition"></a></dt>
+<dd><p>Creates a subscription to the value changes of the parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>interval</strong> (<em>int</em><em> | </em><em>None</em>) – The minimum update interval (in milliseconds).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A subscription to the value changes of the parameter.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="toptica.lasersdk.asyncio.client.html#toptica.lasersdk.asyncio.client.Subscription" title="toptica.lasersdk.asyncio.client.Subscription">Subscription</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.MutableDecopInteger">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">toptica.lasersdk.asyncio.parameter.</span></span><span class="sig-name descname"><span class="pre">MutableDecopInteger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="toptica.lasersdk.asyncio.client.html#toptica.lasersdk.asyncio.client.Client" title="toptica.lasersdk.asyncio.client.Client"><span class="pre">Client</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.MutableDecopInteger" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A read/write DeCoP integer parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>client</strong> (<a class="reference internal" href="toptica.lasersdk.asyncio.client.html#toptica.lasersdk.asyncio.client.Client" title="toptica.lasersdk.asyncio.client.Client"><em>Client</em></a>) – A DeCoP client that is used to access the parameter on a device.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – The fully qualified name of the parameter (e.g. ‘laser1:amp:ontime’).</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.MutableDecopInteger.get">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.MutableDecopInteger.get" title="Link to this definition"></a></dt>
+<dd><p>Returns the current value of the parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The current value of the parameter.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.MutableDecopInteger.name">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.MutableDecopInteger.name" title="Link to this definition"></a></dt>
+<dd><p>The fully qualified name of the parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.MutableDecopInteger.set">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.MutableDecopInteger.set" title="Link to this definition"></a></dt>
+<dd><p>Updates the value of the parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>value</strong> (<em>int</em>) – The new value of the parameter.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Zero if successful or a positive integer indicating a warning.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="toptica.lasersdk.asyncio.connection.html#toptica.lasersdk.asyncio.connection.UnavailableError" title="toptica.lasersdk.asyncio.connection.UnavailableError"><strong>UnavailableError</strong></a> – If the connection is closed or the command line is not available.</p></li>
+<li><p><a class="reference internal" href="toptica.lasersdk.decop.html#toptica.lasersdk.decop.DecopError" title="toptica.lasersdk.decop.DecopError"><strong>DecopError</strong></a> – If the device returned an error when setting the new value.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.MutableDecopInteger.subscribe">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">subscribe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="toptica.lasersdk.asyncio.client.html#toptica.lasersdk.asyncio.client.Subscription" title="toptica.lasersdk.asyncio.client.Subscription"><span class="pre">Subscription</span></a></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.MutableDecopInteger.subscribe" title="Link to this definition"></a></dt>
+<dd><p>Creates a subscription to the value changes of the parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>interval</strong> (<em>int</em><em> | </em><em>None</em>) – The minimum update interval (in milliseconds).</p></li>
+<li><p><strong>threshold</strong> (<em>int</em><em> | </em><em>None</em>) – The minimum change of the value for an update.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A subscription to the value changes of the parameter.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="toptica.lasersdk.asyncio.client.html#toptica.lasersdk.asyncio.client.Subscription" title="toptica.lasersdk.asyncio.client.Subscription">Subscription</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.MutableDecopReal">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">toptica.lasersdk.asyncio.parameter.</span></span><span class="sig-name descname"><span class="pre">MutableDecopReal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="toptica.lasersdk.asyncio.client.html#toptica.lasersdk.asyncio.client.Client" title="toptica.lasersdk.asyncio.client.Client"><span class="pre">Client</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.MutableDecopReal" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A read/write DeCoP floating point parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>client</strong> (<a class="reference internal" href="toptica.lasersdk.asyncio.client.html#toptica.lasersdk.asyncio.client.Client" title="toptica.lasersdk.asyncio.client.Client"><em>Client</em></a>) – A DeCoP client that is used to access the parameter on a device.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – The fully qualified name of the parameter (e.g. ‘laser1:amp:ontime’).</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.MutableDecopReal.get">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.MutableDecopReal.get" title="Link to this definition"></a></dt>
+<dd><p>Returns the current value of the parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The current value of the parameter.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.MutableDecopReal.name">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.MutableDecopReal.name" title="Link to this definition"></a></dt>
+<dd><p>The fully qualified name of the parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.MutableDecopReal.set">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsFloat</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.MutableDecopReal.set" title="Link to this definition"></a></dt>
+<dd><p>Updates the value of the parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>value</strong> (<em>SupportsFloat</em>) – The new value of the parameter.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Zero if successful or a positive integer indicating a warning.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="toptica.lasersdk.asyncio.connection.html#toptica.lasersdk.asyncio.connection.UnavailableError" title="toptica.lasersdk.asyncio.connection.UnavailableError"><strong>UnavailableError</strong></a> – If the connection is closed or the command line is not available.</p></li>
+<li><p><a class="reference internal" href="toptica.lasersdk.decop.html#toptica.lasersdk.decop.DecopError" title="toptica.lasersdk.decop.DecopError"><strong>DecopError</strong></a> – If the device returned an error when setting the new value.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.MutableDecopReal.subscribe">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">subscribe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="toptica.lasersdk.asyncio.client.html#toptica.lasersdk.asyncio.client.Subscription" title="toptica.lasersdk.asyncio.client.Subscription"><span class="pre">Subscription</span></a></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.MutableDecopReal.subscribe" title="Link to this definition"></a></dt>
+<dd><p>Creates a subscription to the value changes of the parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>interval</strong> (<em>int</em><em> | </em><em>None</em>) – The minimum update interval (in milliseconds).</p></li>
+<li><p><strong>threshold</strong> (<em>float</em><em> | </em><em>None</em>) – The minimum change of the value for an update.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A subscription to the value changes of the parameter.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="toptica.lasersdk.asyncio.client.html#toptica.lasersdk.asyncio.client.Subscription" title="toptica.lasersdk.asyncio.client.Subscription">Subscription</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.MutableDecopString">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">toptica.lasersdk.asyncio.parameter.</span></span><span class="sig-name descname"><span class="pre">MutableDecopString</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="toptica.lasersdk.asyncio.client.html#toptica.lasersdk.asyncio.client.Client" title="toptica.lasersdk.asyncio.client.Client"><span class="pre">Client</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.MutableDecopString" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A read/write DeCoP string parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>client</strong> (<a class="reference internal" href="toptica.lasersdk.asyncio.client.html#toptica.lasersdk.asyncio.client.Client" title="toptica.lasersdk.asyncio.client.Client"><em>Client</em></a>) – A DeCoP client that is used to access the parameter on a device.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – The fully qualified name of the parameter (e.g. ‘laser1:amp:ontime’).</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.MutableDecopString.get">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.MutableDecopString.get" title="Link to this definition"></a></dt>
+<dd><p>Returns the current value of the parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The current value of the parameter.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.MutableDecopString.name">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.MutableDecopString.name" title="Link to this definition"></a></dt>
+<dd><p>The fully qualified name of the parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.MutableDecopString.set">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.MutableDecopString.set" title="Link to this definition"></a></dt>
+<dd><p>Updates the value of the parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>value</strong> (<em>str</em>) – The new value of the parameter.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Zero if successful or a positive integer indicating a warning.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="toptica.lasersdk.asyncio.connection.html#toptica.lasersdk.asyncio.connection.UnavailableError" title="toptica.lasersdk.asyncio.connection.UnavailableError"><strong>UnavailableError</strong></a> – If the connection is closed or the command line is not available.</p></li>
+<li><p><a class="reference internal" href="toptica.lasersdk.decop.html#toptica.lasersdk.decop.DecopError" title="toptica.lasersdk.decop.DecopError"><strong>DecopError</strong></a> – If the device returned an error when setting the new value.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.MutableDecopString.subscribe">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">subscribe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="toptica.lasersdk.asyncio.client.html#toptica.lasersdk.asyncio.client.Subscription" title="toptica.lasersdk.asyncio.client.Subscription"><span class="pre">Subscription</span></a></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.MutableDecopString.subscribe" title="Link to this definition"></a></dt>
+<dd><p>Creates a subscription to the value changes of the parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>interval</strong> (<em>int</em><em> | </em><em>None</em>) – The minimum update interval (in milliseconds).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A subscription to the value changes of the parameter.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="toptica.lasersdk.asyncio.client.html#toptica.lasersdk.asyncio.client.Subscription" title="toptica.lasersdk.asyncio.client.Subscription">Subscription</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.SettableDecopBinary">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">toptica.lasersdk.asyncio.parameter.</span></span><span class="sig-name descname"><span class="pre">SettableDecopBinary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="toptica.lasersdk.asyncio.client.html#toptica.lasersdk.asyncio.client.Client" title="toptica.lasersdk.asyncio.client.Client"><span class="pre">Client</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.SettableDecopBinary" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A settable DeCoP binary parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>client</strong> (<a class="reference internal" href="toptica.lasersdk.asyncio.client.html#toptica.lasersdk.asyncio.client.Client" title="toptica.lasersdk.asyncio.client.Client"><em>Client</em></a>) – A DeCoP client that is used to access the parameter on a device</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – The fully qualified name of the parameter (e.g. ‘laser1:amp:ontime’)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.SettableDecopBinary.get">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bytes</span></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.SettableDecopBinary.get" title="Link to this definition"></a></dt>
+<dd><p>Returns the current value of the parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The current value of the parameter.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>bytes</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.SettableDecopBinary.get_set_value">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">get_set_value</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bytes</span></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.SettableDecopBinary.get_set_value" title="Link to this definition"></a></dt>
+<dd><p>Returns the current set-value of the parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The current set-value of the parameter.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>bytes</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.SettableDecopBinary.name">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.SettableDecopBinary.name" title="Link to this definition"></a></dt>
+<dd><p>The fully qualified name of the parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.SettableDecopBinary.set">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">bytearray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.SettableDecopBinary.set" title="Link to this definition"></a></dt>
+<dd><p>Updates the value of the parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>value</strong> (<em>bytes</em><em> | </em><em>bytearray</em>) – The new value of the parameter.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Zero if successful or a positive integer indicating a warning.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="toptica.lasersdk.asyncio.connection.html#toptica.lasersdk.asyncio.connection.UnavailableError" title="toptica.lasersdk.asyncio.connection.UnavailableError"><strong>UnavailableError</strong></a> – If the connection is closed or the command line is not available.</p></li>
+<li><p><a class="reference internal" href="toptica.lasersdk.decop.html#toptica.lasersdk.decop.DecopError" title="toptica.lasersdk.decop.DecopError"><strong>DecopError</strong></a> – If the device returned an error when setting the new value.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.SettableDecopBinary.subscribe">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">subscribe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="toptica.lasersdk.asyncio.client.html#toptica.lasersdk.asyncio.client.Subscription" title="toptica.lasersdk.asyncio.client.Subscription"><span class="pre">Subscription</span></a></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.SettableDecopBinary.subscribe" title="Link to this definition"></a></dt>
+<dd><p>Creates a subscription to the value changes of the parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>interval</strong> (<em>int</em><em> | </em><em>None</em>) – The minimum update interval (in milliseconds).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A subscription to the value changes of the parameter.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="toptica.lasersdk.asyncio.client.html#toptica.lasersdk.asyncio.client.Subscription" title="toptica.lasersdk.asyncio.client.Subscription">Subscription</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.SettableDecopBoolean">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">toptica.lasersdk.asyncio.parameter.</span></span><span class="sig-name descname"><span class="pre">SettableDecopBoolean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="toptica.lasersdk.asyncio.client.html#toptica.lasersdk.asyncio.client.Client" title="toptica.lasersdk.asyncio.client.Client"><span class="pre">Client</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.SettableDecopBoolean" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A settable DeCoP boolean parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>client</strong> (<a class="reference internal" href="toptica.lasersdk.asyncio.client.html#toptica.lasersdk.asyncio.client.Client" title="toptica.lasersdk.asyncio.client.Client"><em>Client</em></a>) – A DeCoP client that is used to access the parameter on a device.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – The fully qualified name of the parameter (e.g. ‘laser1:amp:ontime’).</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.SettableDecopBoolean.get">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.SettableDecopBoolean.get" title="Link to this definition"></a></dt>
+<dd><p>Returns the current value of the parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The current value of the parameter.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.SettableDecopBoolean.get_set_value">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">get_set_value</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.SettableDecopBoolean.get_set_value" title="Link to this definition"></a></dt>
+<dd><p>Returns the current set-value of the parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The current set-value of the parameter.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.SettableDecopBoolean.name">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.SettableDecopBoolean.name" title="Link to this definition"></a></dt>
+<dd><p>The fully qualified name of the parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.SettableDecopBoolean.set">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.SettableDecopBoolean.set" title="Link to this definition"></a></dt>
+<dd><p>Updates the value of the parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>value</strong> (<em>bool</em>) – The new value of the parameter.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Zero if successful or a positive integer indicating a warning.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="toptica.lasersdk.asyncio.connection.html#toptica.lasersdk.asyncio.connection.UnavailableError" title="toptica.lasersdk.asyncio.connection.UnavailableError"><strong>UnavailableError</strong></a> – If the connection is closed or the command line is not available.</p></li>
+<li><p><a class="reference internal" href="toptica.lasersdk.decop.html#toptica.lasersdk.decop.DecopError" title="toptica.lasersdk.decop.DecopError"><strong>DecopError</strong></a> – If the device returned an error when setting the new value.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.SettableDecopBoolean.subscribe">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">subscribe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="toptica.lasersdk.asyncio.client.html#toptica.lasersdk.asyncio.client.Subscription" title="toptica.lasersdk.asyncio.client.Subscription"><span class="pre">Subscription</span></a></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.SettableDecopBoolean.subscribe" title="Link to this definition"></a></dt>
+<dd><p>Creates a subscription to the value changes of the parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>interval</strong> (<em>int</em><em> | </em><em>None</em>) – The minimum update interval (in milliseconds).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A subscription to the value changes of the parameter.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="toptica.lasersdk.asyncio.client.html#toptica.lasersdk.asyncio.client.Subscription" title="toptica.lasersdk.asyncio.client.Subscription">Subscription</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.SettableDecopInteger">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">toptica.lasersdk.asyncio.parameter.</span></span><span class="sig-name descname"><span class="pre">SettableDecopInteger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="toptica.lasersdk.asyncio.client.html#toptica.lasersdk.asyncio.client.Client" title="toptica.lasersdk.asyncio.client.Client"><span class="pre">Client</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.SettableDecopInteger" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A settable DeCoP integer parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>client</strong> (<a class="reference internal" href="toptica.lasersdk.asyncio.client.html#toptica.lasersdk.asyncio.client.Client" title="toptica.lasersdk.asyncio.client.Client"><em>Client</em></a>) – A DeCoP client that is used to access the parameter on a device.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – The fully qualified name of the parameter (e.g. ‘laser1:amp:ontime’).</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.SettableDecopInteger.get">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.SettableDecopInteger.get" title="Link to this definition"></a></dt>
+<dd><p>Returns the current value of the parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The current value of the parameter.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.SettableDecopInteger.get_set_value">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">get_set_value</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.SettableDecopInteger.get_set_value" title="Link to this definition"></a></dt>
+<dd><p>Returns the current set-value of the parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The current set-value of the parameter.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.SettableDecopInteger.name">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.SettableDecopInteger.name" title="Link to this definition"></a></dt>
+<dd><p>The fully qualified name of the parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.SettableDecopInteger.set">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.SettableDecopInteger.set" title="Link to this definition"></a></dt>
+<dd><p>Updates the value of the parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>value</strong> (<em>int</em>) – The new value of the parameter.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Zero if successful or a positive integer indicating a warning.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="toptica.lasersdk.asyncio.connection.html#toptica.lasersdk.asyncio.connection.UnavailableError" title="toptica.lasersdk.asyncio.connection.UnavailableError"><strong>UnavailableError</strong></a> – If the connection is closed or the command line is not available.</p></li>
+<li><p><a class="reference internal" href="toptica.lasersdk.decop.html#toptica.lasersdk.decop.DecopError" title="toptica.lasersdk.decop.DecopError"><strong>DecopError</strong></a> – If the device returned an error when setting the new value.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.SettableDecopInteger.subscribe">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">subscribe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="toptica.lasersdk.asyncio.client.html#toptica.lasersdk.asyncio.client.Subscription" title="toptica.lasersdk.asyncio.client.Subscription"><span class="pre">Subscription</span></a></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.SettableDecopInteger.subscribe" title="Link to this definition"></a></dt>
+<dd><p>Creates a subscription to the value changes of the parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>interval</strong> (<em>int</em><em> | </em><em>None</em>) – The minimum update interval (in milliseconds).</p></li>
+<li><p><strong>threshold</strong> (<em>int</em><em> | </em><em>None</em>) – The minimum change of the value for an update.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A subscription to the value changes of the parameter.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="toptica.lasersdk.asyncio.client.html#toptica.lasersdk.asyncio.client.Subscription" title="toptica.lasersdk.asyncio.client.Subscription">Subscription</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.SettableDecopReal">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">toptica.lasersdk.asyncio.parameter.</span></span><span class="sig-name descname"><span class="pre">SettableDecopReal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="toptica.lasersdk.asyncio.client.html#toptica.lasersdk.asyncio.client.Client" title="toptica.lasersdk.asyncio.client.Client"><span class="pre">Client</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.SettableDecopReal" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A settable DeCoP floating point parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>client</strong> (<a class="reference internal" href="toptica.lasersdk.asyncio.client.html#toptica.lasersdk.asyncio.client.Client" title="toptica.lasersdk.asyncio.client.Client"><em>Client</em></a>) – A DeCoP client that is used to access the parameter on a device.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – The fully qualified name of the parameter (e.g. ‘laser1:amp:ontime’).</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.SettableDecopReal.get">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.SettableDecopReal.get" title="Link to this definition"></a></dt>
+<dd><p>Returns the current value of the parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The current value of the parameter.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.SettableDecopReal.get_set_value">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">get_set_value</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.SettableDecopReal.get_set_value" title="Link to this definition"></a></dt>
+<dd><p>Returns the current set-value of the parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The current set-value of the parameter.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.SettableDecopReal.name">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.SettableDecopReal.name" title="Link to this definition"></a></dt>
+<dd><p>The fully qualified name of the parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.SettableDecopReal.set">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SupportsFloat</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.SettableDecopReal.set" title="Link to this definition"></a></dt>
+<dd><p>Updates the value of the parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>value</strong> (<em>SupportsFloat</em>) – The new value of the parameter.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Zero if successful or a positive integer indicating a warning.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="toptica.lasersdk.asyncio.connection.html#toptica.lasersdk.asyncio.connection.UnavailableError" title="toptica.lasersdk.asyncio.connection.UnavailableError"><strong>UnavailableError</strong></a> – If the connection is closed or the command line is not available.</p></li>
+<li><p><a class="reference internal" href="toptica.lasersdk.decop.html#toptica.lasersdk.decop.DecopError" title="toptica.lasersdk.decop.DecopError"><strong>DecopError</strong></a> – If the device returned an error when setting the new value.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.SettableDecopReal.subscribe">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">subscribe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="toptica.lasersdk.asyncio.client.html#toptica.lasersdk.asyncio.client.Subscription" title="toptica.lasersdk.asyncio.client.Subscription"><span class="pre">Subscription</span></a></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.SettableDecopReal.subscribe" title="Link to this definition"></a></dt>
+<dd><p>Creates a subscription to the value changes of the parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>interval</strong> (<em>int</em><em> | </em><em>None</em>) – The minimum update interval (in milliseconds).</p></li>
+<li><p><strong>threshold</strong> (<em>float</em><em> | </em><em>None</em>) – The minimum change of the value for an update.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A subscription to the value changes of the parameter.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="toptica.lasersdk.asyncio.client.html#toptica.lasersdk.asyncio.client.Subscription" title="toptica.lasersdk.asyncio.client.Subscription">Subscription</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.SettableDecopString">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">toptica.lasersdk.asyncio.parameter.</span></span><span class="sig-name descname"><span class="pre">SettableDecopString</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="toptica.lasersdk.asyncio.client.html#toptica.lasersdk.asyncio.client.Client" title="toptica.lasersdk.asyncio.client.Client"><span class="pre">Client</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.SettableDecopString" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A settable DeCoP string parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>client</strong> (<a class="reference internal" href="toptica.lasersdk.asyncio.client.html#toptica.lasersdk.asyncio.client.Client" title="toptica.lasersdk.asyncio.client.Client"><em>Client</em></a>) – A DeCoP client that is used to access the parameter on a device.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – The fully qualified name of the parameter (e.g. ‘laser1:amp:ontime’).</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.SettableDecopString.get">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.SettableDecopString.get" title="Link to this definition"></a></dt>
+<dd><p>Returns the current value of the parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The current value of the parameter.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.SettableDecopString.get_set_value">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">get_set_value</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.SettableDecopString.get_set_value" title="Link to this definition"></a></dt>
+<dd><p>Returns the current set-value of the parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The current set-value of the parameter.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.SettableDecopString.name">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.SettableDecopString.name" title="Link to this definition"></a></dt>
+<dd><p>The fully qualified name of the parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.SettableDecopString.set">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.SettableDecopString.set" title="Link to this definition"></a></dt>
+<dd><p>Updates the value of the parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>value</strong> (<em>str</em>) – The new value of the parameter.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Zero if successful or a positive integer indicating a warning.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="toptica.lasersdk.asyncio.connection.html#toptica.lasersdk.asyncio.connection.UnavailableError" title="toptica.lasersdk.asyncio.connection.UnavailableError"><strong>UnavailableError</strong></a> – If the connection is closed or the command line is not available.</p></li>
+<li><p><a class="reference internal" href="toptica.lasersdk.decop.html#toptica.lasersdk.decop.DecopError" title="toptica.lasersdk.decop.DecopError"><strong>DecopError</strong></a> – If the device returned an error when setting the new value.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.parameter.SettableDecopString.subscribe">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">subscribe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="toptica.lasersdk.asyncio.client.html#toptica.lasersdk.asyncio.client.Subscription" title="toptica.lasersdk.asyncio.client.Subscription"><span class="pre">Subscription</span></a></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.parameter.SettableDecopString.subscribe" title="Link to this definition"></a></dt>
+<dd><p>Creates a subscription to the value changes of the parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>interval</strong> (<em>int</em><em> | </em><em>None</em>) – The minimum update interval (in milliseconds).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A subscription to the value changes of the parameter.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="toptica.lasersdk.asyncio.client.html#toptica.lasersdk.asyncio.client.Subscription" title="toptica.lasersdk.asyncio.client.Subscription">Subscription</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2018–2025, TOPTICA Photonics SE.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

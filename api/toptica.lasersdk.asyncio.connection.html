@@ -1,0 +1,624 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>toptica.lasersdk.asyncio.connection module &mdash; TOPTICA Python Laser SDK  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            TOPTICA Python Laser SDK
+              <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_connected.html">Getting Connected</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../upgrade_to_v3.html">Upgrade to Version 3.x</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../low_level_api.html">The Low Level API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../synchronous_high_level_api.html">The Synchronous High Level API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../asynchronous_high_level_api.html">The Asynchronous High Level API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">TOPTICA Python Laser SDK</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">toptica.lasersdk.asyncio.connection module</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-toptica.lasersdk.asyncio.connection">
+<span id="toptica-lasersdk-asyncio-connection-module"></span><h1>toptica.lasersdk.asyncio.connection module<a class="headerlink" href="#module-toptica.lasersdk.asyncio.connection" title="Link to this heading"></a></h1>
+<dl class="py exception">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.connection.BufferOverflowError">
+<span class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">toptica.lasersdk.asyncio.connection.</span></span><span class="sig-name descname"><span class="pre">BufferOverflowError</span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.connection.BufferOverflowError" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="toptica.lasersdk.decop.html#toptica.lasersdk.decop.DecopError" title="toptica.lasersdk.decop.DecopError"><code class="xref py py-class docutils literal notranslate"><span class="pre">DecopError</span></code></a></p>
+<p>An exception that is raised when the amount of received data exceeds the size of the internal buffer.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.connection.Connection">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">toptica.lasersdk.asyncio.connection.</span></span><span class="sig-name descname"><span class="pre">Connection</span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.connection.Connection" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>An abstract base class for connection objects.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.connection.Connection.close">
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.connection.Connection.close" title="Link to this definition"></a></dt>
+<dd><p>Closes the connection to a device.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.connection.Connection.command_line_available">
+<span class="property"><span class="k"><span class="pre">abstract</span></span><span class="w"> </span><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">command_line_available</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.connection.Connection.command_line_available" title="Link to this definition"></a></dt>
+<dd><p>True if the command line is available, False otherwise.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.connection.Connection.is_open">
+<span class="property"><span class="k"><span class="pre">abstract</span></span><span class="w"> </span><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">is_open</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.connection.Connection.is_open" title="Link to this definition"></a></dt>
+<dd><p>True if the connection is open, False otherwise.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.connection.Connection.loop">
+<span class="property"><span class="k"><span class="pre">abstract</span></span><span class="w"> </span><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">loop</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">AbstractEventLoop</span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.connection.Connection.loop" title="Link to this definition"></a></dt>
+<dd><p>The event loop used by the connection.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>AbstractEventLoop</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.connection.Connection.monitoring_line_available">
+<span class="property"><span class="k"><span class="pre">abstract</span></span><span class="w"> </span><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">monitoring_line_available</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.connection.Connection.monitoring_line_available" title="Link to this definition"></a></dt>
+<dd><p>True if the monitoring line is available, False otherwise.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.connection.Connection.open">
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">open</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.connection.Connection.open" title="Link to this definition"></a></dt>
+<dd><p>Opens the connection to a device.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.connection.Connection.read_command_line">
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">read_command_line</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.connection.Connection.read_command_line" title="Link to this definition"></a></dt>
+<dd><p>Reads a message from the command line of the device.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.connection.Connection.read_monitoring_line">
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">read_monitoring_line</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.connection.Connection.read_monitoring_line" title="Link to this definition"></a></dt>
+<dd><p>Reads a message from the monitoring line of the device.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.connection.Connection.timeout">
+<span class="property"><span class="k"><span class="pre">abstract</span></span><span class="w"> </span><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">timeout</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.connection.Connection.timeout" title="Link to this definition"></a></dt>
+<dd><p>The timeout value (in seconds) of the connection.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.connection.Connection.write_command_line">
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">write_command_line</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.connection.Connection.write_command_line" title="Link to this definition"></a></dt>
+<dd><p>Writes a message to the monitoring line of the device.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.connection.Connection.write_monitoring_line">
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">write_monitoring_line</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.connection.Connection.write_monitoring_line" title="Link to this definition"></a></dt>
+<dd><p>Writes a message to the monitoring line of the device.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.connection.ConnectionClosedError">
+<span class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">toptica.lasersdk.asyncio.connection.</span></span><span class="sig-name descname"><span class="pre">ConnectionClosedError</span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.connection.ConnectionClosedError" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="toptica.lasersdk.decop.html#toptica.lasersdk.decop.DecopError" title="toptica.lasersdk.decop.DecopError"><code class="xref py py-class docutils literal notranslate"><span class="pre">DecopError</span></code></a></p>
+<p>An exception that is raised when a connection is closed.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.connection.DeviceNotFoundError">
+<span class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">toptica.lasersdk.asyncio.connection.</span></span><span class="sig-name descname"><span class="pre">DeviceNotFoundError</span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.connection.DeviceNotFoundError" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="toptica.lasersdk.decop.html#toptica.lasersdk.decop.DecopError" title="toptica.lasersdk.decop.DecopError"><code class="xref py py-class docutils literal notranslate"><span class="pre">DecopError</span></code></a></p>
+<p>An exception that is raised when connecting to a device has failed.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.connection.DiscoveryProtocol">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">toptica.lasersdk.asyncio.connection.</span></span><span class="sig-name descname"><span class="pre">DiscoveryProtocol</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#toptica.lasersdk.asyncio.connection.DiscoveryProtocol" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">DatagramProtocol</span></code></p>
+<p>An implementation of a DatagramProtocol for device discovery.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>device_name</strong> (<em>str</em>) – The serial number or system label of the device.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.connection.DiscoveryProtocol.connection_made">
+<span class="sig-name descname"><span class="pre">connection_made</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">transport</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">BaseTransport</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.connection.DiscoveryProtocol.connection_made" title="Link to this definition"></a></dt>
+<dd><p>Called when a connection is made.</p>
+<p>The argument is the transport representing the pipe connection.
+To receive data, wait for data_received() calls.
+When the connection is closed, connection_lost() is called.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.connection.DiscoveryProtocol.datagram_received">
+<span class="sig-name descname"><span class="pre">datagram_received</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">addr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.connection.DiscoveryProtocol.datagram_received" title="Link to this definition"></a></dt>
+<dd><p>Called when some datagram is received.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.connection.DiscoveryProtocol.error_received">
+<span class="sig-name descname"><span class="pre">error_received</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Exception</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.connection.DiscoveryProtocol.error_received" title="Link to this definition"></a></dt>
+<dd><p>Called when a send or receive operation raises an OSError.</p>
+<p>(Other than BlockingIOError or InterruptedError.)</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.connection.DiscoveryProtocol.result">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">result</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Future</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">IPv4Address</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">IPv6Address</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.connection.DiscoveryProtocol.result" title="Link to this definition"></a></dt>
+<dd><p>The result of the discovery process.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>asyncio.Future[DeviceNetworkAddress]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.connection.NetworkConnection">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">toptica.lasersdk.asyncio.connection.</span></span><span class="sig-name descname"><span class="pre">NetworkConnection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">host</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">command_line_port</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1998</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">monitoring_line_port</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1999</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#toptica.lasersdk.asyncio.connection.NetworkConnection" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#toptica.lasersdk.asyncio.connection.Connection" title="toptica.lasersdk.asyncio.connection.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a></p>
+<p>A network connection to a device.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>host</strong> (<em>str</em>) – The IP address, DNS hostname, serial number or system label of the device.</p></li>
+<li><p><strong>command_line_port</strong> (<em>int</em>) – The TCP port of the command line (can be 0 if the command line
+is not required or supported by the device).</p></li>
+<li><p><strong>monitoring_line_port</strong> (<em>int</em>) – The TCP port of the monitoring line (can be 0 if the monitoring line
+is not required or supported by the device).</p></li>
+<li><p><strong>timeout</strong> (<em>float</em>) – The timeout (in seconds) of this connection.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.connection.NetworkConnection.close">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.connection.NetworkConnection.close" title="Link to this definition"></a></dt>
+<dd><p>Closes the network connection.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.connection.NetworkConnection.command_line_available">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">command_line_available</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.connection.NetworkConnection.command_line_available" title="Link to this definition"></a></dt>
+<dd><p>True if the command line is available, False otherwise.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.connection.NetworkConnection.find_device">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">find_device</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">IPv4Address</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">IPv6Address</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.connection.NetworkConnection.find_device" title="Link to this definition"></a></dt>
+<dd><p>Tries to find a device in the local network using its serial number or system label.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – The serial number or system label of the device.</p></li>
+<li><p><strong>timeout</strong> (<em>int</em>) – The timeout for waiting for a response from the searched device.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>A tuple containing the IP address and TCP ports of the device</dt><dd><p>or None if the device could not be found.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>DeviceNetworkAddress | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.connection.NetworkConnection.is_open">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">is_open</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.connection.NetworkConnection.is_open" title="Link to this definition"></a></dt>
+<dd><p>True if the connection is open, False otherwise.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.connection.NetworkConnection.loop">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">loop</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">AbstractEventLoop</span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.connection.NetworkConnection.loop" title="Link to this definition"></a></dt>
+<dd><p>The event loop used by the connection.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>AbstractEventLoop</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.connection.NetworkConnection.monitoring_line_available">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">monitoring_line_available</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.connection.NetworkConnection.monitoring_line_available" title="Link to this definition"></a></dt>
+<dd><p>True if the monitoring line is available, False otherwise.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.connection.NetworkConnection.open">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">open</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.connection.NetworkConnection.open" title="Link to this definition"></a></dt>
+<dd><p>Opens a network connection to the device.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#toptica.lasersdk.asyncio.connection.DeviceNotFoundError" title="toptica.lasersdk.asyncio.connection.DeviceNotFoundError"><strong>DeviceNotFoundError</strong></a> – If an invalid IP address was provided or no IP address could be found
+    for the DNS hostname, serial number or system label.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.connection.NetworkConnection.read_command_line">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">read_command_line</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.connection.NetworkConnection.read_command_line" title="Link to this definition"></a></dt>
+<dd><p>Reads a message from the command line of the device.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The message read from the command line.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="#toptica.lasersdk.asyncio.connection.BufferOverflowError" title="toptica.lasersdk.asyncio.connection.BufferOverflowError"><strong>BufferOverflowError</strong></a> – If the amount of received data exceeds the size of the internal buffer.</p></li>
+<li><p><a class="reference internal" href="#toptica.lasersdk.asyncio.connection.ConnectionClosedError" title="toptica.lasersdk.asyncio.connection.ConnectionClosedError"><strong>ConnectionClosedError</strong></a> – If the connection was closed either by calling close() or due to a network error.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.connection.NetworkConnection.read_monitoring_line">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">read_monitoring_line</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.connection.NetworkConnection.read_monitoring_line" title="Link to this definition"></a></dt>
+<dd><p>Reads a message from the monitoring line of the device.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The message read from the monitoring line.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="#toptica.lasersdk.asyncio.connection.UnavailableError" title="toptica.lasersdk.asyncio.connection.UnavailableError"><strong>UnavailableError</strong></a> – If the monitoring line is not available.</p></li>
+<li><p><a class="reference internal" href="#toptica.lasersdk.asyncio.connection.BufferOverflowError" title="toptica.lasersdk.asyncio.connection.BufferOverflowError"><strong>BufferOverflowError</strong></a> – If the received data overflowed the internal buffer.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.connection.NetworkConnection.timeout">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">timeout</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.connection.NetworkConnection.timeout" title="Link to this definition"></a></dt>
+<dd><p>The timeout value (in seconds) of the connection.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.connection.NetworkConnection.write_command_line">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">write_command_line</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.connection.NetworkConnection.write_command_line" title="Link to this definition"></a></dt>
+<dd><p>Sends a message to the command line.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>message</strong> (<em>str</em>) – The message to send to the command line.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#toptica.lasersdk.asyncio.connection.UnavailableError" title="toptica.lasersdk.asyncio.connection.UnavailableError"><strong>UnavailableError</strong></a> – If the connection is either closed or the command line is not available.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.connection.NetworkConnection.write_monitoring_line">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">write_monitoring_line</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.connection.NetworkConnection.write_monitoring_line" title="Link to this definition"></a></dt>
+<dd><p>Sends a message to the monitoring line.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>message</strong> (<em>str</em>) – The message to send to the monitoring line.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="#toptica.lasersdk.asyncio.connection.BufferOverflowError" title="toptica.lasersdk.asyncio.connection.BufferOverflowError"><strong>BufferOverflowError</strong></a> – If the amount of received data exceeds the size of the internal buffer.</p></li>
+<li><p><a class="reference internal" href="#toptica.lasersdk.asyncio.connection.ConnectionClosedError" title="toptica.lasersdk.asyncio.connection.ConnectionClosedError"><strong>ConnectionClosedError</strong></a> – If the connection was closed either by calling close() or due to a network error.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.connection.SerialConnection">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">toptica.lasersdk.asyncio.connection.</span></span><span class="sig-name descname"><span class="pre">SerialConnection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">baudrate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">115200</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#toptica.lasersdk.asyncio.connection.SerialConnection" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#toptica.lasersdk.asyncio.connection.Connection" title="toptica.lasersdk.asyncio.connection.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a></p>
+<p>A serial connection to a device.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>port</strong> (<em>str</em>) – The name of a serial port (e.g. ‘COM1’ or ‘/dev/ttyUSB0’) or
+a pyserial URL handler (<a class="reference external" href="https://pyserial.readthedocs.io/en/latest/url_handlers.html">https://pyserial.readthedocs.io/en/latest/url_handlers.html</a>).</p></li>
+<li><p><strong>baudrate</strong> (<em>int</em>) – The number of transferred bits per second.</p></li>
+<li><p><strong>timeout</strong> (<em>float</em>) – The communication timeout (in seconds).</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.connection.SerialConnection.close">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.connection.SerialConnection.close" title="Link to this definition"></a></dt>
+<dd><p>Closes the serial connection to the device.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.connection.SerialConnection.command_line_available">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">command_line_available</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.connection.SerialConnection.command_line_available" title="Link to this definition"></a></dt>
+<dd><p>True if the command line is available, False otherwise.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.connection.SerialConnection.is_open">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">is_open</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.connection.SerialConnection.is_open" title="Link to this definition"></a></dt>
+<dd><p>True if the connection is open, False otherwise.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.connection.SerialConnection.loop">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">loop</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">AbstractEventLoop</span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.connection.SerialConnection.loop" title="Link to this definition"></a></dt>
+<dd><p>The event loop used by the connection.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>AbstractEventLoop</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.connection.SerialConnection.monitoring_line_available">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">monitoring_line_available</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.connection.SerialConnection.monitoring_line_available" title="Link to this definition"></a></dt>
+<dd><p>Always False because the monitoring line is not available on serial connections.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.connection.SerialConnection.open">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">open</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.connection.SerialConnection.open" title="Link to this definition"></a></dt>
+<dd><p>Opens a serial connection to the device.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#toptica.lasersdk.asyncio.connection.DeviceNotFoundError" title="toptica.lasersdk.asyncio.connection.DeviceNotFoundError"><strong>DeviceNotFoundError</strong></a> – If connecting to the device failed.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.connection.SerialConnection.read_command_line">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">read_command_line</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.connection.SerialConnection.read_command_line" title="Link to this definition"></a></dt>
+<dd><p>Reads a message from the command line of the device.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The message read from the command line.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#toptica.lasersdk.asyncio.connection.UnavailableError" title="toptica.lasersdk.asyncio.connection.UnavailableError"><strong>UnavailableError</strong></a> – If the connection is closed.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.connection.SerialConnection.read_monitoring_line">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">read_monitoring_line</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.connection.SerialConnection.read_monitoring_line" title="Link to this definition"></a></dt>
+<dd><p>Reads a message from the monitoring line of the device.</p>
+<p>The monitoring line is not available on serial connections, therefore
+this method will always raise an UnavailableError.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The message read from the monitoring line.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#toptica.lasersdk.asyncio.connection.UnavailableError" title="toptica.lasersdk.asyncio.connection.UnavailableError"><strong>UnavailableError</strong></a> – Always because the monitoring line is not available on serial connections.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.connection.SerialConnection.timeout">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">timeout</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.connection.SerialConnection.timeout" title="Link to this definition"></a></dt>
+<dd><p>The timeout value (in seconds) of the connection.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.connection.SerialConnection.write_command_line">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">write_command_line</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.connection.SerialConnection.write_command_line" title="Link to this definition"></a></dt>
+<dd><p>Sends a message to the command line.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>message</strong> (<em>str</em>) – The message to send to the command line.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#toptica.lasersdk.asyncio.connection.UnavailableError" title="toptica.lasersdk.asyncio.connection.UnavailableError"><strong>UnavailableError</strong></a> – If the connection is closed.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.connection.SerialConnection.write_monitoring_line">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">write_monitoring_line</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.connection.SerialConnection.write_monitoring_line" title="Link to this definition"></a></dt>
+<dd><p>Sends a message to the monitoring line of the device.</p>
+<p>The monitoring line is not available on serial connections, therefore
+this method will always raise an UnavailableError.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>message</strong> (<em>str</em>) – The message to send to the monitoring line.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#toptica.lasersdk.asyncio.connection.UnavailableError" title="toptica.lasersdk.asyncio.connection.UnavailableError"><strong>UnavailableError</strong></a> – Always because the monitoring line is not available on serial connections.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="toptica.lasersdk.asyncio.connection.UnavailableError">
+<span class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">toptica.lasersdk.asyncio.connection.</span></span><span class="sig-name descname"><span class="pre">UnavailableError</span></span><a class="headerlink" href="#toptica.lasersdk.asyncio.connection.UnavailableError" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="toptica.lasersdk.decop.html#toptica.lasersdk.decop.DecopError" title="toptica.lasersdk.decop.DecopError"><code class="xref py py-class docutils literal notranslate"><span class="pre">DecopError</span></code></a></p>
+<p>An exception that is raised when a command line or monitoring line is used that is not available.</p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2018–2025, TOPTICA Photonics SE.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

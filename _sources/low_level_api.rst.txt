@@ -1,0 +1,70 @@
+The Low Level API
+=================
+
+Client Access to Parameters
+---------------------------
+
+The low level API provides a simple synchronous approach for reading or manipulating device parameters.
+
+First of all, one needs to acquire an instance of the :py:class:`toptica.lasersdk.client.Client` class:
+
+.. code-block:: python
+
+    from toptica.lasersdk.client import Client, NetworkConnection
+
+    with Client(NetworkConnection('My Laser')) as client:
+
+The :py:class:`toptica.lasersdk.client.Client` class provides functions that take the full parameter name as string. Reading and writing parameter values is straightforward:
+
+.. code-block:: python
+
+    print(client.get('system-label', str))
+    client.set('system-label', 'Please do not touch!')
+
+Invoking events is a piece of cake:
+
+.. code-block:: python
+
+    client.exec('laser1:dl:lock:close')
+
+Some laser devices support events with extensions (aka commands) such as a return value, arguments, input and output streams. All those features are also supported:
+
+.. code-block:: python
+
+    # Execute command with two arguments that returns a bytes object
+    result = client.exec('laser1:recorder:data:get-data', 0, 100, return_type=bytes)
+
+    # Execute command with binary output stream and no return value
+    client.exec('system-service-report:service-report', output_type=bytes)
+
+    # Execute command with one argument, binary input stream, string-type
+    # output stream, and no return value
+    with open('DLCpro-archive.fw', 'rb') as f:
+        data = f.read()
+
+    output_stream = client.exec('fw-update:upload', f.name, input_stream=data, output_type=str)
+
+Parameter Subscription
+----------------------
+
+It is also possible to get notifications on parameter value changes by subscribing to parameters.  To subscribe to a particular parameter a callback function must be provided that is invoked by the library on each parameter value change:
+
+.. code-block:: python
+
+    from toptica.lasersdk.client import Client, NetworkConnection, Subscription, Timestamp, SubscriptionValue
+
+    def callback(subscription: Subscription, timestamp: Timestamp, value: SubscriptionValue):
+        print("{}: Parameter '{}' changed its value to {}".format(timestamp.time(), subscription.name, value.get()))
+
+    with Client(NetworkConnection('172.16.109.112')) as client:
+        with client.subscribe('laser1:dl:cc:current-act', callback):
+            client.run(10)
+
+The function :py:func:`toptica.lasersdk.client.Client.subscribe` returns a :py:class:`toptica.lasersdk.client.Subscription` object that manages the lifetime of the subscription.
+
+Note that after subscribing the program control must be transfered to the library by calling  :py:func:`toptica.lasersdk.client.Client.run` or :py:func:`toptica.lasersdk.client.Client.poll` in order to make the callback mechanism work.
+
+Example
+-------
+
+See :ref:`low_level_api_example`.

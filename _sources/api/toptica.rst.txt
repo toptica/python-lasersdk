@@ -1,0 +1,12 @@
+toptica namespace
+=================
+
+.. py:module:: toptica
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   toptica.lasersdk
