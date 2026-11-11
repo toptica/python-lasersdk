@@ -1,0 +1,65 @@
+Examples
+========
+
+.. _low_level_api_example:
+
+Low Level API Example
+---------------------
+
+This example shows how to use the low level API.
+
+.. literalinclude:: ../examples/Low Level API/main.py
+   :language: python
+
+.. _synchronous_api_example:
+
+Synchronous API Example
+-----------------------
+
+This example shows the usage of the synchronous high level API.
+
+.. literalinclude:: ../examples/Synchronous API/main.py
+   :language: python
+
+.. _asynchronous_api_example:
+
+Asynchronous API Example
+------------------------
+
+This example shows the usage of the asynchronous high level API.
+
+.. literalinclude:: ../examples/Asynchronous API/main.py
+   :language: python
+
+DLC pro Scope and Lock Example
+------------------------------
+
+This example shows how to read and display scope and lock data from a DLC pro scientific laser using `Matplotlib`_.
+
+.. literalinclude:: ../examples/DLC pro Scope and Lock/main.py
+   :language: python
+
+.. _Matplotlib: https://matplotlib.org/
+
+DLC pro Recorder Example
+------------------------
+
+This example demonstrates how to download and save data, recorded by 
+a DLC pro recorder.
+
+First use the WideScan of laser 1 to record data and then the following 
+example can be used to download the raw data to a CSV file named 
+"test.csv".
+
+.. literalinclude:: ../examples/DLC pro Recorder/main.py
+   :language: python
+
+Simple Data Logger Example
+--------------------------
+
+This example demonstrates how to use the low-level API and the monitoring
+line to realize a simple data logger, periodically saving parameter values
+into a text file.
+
+.. literalinclude:: ../examples/Simple Data Logger/main.py
+   :language: python
